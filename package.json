@@ -1,0 +1,27 @@
+{
+  "name": "react-content-manager",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavelee/react-content-manager.git"
+  },
+  "keywords": [
+    "react",
+    "content-manager"
+  ],
+  "author": "Paweł Ciosek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pavelee/react-content-manager/issues"
+  },
+  "homepage": "https://github.com/pavelee/react-content-manager#readme",
+  "dependencies": {
+    "antd": "^5.10.3",
+    "react": "^18.2.0",
+    "react-icons": "^4.11.0"
+  }
+}

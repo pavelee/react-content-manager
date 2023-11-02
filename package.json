@@ -1,8 +1,14 @@
 {
   "name": "react-content-manager",
-  "version": "1.0.0",
-  "main": "index.ts",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +29,11 @@
     "antd": "^5.10.3",
     "react": "^18.2.0",
     "react-icons": "^4.11.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.34",
+    "ts-node": "^10.9.1",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
   }
 }

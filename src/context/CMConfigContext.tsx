@@ -1,5 +1,6 @@
 'use client'
 
+import React from "react";
 import { createContext, useContext, useState } from "react"
 import { CMComponentInterface } from "../services/CmComponentGallery";
 import { cmComponentGallery, persistConfigData } from "../pages/CMPage";

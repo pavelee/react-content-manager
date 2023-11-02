@@ -1,3 +1,4 @@
+import React from "react";
 import { CmConfig } from "../services/CmConfig";
 import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
@@ -14,8 +15,19 @@ interface Props {
 }
 
 const getCmConfig = () => {
-  delete require.cache[require.resolve('/cm.config.ts')];
-  return require('/cm.config.ts').default as CmConfig;
+  // delete require.cache[require.resolve('/cm.config.ts')];
+  // return require('/cm.config.ts').default as CmConfig;
+  const fetcher = async (componentId: string): Promise<any> => { };
+
+  const persister = async (
+    configId: string,
+    componentId: string,
+    data: any
+  ) => { };
+
+  const cmConfig = new CmConfig(fetcher, persister);
+
+  return cmConfig;
 }
 
 export const cmConfig = getCmConfig();

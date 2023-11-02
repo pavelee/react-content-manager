@@ -1,4 +1,4 @@
-import { CmConfig } from "./content-manager/services/CmConfig";
+import { CmConfig } from "./src/services/CmConfig";
 
 const fetcher = async (componentId: string): Promise<any> => {};
 

@@ -1,6 +1,8 @@
 import { CmConfig } from "react-content-manager";
 
-const fetcher = async (componentId: string): Promise<any> => {};
+const fetcher = async (componentId: string): Promise<any> => {
+  return {};
+};
 
 const persister = async (
   configId: string,

@@ -31,6 +31,7 @@ export const CMComponentClient = (props: CMComponentProps) => {
         props: componentProps,
       };
     }
+    return undefined;
   }, [component, componentProps]);
 
   const dynamicFormProps = useMemo(() => {
@@ -43,12 +44,14 @@ export const CMComponentClient = (props: CMComponentProps) => {
         }
       };
     }
+    return undefined;
   }, [setProps, component, componentProps]);
 
   const DynamicComponentMemoized = useMemo(() => {
     if (dynamicComponentProps) {
       return <DynamicComponent {...dynamicComponentProps} />;
     }
+    return null;
   }, [dynamicComponentProps]);
 
   if (!component) {

@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy } from "react";
+import { useEffect, useState } from "react";
 import { cmComponentGallery, fetchConfigData } from "../pages/CMPage";
 import { CMComponentInterface } from "../services/CmComponentGallery";
 import { useCMConfig } from "../context/CMConfigContext";

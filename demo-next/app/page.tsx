@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { CMProvider } from 'react-content-manager/content-manager/pages/CMPage';
+import { CMProvider } from 'react-content-manager';
 
 export default function Home() {
   return (

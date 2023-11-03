@@ -35,7 +35,8 @@ export const CMContainer = (props: ContainerProps) => {
   if (mode === 'edit') {
     return <CMContainerClient {...props} />
   }
-
+  
+  {/* @ts-ignore */}
   return <CMContainerServer {...props} />
 };
 

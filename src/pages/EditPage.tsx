@@ -12,7 +12,7 @@ interface ModeratorBarProps {
 
 const ModeratorBar = (props: ModeratorBarProps) => {
   const [api, contextHolder] = notification.useNotification();
-  const { changes, saveChanges, revertLastChange, mode, setMode } = useCMConfig();
+  const { saveChanges, mode, setMode } = useCMConfig();
   const [visible, setVisible] = useState(false);
   const onClose = () => {
     setVisible(false);
@@ -67,6 +67,8 @@ export const EditPage = (props: EditPageProps) => {
   const { mode } = props;
 
   const toogleEditMode = (toggle: boolean) => {
+    // @todo
+    console.log(toggle);
   };
 
   // context should keep changed components

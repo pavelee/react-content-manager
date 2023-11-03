@@ -12,6 +12,7 @@ export const CMContainerServer = async (props: ContainerProps) => {
       {props.configIds?.map((componentId: any) => {
         return (
           <div className="grow" key={componentId.configId}>
+            {/* @ts-ignore */}
             <CMComponentServer
               key={componentId.configId}
               mode={p.mode}

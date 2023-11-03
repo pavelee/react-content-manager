@@ -25,6 +25,7 @@ export const CMComponent = (props: CMComponentProps) => {
   if (props.mode === 'edit') {
     return <CMComponentClient {...props} />
   }
-
+  
+  {/* @ts-ignore */}
   return <CMComponentServer {...props} />
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Drawer, Switch } from "antd";
 
 interface ViewPageProps {
   children: React.ReactNode;

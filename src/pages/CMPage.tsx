@@ -17,13 +17,17 @@ interface Props {
 const getCmConfig = () => {
   // delete require.cache[require.resolve('/cm.config.ts')];
   // return require('/cm.config.ts').default as CmConfig;
-  const fetcher = async (componentId: string): Promise<any> => { };
+  const fetcher = async (componentId: string): Promise<any> => {
+    console.log(componentId);
+  };
 
   const persister = async (
     configId: string,
     componentId: string,
     data: any
-  ) => { };
+  ) => {
+    console.log(configId, componentId, data);
+  };
 
   const cmConfig = new CmConfig(fetcher, persister);
 

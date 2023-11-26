@@ -1,6 +1,6 @@
 import { CmConfig } from "./src/services/CmConfig";
 
-const fetcher = async (componentId: string): Promise<any> => {};
+const fetcher = async (configId: string): Promise<any> => {};
 
 const persister = async (
   configId: string,

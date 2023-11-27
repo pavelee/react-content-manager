@@ -7,7 +7,7 @@ import { Button, Card, Select, Table, Form as AntdForm, Drawer } from "antd";
 import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { FiArrowDown, FiArrowUp, FiTrash } from "react-icons/fi";
 import { ContainerProps } from "./CMContainer";
-import { CMComponentClient } from "../component/CMComponentClient";
+import { CMComponentClient } from "../component/CMComponent.client";
 
 interface ComponentForm {
   setProps: (props: any) => void;

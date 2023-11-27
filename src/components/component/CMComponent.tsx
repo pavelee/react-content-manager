@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { EditableProps } from "../../pages/CMPage";
-import { CMComponentServer } from "./CMComponentServer";
-import { CMComponentClient } from "./CMComponentClient";
+import { CMComponentServer } from "./CMComponent.server";
+import { CMComponentClient } from "./CMComponent.client";
 import { fetchConfigData } from "../../pages/CMPage";
 
 export interface CMComponentProps extends EditableProps {

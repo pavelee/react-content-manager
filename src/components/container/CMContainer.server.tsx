@@ -1,5 +1,5 @@
 import React from 'react';
-import { CMComponentServer } from "../component/CMComponentServer";
+import { CMComponentServer } from "../component/CMComponent.server";
 import { ContainerProps, getCssStyles, getPropsWithDefaults } from "./CMContainer";
 
 export const CMContainerServer = async (props: ContainerProps) => {

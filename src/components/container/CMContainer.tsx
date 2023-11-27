@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditableProps, mode } from "../../pages/CMPage";
-import { CMContainerClient } from "./CMContainerClient";
-import { CMContainerServer } from "./CMContainerServer";
+import { CMContainerClient } from "./CMContainer.client";
+import { CMContainerServer } from "./CMContainer.server";
 import { ContainerWrapperId } from "./Form";
 
 export interface ContainerProps extends EditableProps {

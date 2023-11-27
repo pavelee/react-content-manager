@@ -3,7 +3,7 @@
 import React from 'react';
 import { useCMConfig } from "../../context/CMConfigContext";
 import { ContainerProps, getCssStyles, getPropsWithDefaults } from "./CMContainer";
-import { CMComponentClient } from "../component/CMComponentClient";
+import { CMComponentClient } from "../component/CMComponent.client";
 
 export const CMContainerClient = (props: ContainerProps) => {
 

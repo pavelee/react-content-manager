@@ -4,47 +4,47 @@ interface SkeletonProps {
   style?: React.CSSProperties;
 }
 
-const styles = {
-  skeletonBar: {
-    backgroundColor: 'gray-200',
-    animation: 'pulse',
-    borderRadius: 'rounded-lg',
-  },
-  skeletonContainer: {
-    display: 'flex',
-    gap: '3',
-    padding: '5',
-  },
-  skeletonBarContainer: {
-    width: '1/2',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '3',
-  },
-  skeletonBarSmall: {
-    height: '5',
-  },
-};
-
 const SkeletonBar = (props: SkeletonProps) => {
   return <div style={props.style}></div>;
 }
 
 export const Skeleton = () => {
   return (
-    <div style={styles.skeletonContainer}>
+    <div
+      className='animate-pulse'
+      style={{
+        animationName: 'pulse',
+        animationDuration: '1s',
+        animationIterationCount: 'infinite',
+        display: 'flex',
+        gap: '12px',
+      }}>
+      <SkeletonBar style={{
+        width: '50%',
+        backgroundColor: '#D3D3D3',
+        borderRadius: '0.5rem'
+      }} />
       <div style={{
-        width: '1/2',
+        width: '50%',
         display: 'flex',
         flexDirection: 'column',
-        gap: '3',
+        gap: '12px',
       }}>
         <SkeletonBar style={{
-          width: '50%'
+          height: '1rem',
+          backgroundColor: '#D3D3D3',
+          borderRadius: '0.25rem'
         }} />
-        <SkeletonBar style={styles.skeletonBarSmall} />
-        <SkeletonBar style={styles.skeletonBarSmall} />
-        <SkeletonBar style={styles.skeletonBarSmall} />
+        <SkeletonBar style={{
+          height: '1rem',
+          backgroundColor: '#D3D3D3',
+          borderRadius: '0.25rem'
+        }} />
+        <SkeletonBar style={{
+          height: '1rem',
+          backgroundColor: '#D3D3D3',
+          borderRadius: '0.25rem'
+        }} />
       </div>
     </div>
   );

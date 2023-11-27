@@ -1,5 +1,4 @@
 import React from 'react';
-import { EditableProps } from "../../pages/CMPage";
 import { DynamicComponent } from "../DynamicComponent";
 import { cmComponentGallery, containerComponentId, fetchConfigData } from "../../pages/CMPage";
 import { CMComponentProps } from "./CMComponent";

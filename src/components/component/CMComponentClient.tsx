@@ -1,14 +1,13 @@
 'use client'
 
-import { EditableProps } from "../../pages/CMPage";
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useConfig } from "../../hooks/useConfig";
-import { Drawer, Modal, Spin, Tag } from "antd";
+import { Drawer, Tag } from "antd";
 import { OptionsWrapper } from "../OptionsWrapper";
-import { FiArrowDown, FiArrowUp, FiSave, FiSettings, FiTrash } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
 import { DynamicComponent } from "../DynamicComponent";
 import { useCMConfig } from "../../context/CMConfigContext";
-import { containerComponentId, persistConfigData } from "../../pages/CMPage";
+import { containerComponentId } from "../../pages/CMPage";
 import { CMComponentProps } from "./CMComponent";
 import { Skeleton } from "../Skeleton";
 

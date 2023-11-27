@@ -2,8 +2,6 @@
 
 import React from 'react';
 import { useCMConfig } from "../../context/CMConfigContext";
-import { useState } from "react";
-import { ContainerWrapperId } from "./Form";
 import { ContainerProps, getCssStyles, getPropsWithDefaults } from "./CMContainer";
 import { CMComponentClient } from "../component/CMComponentClient";
 

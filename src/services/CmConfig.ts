@@ -1,5 +1,11 @@
-import { CMComponentData } from "../hooks/data";
 import { CmComponentGallery } from "./CmComponentGallery";
+
+export interface CMComponentData {
+  componentId: string;
+  data: {
+    [key: string]: any;
+  };
+}
 
 export class CmConfig {
   private cg: CmComponentGallery;

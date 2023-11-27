@@ -3,7 +3,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { cmComponentGallery, persistConfigData } from "../../pages/CMPage";
-import { Button, Card, Select, Table, Form as AntdForm, Modal, Drawer } from "antd";
+import { Button, Card, Select, Table, Form as AntdForm, Drawer } from "antd";
 import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { FiArrowDown, FiArrowUp, FiTrash } from "react-icons/fi";
 import { ContainerProps } from "./CMContainer";

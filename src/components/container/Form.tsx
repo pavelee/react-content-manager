@@ -70,7 +70,12 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
         width={document.body.clientWidth * 0.5}
         footer={null}
       >
-        <div className="flex flex-col flex-wrap gap-3">
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          gap: '0.75rem',
+        }}>
           <AntdForm>
             <AntdForm.Item>
               <Select
@@ -91,12 +96,22 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
             Array.from(components).map(([key, value]) => {
               return (
                 <Card title={value.name} extra={
-                  <div className="flex justify-end">
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                  }}>
                     <Button key={'addComponent'} type="primary" onClick={() => { props.addComponentToContainer(value); closeComponentGallery(); }}>dodaj</Button>
                   </div>}
                   key={key}
-                  className="shadow-xl">
-                  <div className="flex flex-col h-full items-center">
+                  style={{
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                  }}>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    alignItems: 'center',
+                  }}>
                     <CMComponentClient configId={key} componentId={value.id} mode='view' />
                   </div>
                 </Card>
@@ -206,8 +221,19 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   };
 
   return (
-    <div className="space-y-5">
-      <AntdForm className="flex flex-col flex-wrap gap-5">
+    <div style={
+      {
+        transform: 'translateY(1.25rem)'
+      }
+    }>
+      <AntdForm style={
+        {
+          display: 'flex',
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          gap: '1.25rem'
+        }
+      }>
         <AntdForm.Item label="direction">
           <Select value={direction} onChange={(value) => setDirection(value)}>
             <Select.Option value="row">row</Select.Option>
@@ -232,7 +258,10 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               title: "komponent",
               key: "komponent",
               render: (text, record) => (
-                <div className="flex gap-3">
+                <div style={{
+                  display: 'flex',
+                  gap: '0.75rem',
+                }}>
                   <div>{record.component.name}</div>
                 </div>
               ),
@@ -241,7 +270,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               title: 'actions',
               key: 'actions',
               render: (text, record) => (
-                <div className="space-x-3">
+                <div style={{ transform: 'translateY(0.5rem)' }}>
                   <Button onClick={() => moveComponentUp(record.id)}><FiArrowUp /></Button>
                   <Button onClick={() => moveComponentDown(record.id)}><FiArrowDown /></Button>
                   <Button onClick={() => deleteComponent(record.id)}><FiTrash /></Button>
@@ -251,7 +280,11 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           ]}
         />
       </AntdForm>
-      <div className="flex justify-center gap-3">
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '0.75rem',
+      }}>
         <Button onClick={() => { addContainer() }}>Dodaj kontener</Button>
         <ComponentGallery addComponentToContainer={addComponentToContainer} />
       </div>

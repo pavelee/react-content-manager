@@ -29,7 +29,12 @@ const ModeratorBar = (props: ModeratorBarProps) => {
     <>
       {contextHolder}
       <Button
-        className="absolute top-24 right-0 z-50"
+        style={{
+          position: 'absolute',
+          top: '24px',
+          right: '0',
+          zIndex: 50
+        }}
         onClick={() => setVisible(true)}
       >
         Edit
@@ -40,7 +45,17 @@ const ModeratorBar = (props: ModeratorBarProps) => {
         onClose={onClose}
         open={visible}
       >
-        <div className="flex flex-col gap-4 items-center">
+        <div
+          style={
+            {
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '1rem'
+            }
+          }
+        >
           <Switch
             checked={mode === 'edit'}
             checkedChildren="edit"

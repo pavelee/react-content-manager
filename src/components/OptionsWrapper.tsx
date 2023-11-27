@@ -11,12 +11,21 @@ interface OptionsWrapperProps {
 
 export const OptionsWrapper = (props: OptionsWrapperProps) => {
   return (
-    <div className="flex gap-1 items-center flex-wrap">
+    <div style={{
+      display: 'flex',
+      gap: '0.25rem',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+    }}>
       {
         props.options.map((option, index) => (
           <button
             key={index}
-            className="bg-gray-300 rounded-full p-1"
+            style={{
+              backgroundColor: '#D1D5DB',
+              borderRadius: '9999px',
+              padding: '0.25rem',
+            }}
             onClick={option.callback}
           >
             {option.icon}

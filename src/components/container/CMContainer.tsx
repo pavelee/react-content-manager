@@ -18,16 +18,24 @@ export const getPropsWithDefaults = (props: ContainerProps) => {
   }
 }
 
-export const getCssClasses = (props: ContainerProps, mode: mode) => {
-  let classes = "flex gap-4";
-  if (props.direction === "column") {
-    classes += " flex-col ";
+export const getCssStyles = (props: ContainerProps, mode: mode) => {
+  let styles: any = {
+    display: 'flex',
+    gap: '1rem',
+  };
+  if (props.direction === 'column') {
+    styles = { ...styles, flexDirection: 'column' };
   }
-  if (mode === "edit") {
-    classes += " p-1 border-2 border-gray-300 rounded-xl";
+  if (mode === 'edit') {
+    styles = {
+      ...styles,
+      padding: '0.25rem',
+      border: '2px solid #D1D5DB',
+      borderRadius: '0.5rem',
+    };
   }
-  return classes;
-}
+  return styles;
+};
 
 export const CMContainer = (props: ContainerProps) => {
   const { mode = 'edit' } = props;
@@ -35,8 +43,8 @@ export const CMContainer = (props: ContainerProps) => {
   if (mode === 'edit') {
     return <CMContainerClient {...props} />
   }
-  
-  {/* @ts-ignore */}
+
+  {/* @ts-ignore */ }
   return <CMContainerServer {...props} />
 };
 

@@ -1,21 +1,50 @@
 import React from 'react';
 
 interface SkeletonProps {
-  className?: string;
+  style?: React.CSSProperties;
 }
 
+const styles = {
+  skeletonBar: {
+    backgroundColor: 'gray-200',
+    animation: 'pulse',
+    borderRadius: 'rounded-lg',
+  },
+  skeletonContainer: {
+    display: 'flex',
+    gap: '3',
+    padding: '5',
+  },
+  skeletonBarContainer: {
+    width: '1/2',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '3',
+  },
+  skeletonBarSmall: {
+    height: '5',
+  },
+};
+
 const SkeletonBar = (props: SkeletonProps) => {
-  return <div className={`bg-gray-200 animate-pulse rounded-lg ${props.className}`}></div>;
+  return <div style={props.style}></div>;
 }
 
 export const Skeleton = () => {
   return (
-    <div className="flex gap-3 p-5">
-      <SkeletonBar className="w-1/2" />
-      <div className="w-1/2 flex flex-col gap-3">
-        <SkeletonBar className="h-5" />
-        <SkeletonBar className="h-5" />
-        <SkeletonBar className="h-5" />
+    <div style={styles.skeletonContainer}>
+      <div style={{
+        width: '1/2',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '3',
+      }}>
+        <SkeletonBar style={{
+          width: '50%'
+        }} />
+        <SkeletonBar style={styles.skeletonBarSmall} />
+        <SkeletonBar style={styles.skeletonBarSmall} />
+        <SkeletonBar style={styles.skeletonBarSmall} />
       </div>
     </div>
   );

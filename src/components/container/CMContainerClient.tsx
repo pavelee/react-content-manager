@@ -4,7 +4,7 @@ import React from 'react';
 import { useCMConfig } from "../../context/CMConfigContext";
 import { useState } from "react";
 import { ContainerWrapperId } from "./Form";
-import { ContainerProps, getCssClasses, getPropsWithDefaults } from "./CMContainer";
+import { ContainerProps, getCssStyles, getPropsWithDefaults } from "./CMContainer";
 import { CMComponentClient } from "../component/CMComponentClient";
 
 export const CMContainerClient = (props: ContainerProps) => {
@@ -12,13 +12,15 @@ export const CMContainerClient = (props: ContainerProps) => {
   const p = getPropsWithDefaults(props);
   const { mode } = useCMConfig();
 
-  const classes = getCssClasses(p, mode);
+  const styles = getCssStyles(p, mode);
 
   return (
-    <div className={classes}>
+    <div style={styles}>
       {p.configIds?.map((componentId, index) => {
         return (
-          <div className="grow" key={componentId.configId}>
+          <div style={{
+            flexGrow: 1,
+          }} key={componentId.configId}>
             <CMComponentClient
               key={componentId.configId}
               configId={componentId.configId}

@@ -1,17 +1,19 @@
 import React from 'react';
 import { CMComponentServer } from "../component/CMComponentServer";
-import { ContainerProps, getCssClasses, getPropsWithDefaults } from "./CMContainer";
+import { ContainerProps, getCssStyles, getPropsWithDefaults } from "./CMContainer";
 
 export const CMContainerServer = async (props: ContainerProps) => {
 
   const p = getPropsWithDefaults(props);
-  const classes = getCssClasses(p, 'view');
+  const styles = getCssStyles(p, 'view');
 
   return (
-    <div className={classes}>
+    <div style={styles}>
       {props.configIds?.map((componentId: any) => {
         return (
-          <div className="grow" key={componentId.configId}>
+          <div style={{
+            flexGrow: 1,
+          }} key={componentId.configId}>
             {/* @ts-ignore */}
             <CMComponentServer
               key={componentId.configId}

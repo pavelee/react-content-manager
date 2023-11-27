@@ -72,7 +72,12 @@ export const CMComponentClient = (props: CMComponentProps) => {
         </Drawer>
       }
       <div>
-        <div className="p-1 flex gap-3 items-center">
+        <div style={{
+          padding: '0.25rem',
+          display: 'flex',
+          gap: '0.75rem',
+          alignItems: 'center',
+        }}>
           {mode === 'edit' &&
             <>
               <OptionsWrapper options={[

@@ -36,6 +36,13 @@ export const useConfig = (
     fd();
   }, [configId, componentId, initProps]);
 
+  const reloadProps = async (data: any) => {
+    if (component) {
+      const props = await (await component.readProps()).default(data);
+      setComponentProps(props);
+    }
+  };
+
   const setProps = (props: any) => {
     if (componentId) {
       // @todo we should save previous props and compare them to the new ones
@@ -50,6 +57,7 @@ export const useConfig = (
       }
       return prev;
     });
+    reloadProps(props);
   };
 
   return {

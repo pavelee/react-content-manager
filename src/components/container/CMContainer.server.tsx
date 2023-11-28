@@ -10,6 +10,11 @@ export const CMContainerServer = async (props: ContainerProps) => {
   const p = getPropsWithDefaults(props);
   const styles = getCssStyles(p, "view");
 
+  // on server, we don't want to render anything if there are no components
+  if (p.configIds?.length === 0) {
+    return null;
+  }
+
   return (
     <div style={styles}>
       {props.configIds?.map((componentId: any) => {

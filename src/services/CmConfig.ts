@@ -15,8 +15,8 @@ export class CmConfig {
     private persister: (
       configId: string,
       componentId: string,
-      data: any
-    ) => Promise<void>
+      data: any,
+    ) => Promise<void>,
   ) {
     this.cg = CmComponentGallery.getInstance();
   }
@@ -32,7 +32,7 @@ export class CmConfig {
   public getPersister(): (
     configId: string,
     componentId: string,
-    data: any
+    data: any,
   ) => Promise<void> {
     return this.persister;
   }

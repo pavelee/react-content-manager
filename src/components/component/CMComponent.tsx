@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from "react";
 import { EditableProps } from "../../pages/CMPage";
 import { CMComponentServer } from "./CMComponent.server";
 import { CMComponentClient } from "./CMComponent.client";
@@ -18,14 +17,13 @@ export const fetchConfigIds = async (configId: string) => {
     return data.data.configIds;
   }
   return [];
-}
+};
 
 export const CMComponent = (props: CMComponentProps) => {
-
-  if (props.mode === 'edit') {
-    return <CMComponentClient {...props} />
+  if (props.mode === "edit") {
+    return <CMComponentClient {...props} />;
   }
-  
-  {/* @ts-ignore */}
-  return <CMComponentServer {...props} />
-}
+
+  // @ts-ignore
+  return <CMComponentServer {...props} />;
+};

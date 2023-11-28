@@ -3,7 +3,10 @@
 import React from "react";
 import { Button, Drawer, Switch, notification } from "antd";
 import { useState } from "react";
-import { CMConfigContextProvider, useCMConfig } from "../context/CMConfigContext";
+import {
+  CMConfigContextProvider,
+  useCMConfig,
+} from "../context/CMConfigContext";
 
 interface ModeratorBarProps {
   isEditMode: boolean;
@@ -21,19 +24,19 @@ const ModeratorBar = (props: ModeratorBarProps) => {
     // @todo what if save fails?
     await saveChanges();
     api.success({
-      message: 'Changes saved',
-      placement: 'top'
+      message: "Changes saved",
+      placement: "top",
     });
-  }
+  };
   return (
     <>
       {contextHolder}
       <Button
         style={{
-          position: 'absolute',
-          top: '24px',
-          right: '0',
-          zIndex: 50
+          position: "absolute",
+          top: "24px",
+          right: "0",
+          zIndex: 50,
         }}
         onClick={() => setVisible(true)}
       >
@@ -46,23 +49,21 @@ const ModeratorBar = (props: ModeratorBarProps) => {
         open={visible}
       >
         <div
-          style={
-            {
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '1rem'
-            }
-          }
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
+          }}
         >
           <Switch
-            checked={mode === 'edit'}
+            checked={mode === "edit"}
             checkedChildren="edit"
             unCheckedChildren="preview"
             onChange={(checked) => {
               props.toggleEditMode(checked);
-              setMode(checked ? 'edit' : 'view');
+              setMode(checked ? "edit" : "view");
             }}
           />
           <Button onClick={() => save()}>Save changes</Button>
@@ -90,10 +91,11 @@ export const EditPage = (props: EditPageProps) => {
 
   return (
     <div>
-      <CMConfigContextProvider
-        mode={props.mode}
-      >
-        <ModeratorBar isEditMode={mode === 'edit'} toggleEditMode={toogleEditMode} />
+      <CMConfigContextProvider mode={props.mode}>
+        <ModeratorBar
+          isEditMode={mode === "edit"}
+          toggleEditMode={toogleEditMode}
+        />
         {props.children}
       </CMConfigContextProvider>
     </div>

@@ -1,17 +1,13 @@
 {
   "include": ["src"],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "demo-next"
-  ],
+  "exclude": ["dist", "node_modules", "demo-next"],
   "compilerOptions": {
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./src",
+    "rootDir": "src",
     "outDir": "./dist/esm",
     "strict": true,
     "noImplicitReturns": true,
@@ -22,6 +18,6 @@
     "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

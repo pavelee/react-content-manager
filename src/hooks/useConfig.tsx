@@ -3,26 +3,36 @@ import { cmComponentGallery, fetchConfigData } from "../pages/CMPage";
 import { CMComponentInterface } from "../services/CmComponentGallery";
 import { useCMConfig } from "../context/CMConfigContext";
 
-export const useConfig = (configId: string, componentId?: string, initProps?: object) => {
+export const useConfig = (
+  configId: string,
+  componentId?: string,
+  initProps?: object,
+) => {
   const { addChange } = useCMConfig();
-  const [componentProps, setComponentProps] = useState<{ [key: string]: any } | undefined>(undefined);
-  const [component, setComponent] = useState<CMComponentInterface | undefined>(undefined);
+  const [componentProps, setComponentProps] = useState<
+    { [key: string]: any } | undefined
+  >(undefined);
+  const [component, setComponent] = useState<CMComponentInterface | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     const fd = async () => {
       const config = await fetchConfigData(configId);
-      const component = cmComponentGallery.getComponent(componentId ? componentId : config.componentId);
+      const component = cmComponentGallery.getComponent(
+        componentId ? componentId : config.componentId,
+      );
       const props = await (await component.readProps()).default(config.data);
       if (initProps) {
         setComponentProps({
           ...initProps,
-          ...props
+          ...props,
         });
       } else {
         setComponentProps(props);
       }
       setComponent(component);
-    }
+    };
     fd();
   }, [configId, componentId, initProps]);
 
@@ -35,16 +45,16 @@ export const useConfig = (configId: string, componentId?: string, initProps?: ob
       if (prev) {
         return {
           ...prev,
-          ...props
-        }
+          ...props,
+        };
       }
       return prev;
     });
-  }
+  };
 
   return {
     component,
     componentProps,
     setProps,
-  }
-}
+  };
+};

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useMemo, useState } from "react";
 import { useConfig } from "../../hooks/useConfig";
@@ -14,7 +14,11 @@ import { Skeleton } from "../Skeleton";
 export const CMComponentClient = (props: CMComponentProps) => {
   const { mode } = useCMConfig();
   const [visibleForm, setVisibleForm] = useState(false);
-  const { setProps, componentProps, component } = useConfig(props.configId, props.componentId, props.initProps);
+  const { setProps, componentProps, component } = useConfig(
+    props.configId,
+    props.componentId,
+    props.initProps,
+  );
 
   // @todo rething this, it's a bit hacky
   if (componentProps && component) {
@@ -39,8 +43,8 @@ export const CMComponentClient = (props: CMComponentProps) => {
         componentPath: component.formPath,
         props: {
           ...componentProps,
-          setProps: setProps
-        }
+          setProps: setProps,
+        },
       };
     }
     return undefined;
@@ -54,13 +58,12 @@ export const CMComponentClient = (props: CMComponentProps) => {
   }, [dynamicComponentProps]);
 
   if (!component) {
-    return <Skeleton />
+    return <Skeleton />;
   }
 
   return (
     <>
-      {
-        mode === 'edit' && dynamicFormProps &&
+      {mode === "edit" && dynamicFormProps && (
         <Drawer
           open={visibleForm}
           width={document.body.clientWidth * 0.5}
@@ -69,32 +72,37 @@ export const CMComponentClient = (props: CMComponentProps) => {
         >
           {dynamicFormProps && <DynamicComponent {...dynamicFormProps} />}
         </Drawer>
-      }
+      )}
       <div>
-        <div style={{
-          padding: '0.25rem',
-          display: 'flex',
-          gap: '0.75rem',
-          alignItems: 'center',
-        }}>
-          {mode === 'edit' &&
+        <div
+          style={{
+            padding: "0.25rem",
+            display: "flex",
+            gap: "0.75rem",
+            alignItems: "center",
+          }}
+        >
+          {mode === "edit" && (
             <>
-              <OptionsWrapper options={[
-                {
-                  icon: <FiSettings />,
-                  callback: () => {
-                    setVisibleForm(true);
-                  }
-                },
-              ]} />
+              <OptionsWrapper
+                options={[
+                  {
+                    icon: <FiSettings />,
+                    callback: () => {
+                      setVisibleForm(true);
+                    },
+                  },
+                ]}
+              />
               <div>
                 <Tag>{props.configId}</Tag>
                 <Tag>{component.id}</Tag>
               </div>
-            </>}
+            </>
+          )}
         </div>
         {DynamicComponentMemoized}
       </div>
     </>
-  )
-}
+  );
+};

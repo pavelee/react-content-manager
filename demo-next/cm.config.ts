@@ -7,7 +7,7 @@ const fetcher = async (componentId: string): Promise<any> => {
 const persister = async (
   configId: string,
   componentId: string,
-  data: any
+  data: any,
 ) => {};
 
 const cmConfig = new CmConfig(fetcher, persister);

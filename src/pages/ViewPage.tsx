@@ -5,10 +5,5 @@ interface ViewPageProps {
 }
 
 export const ViewPage = (props: ViewPageProps) => {
-
-  return (
-    <div>
-      {props.children}
-    </div>
-  );
+  return <div>{props.children}</div>;
 };

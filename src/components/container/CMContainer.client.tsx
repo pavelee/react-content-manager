@@ -1,12 +1,15 @@
-'use client'
+"use client";
 
-import React from 'react';
+import React from "react";
 import { useCMConfig } from "../../context/CMConfigContext";
-import { ContainerProps, getCssStyles, getPropsWithDefaults } from "./CMContainer";
+import {
+  ContainerProps,
+  getCssStyles,
+  getPropsWithDefaults,
+} from "./CMContainer";
 import { CMComponentClient } from "../component/CMComponent.client";
 
 export const CMContainerClient = (props: ContainerProps) => {
-
   const p = getPropsWithDefaults(props);
   const { mode } = useCMConfig();
 
@@ -16,9 +19,12 @@ export const CMContainerClient = (props: ContainerProps) => {
     <div style={styles}>
       {p.configIds?.map((componentId, index) => {
         return (
-          <div style={{
-            flexGrow: 1,
-          }} key={componentId.configId}>
+          <div
+            style={{
+              flexGrow: 1,
+            }}
+            key={componentId.configId}
+          >
             <CMComponentClient
               key={componentId.configId}
               configId={componentId.configId}

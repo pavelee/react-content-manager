@@ -15,7 +15,7 @@ const readProps = async (serailizedProps?: any) => {
     configIds = configIds.map((configId: any) => {
       data.push({
         configId: configId.configId,
-        component: cmComponentGallery.getComponent(configId.componentId)
+        component: cmComponentGallery.getComponent(configId.componentId),
       });
     });
     props.configIds = data;
@@ -26,6 +26,6 @@ const readProps = async (serailizedProps?: any) => {
   }
 
   return props;
-}
+};
 
 export default readProps;

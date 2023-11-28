@@ -55,7 +55,7 @@ export class CmComponentGallery {
   }
 
   public getPublicComponents(
-    tags?: string[]
+    tags?: string[],
   ): Map<string, CMComponentInterface> {
     const publicComponents = new Map<string, CMComponentInterface>();
     this.components.forEach((component) => {

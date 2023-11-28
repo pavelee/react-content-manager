@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
 import React from "react";
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState } from "react";
 import { CMComponentInterface } from "../services/CmComponentGallery";
 import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 
 interface CMConfigContextProps {
-  mode: 'edit' | 'view',
-  setMode: (mode: 'edit' | 'view') => void;
+  mode: "edit" | "view";
+  setMode: (mode: "edit" | "view") => void;
   changes: { [configId: string]: { [componentId: string]: any } };
   addChange: (configId: string, componentId: string, props: any) => void;
   revertLastChange: () => void;
@@ -15,33 +15,41 @@ interface CMConfigContextProps {
 }
 
 export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
-  mode: 'view',
-  setMode: () => { },
+  mode: "view",
+  setMode: () => {},
   changes: {},
-  addChange: () => { },
-  revertLastChange: () => { },
-  saveChanges: () => { }
+  addChange: () => {},
+  revertLastChange: () => {},
+  saveChanges: () => {},
 });
 
 interface CMConfigContextProviderProps {
-  mode: 'edit' | 'view';
+  mode: "edit" | "view";
   children: React.ReactNode;
 }
 
-export const CMConfigContextProvider = (props: CMConfigContextProviderProps) => {
-  const [mode, setMode] = useState<'edit' | 'view'>(props.mode);
-  const [changes, setChanges] = useState<{ [configId: string]: { [componentId: string]: any } }>({});
+export const CMConfigContextProvider = (
+  props: CMConfigContextProviderProps,
+) => {
+  const [mode, setMode] = useState<"edit" | "view">(props.mode);
+  const [changes, setChanges] = useState<{
+    [configId: string]: { [componentId: string]: any };
+  }>({});
 
-  const setModeHandler = (mode: 'edit' | 'view') => {
+  const setModeHandler = (mode: "edit" | "view") => {
     setMode(mode);
-  }
+  };
 
-  const saveComponent = async (configId: string, component: CMComponentInterface, props: any) => {
+  const saveComponent = async (
+    configId: string,
+    component: CMComponentInterface,
+    props: any,
+  ) => {
     if (component && component.formPath) {
       const data = await (await component.writeProps()).default(props);
       await persistConfigData(configId, component.id, data);
     }
-  }
+  };
 
   const saveChanges = async () => {
     const configIds = Object.keys(changes);
@@ -51,11 +59,15 @@ export const CMConfigContextProvider = (props: CMConfigContextProviderProps) => 
       for (let j = 0; j < componentIds.length; j++) {
         const componentId = componentIds[j];
         const component = cmComponentGallery.getComponent(componentId);
-        await saveComponent(configId, component, changes[configId][componentId]);
+        await saveComponent(
+          configId,
+          component,
+          changes[configId][componentId],
+        );
       }
     }
     setChanges({});
-  }
+  };
 
   const contextValue: CMConfigContextProps = {
     mode: mode,
@@ -72,22 +84,24 @@ export const CMConfigContextProvider = (props: CMConfigContextProviderProps) => 
     revertLastChange: () => {
       // @TODO
     },
-    saveChanges: saveChanges
-  }
+    saveChanges: saveChanges,
+  };
 
   return (
     <CMConfigContext.Provider value={contextValue}>
       {props.children}
     </CMConfigContext.Provider>
-  )
-}
+  );
+};
 
 export const useCMConfig = () => {
   const context = useContext(CMConfigContext);
 
   if (context === undefined) {
-    throw new Error('useCMConfig must be used within a CMConfigContextProvider')
+    throw new Error(
+      "useCMConfig must be used within a CMConfigContextProvider",
+    );
   }
 
   return context;
-}
+};

@@ -30,7 +30,7 @@ yarn add react-content-manager
 import { CmConfig } from "react-content-manager";
 
 // define function that will fetch data from your persistance layer, eg. database
-const fetcher = async (componentId: string): Promise<any> => {
+const fetcher = async (configId: string): Promise<any> => {
   return {};
 };
 

@@ -287,6 +287,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               component: id.component,
             };
           })}
+          rowKey={(record) => record.id}
           columns={[
             {
               title: "ID",

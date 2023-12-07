@@ -1,4 +1,4 @@
-import { CmConfig } from "./src1/services/CmConfig";
+import { CmConfig } from "./src/services/CmConfig";
 
 const fetcher = async (configId: string): Promise<any> => {};
 

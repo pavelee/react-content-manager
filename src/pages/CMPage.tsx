@@ -16,8 +16,8 @@ interface Props {
 }
 
 const getCmConfig = () => {
-  delete require.cache[require.resolve("cm.config.ts")];
-  return require("cm.config.ts").default as CmConfig;
+  delete require.cache[require.resolve("../../../../../cm.config.ts")];
+  return require("../../../../../cm.config.ts").default as CmConfig;
 };
 
 export const cmConfig = getCmConfig();

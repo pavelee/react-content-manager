@@ -1,8 +1,7 @@
 import React from "react";
 import { EditableProps, mode } from "../../pages/CMPage";
-import { CMContainerClient } from "./CMContainer.client";
-import { CMContainerServer } from "./CMContainer.server";
 import { ContainerWrapperId } from "./Form";
+import { CMComponent } from "../..";
 
 export interface ContainerProps extends EditableProps {
   id: string;
@@ -40,12 +39,29 @@ export const getCssStyles = (props: ContainerProps, mode: mode) => {
 export const CMContainer = (props: ContainerProps) => {
   const { mode = "edit" } = props;
 
-  if (mode === "edit") {
-    return <CMContainerClient {...props} />;
-  }
+  const styles = getCssStyles(props, mode);
 
-  // @ts-ignore
-  return <CMContainerServer {...props} />;
+  return (
+    <div style={styles}>
+      {props.configIds?.map((componentId: any) => {
+        return (
+          <div
+            style={{
+              flexGrow: 1,
+            }}
+            key={componentId.configId}
+          >
+            <CMComponent
+              key={componentId.configId}
+              mode={mode}
+              configId={componentId.configId}
+              componentId={componentId.componentId}
+            />
+          </div>
+        );
+      })}
+    </div>
+  )
 };
 
 export default CMContainer;

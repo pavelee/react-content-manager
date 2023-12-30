@@ -9,7 +9,9 @@ interface ComponentForm {
 const Form = (props: any) => {
   return (
     <>
-      <div>Hello!</div>
+      <div className="bg-black p-5">
+        <div>Hello!</div>
+      </div>
     </>
   );
 };

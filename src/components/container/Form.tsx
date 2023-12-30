@@ -206,7 +206,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       configIds: configIds.map((config) => {
         return {
           configId: config.configId,
-          componentId: config.component.id,
+          component: config.component,
         };
       }),
       direction: direction,

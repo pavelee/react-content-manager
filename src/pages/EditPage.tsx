@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { Button, Drawer, Switch, notification } from "antd";
+import { Drawer, Switch, notification } from "antd";
 import { useState } from "react";
 import {
   CMConfigContextProvider,
   useCMConfig,
 } from "../context/CMConfigContext";
+import { Button } from "../components/button/Button";
 
 interface ModeratorBarProps {
   isEditMode: boolean;
@@ -32,7 +33,7 @@ const ModeratorBar = (props: ModeratorBarProps) => {
     <>
       {contextHolder}
       <Button
-        style={{
+        extraStyle={{
           position: "absolute",
           top: "24px",
           right: "0",

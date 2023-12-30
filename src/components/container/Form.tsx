@@ -3,11 +3,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { cmComponentGallery, persistConfigData } from "../../pages/CMPage";
-import { Button, Card, Select, Table, Form as AntdForm, Drawer } from "antd";
+import { Card, Select, Table, Form as AntdForm, Drawer } from "antd";
 import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { FiArrowDown, FiArrowUp, FiTrash } from "react-icons/fi";
 import { ContainerProps } from "./CMContainer";
 import { CMComponentClient } from "../component/CMComponent.client";
+import { Button } from "../button/Button";
 
 interface ComponentForm {
   setProps: (props: any) => void;
@@ -113,7 +114,7 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
                   >
                     <Button
                       key={"addComponent"}
-                      type="primary"
+                      usage="primary"
                       onClick={() => {
                         props.addComponentToContainer(value);
                         closeComponentGallery();
@@ -263,6 +264,9 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     <div
       style={{
         transform: "translateY(1.25rem)",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.25rem",
       }}
     >
       <AntdForm
@@ -312,7 +316,11 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               title: "actions",
               key: "actions",
               render: (text, record) => (
-                <div style={{ transform: "translateY(0.5rem)" }}>
+                <div style={{
+                  transform: "translateY(0.5rem)",
+                  display: "flex",
+                  gap: "0.75rem",
+                }}>
                   <Button onClick={() => moveComponentUp(record.id)}>
                     <FiArrowUp />
                   </Button>
@@ -335,16 +343,12 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           gap: "0.75rem",
         }}
       >
-        <Button
-          onClick={() => {
-            addContainer();
-          }}
-        >
-          Dodaj kontener
-        </Button>
         <ComponentGallery addComponentToContainer={addComponentToContainer} />
       </div>
-      <Button block type="primary" onClick={setComponentProps}>
+      <Button
+        usage="primary"
+        onClick={setComponentProps}
+      >
         Zatwierdz zmiany
       </Button>
     </div>

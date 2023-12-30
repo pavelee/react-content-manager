@@ -10,12 +10,19 @@ const readProps = async (serailizedProps?: any) => {
   let configIds = serailizedProps;
   if (serailizedProps?.configIds) {
     configIds = serailizedProps.configIds;
+    for (let configId of configIds) {
+      if (!configId.component) {
+        configId.component = {
+          id: configId.componentId,
+        };
+      }
+    }
   }
   if (Array.isArray(configIds)) {
     configIds = configIds.map((configId: any) => {
       data.push({
         configId: configId.configId,
-        component: cmComponentGallery.getComponent(configId.componentId),
+        component: cmComponentGallery.getComponent(configId.component.id),
       });
     });
     props.configIds = data;

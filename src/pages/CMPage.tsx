@@ -3,6 +3,7 @@ import { CmConfig } from "../services/CmConfig";
 import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
 import { Skeleton } from "../components/Skeleton";
+import { CmComponentGallery } from "../services/CmComponentGallery";
 
 export type mode = "edit" | "view";
 
@@ -15,7 +16,7 @@ interface Props {
   mode: mode;
 }
 
-const getCmConfig = () => {
+const getCmConfig = (): CmConfig => {
   delete require.cache[require.resolve("../../../../../cm.config.ts")];
   return require("../../../../../cm.config.ts").default as CmConfig;
 };

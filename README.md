@@ -77,3 +77,25 @@ export default function Home() {
 ```
 
 4. Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
+
+## How to develop package locally?
+
+1. npm link inside src directory
+2. temporary change inside CMPackage source (temporary solution until I will find better way to do it)
+
+```javascript
+delete require.cache[require.resolve("../../../demo-next/cm.config.ts")];
+return require("../../../demo-next/cm.config.ts").default;
+```
+
+2. npm link react-content-manager inside demo-next directory
+
+```
+npm link react-content-manager
+```
+
+3. spin up demo-next project
+
+```
+npm run dev
+```

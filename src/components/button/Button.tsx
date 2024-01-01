@@ -9,6 +9,8 @@ type Props = {
 export const Button = (props: Props) => {
   const { usage = "secondary" } = props;
 
+  const { extraStyle, ...rest } = props;
+
   if (usage === "secondary") {
     return (
       <button
@@ -24,7 +26,7 @@ export const Button = (props: Props) => {
             boxShadow: "0 0 0.1rem #1890ff",
             ...props.extraStyle,
           }}
-        {...props}
+        {...rest}
       >
         {props.children}
       </button>
@@ -43,7 +45,7 @@ export const Button = (props: Props) => {
         boxShadow: "0 0 0.25rem #1890ff",
         ...props.extraStyle,
       }}
-      {...props}
+      {...rest}
     >
       {props.children}
     </button>

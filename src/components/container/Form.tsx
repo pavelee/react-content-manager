@@ -3,7 +3,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { cmComponentGallery, persistConfigData } from "../../pages/CMPage";
-import { Card, Select, Table, Form as AntdForm, Drawer } from "antd";
+import { Card, Select, Table, Form as AntdForm, Drawer, Radio } from "antd";
 import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { FiArrowDown, FiArrowUp, FiTrash } from "react-icons/fi";
 import { ContainerProps } from "./CMContainer";
@@ -276,12 +276,13 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           flexWrap: "wrap",
           gap: "1.25rem",
         }}
+        layout="vertical"
       >
-        <AntdForm.Item label="direction">
-          <Select value={direction} onChange={(value) => setDirection(value)}>
-            <Select.Option value="row">row</Select.Option>
-            <Select.Option value="column">column</Select.Option>
-          </Select>
+        <AntdForm.Item label="kierunek ułożenia komponentów">
+          <Radio.Group size="large" className="flex" value={direction} onChange={(ev) => setDirection(ev.target.value)}>
+            <Radio.Button className="w-full" value="row">horyzontalny</Radio.Button>
+            <Radio.Button className="w-full" value="column">wertykalny</Radio.Button>
+          </Radio.Group>
         </AntdForm.Item>
         <Table
           pagination={false}

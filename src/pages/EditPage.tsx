@@ -8,6 +8,7 @@ import {
   useCMConfig,
 } from "../context/CMConfigContext";
 import { Button } from "../components/button/Button";
+import { Translator } from "./CMPage";
 
 interface ModeratorBarProps {
   isEditMode: boolean;
@@ -41,10 +42,10 @@ const ModeratorBar = (props: ModeratorBarProps) => {
         }}
         onClick={() => setVisible(true)}
       >
-        Edit
+        {Translator.translate('EDIT')}
       </Button>
       <Drawer
-        title="Moderator bar"
+        title={Translator.translate('MODERATOR_BAR')}
         placement="right"
         onClose={onClose}
         open={visible}
@@ -60,14 +61,14 @@ const ModeratorBar = (props: ModeratorBarProps) => {
         >
           <Switch
             checked={mode === "edit"}
-            checkedChildren="edit"
-            unCheckedChildren="preview"
+            checkedChildren={Translator.translate('EDIT')}
+            unCheckedChildren={Translator.translate('PREVIEW')}
             onChange={(checked) => {
               props.toggleEditMode(checked);
               setMode(checked ? "edit" : "view");
             }}
           />
-          <Button onClick={() => save()}>Save changes</Button>
+          <Button onClick={() => save()}>{Translator.translate('SAVE_CHANGES')}</Button>
           {/* <Button onClick={() => revertLastChange()}>Revert last change</Button> */}
         </div>
       </Drawer>
@@ -84,7 +85,6 @@ export const EditPage = (props: EditPageProps) => {
   const { mode } = props;
 
   const toogleEditMode = (toggle: boolean) => {
-    // @todo
     console.log(toggle);
   };
 

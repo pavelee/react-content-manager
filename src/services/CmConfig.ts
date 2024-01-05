@@ -1,4 +1,5 @@
 import { CmComponentGallery } from "./CmComponentGallery";
+import { Translator, language } from "./translator/translator";
 
 export interface CMComponentData {
   componentId: string;
@@ -17,6 +18,7 @@ export class CmConfig {
       componentId: string,
       data: any,
     ) => Promise<void>,
+    private language?: language,
   ) {
     this.cg = CmComponentGallery.getInstance();
   }
@@ -35,5 +37,13 @@ export class CmConfig {
     data: any,
   ) => Promise<void> {
     return this.persister;
+  }
+
+  public getTranslator(): Translator {
+    let language: language = "en";
+    if (this.language) {
+      language = this.language;
+    }
+    return Translator.getInstance().setLanguage(language);
   }
 }

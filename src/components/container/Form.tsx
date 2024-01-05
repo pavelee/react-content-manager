@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useEffect, useState } from "react";
-import { cmComponentGallery, persistConfigData } from "../../pages/CMPage";
+import { Translator, cmComponentGallery, persistConfigData } from "../../pages/CMPage";
 import { Card, Select, Table, Form as AntdForm, Drawer, Radio } from "antd";
 import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { FiArrowDown, FiArrowUp, FiTrash } from "react-icons/fi";
@@ -67,10 +67,10 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
   return (
     <>
       <Button onClick={() => setComponentGalleryOpen(true)}>
-        Wybierz komponent z galerii
+        {Translator.translate("ADD_COMPONENT")}
       </Button>
       <Drawer
-        title={"Galeria komponentów"}
+        title={Translator.translate("COMPONENT_LIBRARY")}
         open={componentGalleryOpen}
         // onCancel={() => setComponentGalleryOpen(false)}
         onClose={() => closeComponentGallery()}
@@ -91,7 +91,7 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
                 mode="multiple"
                 allowClear
                 style={{ width: "100%" }}
-                placeholder="Wyszukaj po tagach"
+                placeholder={Translator.translate("SEARCH_BY_TAG")}
                 value={selectedTags}
                 onChange={(value) => {
                   setSelectedTags(value);
@@ -120,7 +120,7 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
                         closeComponentGallery();
                       }}
                     >
-                      dodaj
+                      {Translator.translate("ADD_COMPONENT")}
                     </Button>
                   </div>
                 }
@@ -278,10 +278,10 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         }}
         layout="vertical"
       >
-        <AntdForm.Item label="kierunek ułożenia komponentów">
+        <AntdForm.Item label={Translator.translate("COMPONENT_DIRECTION")}>
           <Radio.Group size="large" className="flex" value={direction} onChange={(ev) => setDirection(ev.target.value)}>
-            <Radio.Button className="w-full" value="row">horyzontalny</Radio.Button>
-            <Radio.Button className="w-full" value="column">wertykalny</Radio.Button>
+            <Radio.Button className="w-full" value="row">{Translator.translate("COMPONENT_DIRECTION_HORIZONTAL")}</Radio.Button>
+            <Radio.Button className="w-full" value="column">{Translator.translate("COMPONENT_DIRECTION_VERTICAL")}</Radio.Button>
           </Radio.Group>
         </AntdForm.Item>
         <Table
@@ -300,7 +300,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               key: "id",
             },
             {
-              title: "komponent",
+              title: Translator.translate("COMPONENT"),
               key: "komponent",
               render: (text, record) => (
                 <div
@@ -314,7 +314,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               ),
             },
             {
-              title: "actions",
+              title: Translator.translate("ACTIONS"),
               key: "actions",
               render: (text, record) => (
                 <div style={{
@@ -350,7 +350,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         usage="primary"
         onClick={setComponentProps}
       >
-        Zatwierdz zmiany
+        {Translator.translate("SAVE_CHANGES")}
       </Button>
     </div>
   );

@@ -4,6 +4,7 @@ import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
 import { Skeleton } from "../components/Skeleton";
 import { CmComponentGallery } from "../services/CmComponentGallery";
+import { Translator as TranslatorService } from "../services/translator/translator";
 
 export type mode = "edit" | "view";
 
@@ -22,6 +23,7 @@ const getCmConfig = (): CmConfig => {
 };
 
 export const cmConfig = getCmConfig();
+export const Translator = cmConfig.getTranslator();
 export const containerComponentId = "container";
 export const cmComponentGallery = getCmConfig().getComponentGallery();
 cmComponentGallery.registerComponent({

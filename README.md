@@ -41,7 +41,8 @@ const persister = async (
   data: any
 ) => {};
 
-const cmConfig = new CmConfig(fetcher, persister);
+// optionally last parameter is language, default is 'en', we support 'pl' as well
+const cmConfig = new CmConfig(fetcher, persister, 'en');
 
 // register your components
 cmConfig.getComponentGallery().registerComponent({

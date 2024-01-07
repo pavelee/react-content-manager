@@ -79,6 +79,18 @@ export default function Home() {
 
 4. Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
 
+## Run demo locally
+
+It's very easy to run demo locally.
+
+```
+cd demo-next
+npm install
+npm run dev
+```
+
+The demo is using local file to persist data. It's only for demo purposes. In real project you should use your own persistance layer.
+
 ## How to develop package locally?
 
 1. npm link inside src directory

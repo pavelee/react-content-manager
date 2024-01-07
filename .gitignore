@@ -2,3 +2,4 @@ node_modules
 dist
 # ignore all .tgz files, created by npm pack
 *.tgz
+.vscode

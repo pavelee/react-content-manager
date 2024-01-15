@@ -42,7 +42,7 @@ export const CMContainer = (props: ContainerProps) => {
   const styles = getCssStyles(props, mode);
 
   return (
-    <div style={styles}>
+    <div style={styles} className="@container">
       {props.configIds?.map((componentId: any) => {
         return (
           <div

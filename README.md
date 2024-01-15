@@ -79,6 +79,12 @@ export default function Home() {
 
 4. Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
 
+## Support for container query in tailwindcss
+
+Library supports container query in tailwindcss. You can use it in your components.
+
+You need plugin to enable it -> https://tailwindcss.com/docs/plugins#container-queries
+
 ## Run demo locally
 
 It's very easy to run demo locally.

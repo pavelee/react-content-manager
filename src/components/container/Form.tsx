@@ -279,7 +279,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         layout="vertical"
       >
         <AntdForm.Item label={Translator.translate("COMPONENT_DIRECTION")}>
-          <Radio.Group size="large" className="flex" value={direction} onChange={(ev) => setDirection(ev.target.value)}>
+          <Radio.Group size="middle" className="flex" value={direction} onChange={(ev) => setDirection(ev.target.value)}>
             <Radio.Button className="w-full" value="row">{Translator.translate("COMPONENT_DIRECTION_HORIZONTAL")}</Radio.Button>
             <Radio.Button className="w-full" value="column">{Translator.translate("COMPONENT_DIRECTION_VERTICAL")}</Radio.Button>
           </Radio.Group>

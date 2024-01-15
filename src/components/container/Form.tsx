@@ -345,6 +345,9 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         }}
       >
         <ComponentGallery addComponentToContainer={addComponentToContainer} />
+        <Button onClick={addContainer}>
+          {Translator.translate("ADD_CONTAINER")}
+        </Button>
       </div>
       <Button
         usage="primary"

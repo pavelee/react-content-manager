@@ -12,4 +12,5 @@ export const tranlations: { [key: string]: string } = {
   COMPONENT: "Komponent",
   ACTIONS: "Akcje",
   COMPONENT_LIBRARY: "Biblioteka komponentów",
+  ADD_CONTAINER: "Dodaj kontener",
 };

@@ -18,6 +18,9 @@ interface Props {
 }
 
 const getCmConfig = (): CmConfig => {
+  // replace for development, @TODO fix, too hacky
+  // delete require.cache[require.resolve("../../../demo-next/cm.config.ts")];
+  // return require("../../../demo-next/cm.config.ts").default;
   delete require.cache[require.resolve("../../../../../cm.config.ts")];
   return require("../../../../../cm.config.ts").default as CmConfig;
 };

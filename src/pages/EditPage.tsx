@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Drawer, Switch, notification } from "antd";
 import { useState } from "react";
 import {
@@ -9,9 +9,10 @@ import {
 } from "../context/CMConfigContext";
 import { Button } from "../components/button/Button";
 import { Translator } from "./CMPage";
+import { cmConfig } from "./CMPage";
 
 interface ModeratorBarProps {
-  isEditMode: boolean;
+  initPreviewMode: boolean;
   toggleEditMode: (toggle: boolean) => void;
 }
 
@@ -22,6 +23,11 @@ const ModeratorBar = (props: ModeratorBarProps) => {
   const onClose = () => {
     setVisible(false);
   };
+
+  useEffect(() => {
+    setMode(props.initPreviewMode ? "view" : "edit");
+  }, [])
+
   const save = async () => {
     // @todo what if save fails?
     await saveChanges();
@@ -94,7 +100,7 @@ export const EditPage = (props: EditPageProps) => {
     <div>
       <CMConfigContextProvider mode={props.mode}>
         <ModeratorBar
-          isEditMode={mode === "edit"}
+          initPreviewMode={cmConfig.getPreviewOnInit()}
           toggleEditMode={toogleEditMode}
         />
         {props.children}

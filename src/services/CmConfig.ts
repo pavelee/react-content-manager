@@ -19,8 +19,10 @@ export class CmConfig {
       data: any,
     ) => Promise<void>,
     private language?: language,
+    private previewOnInit?: boolean,
   ) {
     this.cg = CmComponentGallery.getInstance();
+    this.previewOnInit = previewOnInit || true;
   }
 
   public getComponentGallery(): CmComponentGallery {
@@ -45,5 +47,12 @@ export class CmConfig {
       language = this.language;
     }
     return Translator.getInstance().setLanguage(language);
+  }
+
+  public getPreviewOnInit(): boolean {
+    if (this.previewOnInit === undefined) {
+      return true;
+    }
+    return this.previewOnInit;
   }
 }

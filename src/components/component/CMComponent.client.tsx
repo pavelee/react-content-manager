@@ -20,22 +20,22 @@ export const CMComponentClient = (props: CMComponentProps) => {
     props.initProps,
   );
 
-  // @todo rething this, it's a bit hacky
-  if (componentProps && component) {
-    if (component.id === containerComponentId) {
-      componentProps.mode = mode;
-    }
-  }
-
   const dynamicComponentProps = useMemo(() => {
     if (componentProps && component) {
+      const p = componentProps;
+      // @todo rething this, it's a bit hacky
+      if (componentProps && component) {
+        if (component.id === containerComponentId) {
+          p.mode = mode;
+        }
+      }
       return {
         componentPath: component.componentPath,
         props: componentProps,
       };
     }
     return undefined;
-  }, [component, componentProps]);
+  }, [component, componentProps, mode]);
 
   const dynamicFormProps = useMemo(() => {
     if (component && component.formPath) {

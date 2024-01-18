@@ -32,7 +32,7 @@ const ModeratorBar = (props: ModeratorBarProps) => {
     // @todo what if save fails?
     await saveChanges();
     api.success({
-      message: "Changes saved",
+      message: Translator.translate('CHANGES_SAVED'),
       placement: "top",
     });
   };

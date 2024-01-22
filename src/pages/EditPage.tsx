@@ -26,7 +26,7 @@ const ModeratorBar = (props: ModeratorBarProps) => {
 
   useEffect(() => {
     setMode(props.initPreviewMode ? "view" : "edit");
-  }, [])
+  }, [setMode, props.initPreviewMode]);
 
   const save = async () => {
     // @todo what if save fails?

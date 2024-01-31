@@ -41,6 +41,10 @@ export const CMContainerServer = (props: ContainerProps) => {
 
   const styles = getCssStyles(props, mode);
 
+  if (!props.configIds || props.configIds?.length === 0) {
+    return null;
+  }
+
   return (
     <div style={styles} className="@container">
       {props.configIds?.map((componentId: any) => {
@@ -61,5 +65,5 @@ export const CMContainerServer = (props: ContainerProps) => {
         );
       })}
     </div>
-  )
+  );
 };

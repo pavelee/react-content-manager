@@ -21,7 +21,7 @@ export const getPropsWithDefaults = (props: ContainerProps) => {
 export const getCssStyles = (props: ContainerProps, mode: mode) => {
   let styles: any = {
     display: "flex",
-    gap: "1rem",
+    gap: "2rem",
   };
   if (props.direction === "column") {
     styles = { ...styles, flexDirection: "column" };
@@ -41,9 +41,7 @@ export const CMContainer = (props: ContainerProps) => {
   const { mode = "edit" } = props;
 
   if (mode === "edit") {
-    return (
-      <CMContainerClient {...props} />
-    )
+    return <CMContainerClient {...props} />;
   }
 
   return <CMContainerServer {...props} />;

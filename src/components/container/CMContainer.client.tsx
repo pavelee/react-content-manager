@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
 import React from "react";
 import { EditableProps, mode } from "../../pages/CMPage";
 import { ContainerWrapperId } from "./Form";
 import { CMComponent } from "../..";
 import { useCMConfig } from "../../context/CMConfigContext";
+import { getCssStyles } from "./CMContainer";
 
 export interface ContainerProps extends EditableProps {
   id: string;
@@ -18,25 +19,6 @@ export const getPropsWithDefaults = (props: ContainerProps) => {
     configIds: props.configIds ?? [],
     direction: props.direction ?? "column",
   };
-};
-
-export const getCssStyles = (props: ContainerProps, mode: mode) => {
-  let styles: any = {
-    display: "flex",
-    gap: "1rem",
-  };
-  if (props.direction === "column") {
-    styles = { ...styles, flexDirection: "column" };
-  }
-  if (mode === "edit") {
-    styles = {
-      ...styles,
-      padding: "0.25rem",
-      border: "2px solid #D1D5DB",
-      borderRadius: "0.5rem",
-    };
-  }
-  return styles;
 };
 
 export const CMContainerClient = (props: ContainerProps) => {
@@ -64,5 +46,5 @@ export const CMContainerClient = (props: ContainerProps) => {
         );
       })}
     </div>
-  )
+  );
 };

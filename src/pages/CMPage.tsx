@@ -5,6 +5,7 @@ import { ViewPage } from "./ViewPage";
 import { Skeleton } from "../components/Skeleton";
 import { CmComponentGallery } from "../services/CmComponentGallery";
 import { Translator as TranslatorService } from "../services/translator/translator";
+import path from 'path';
 
 export type mode = "edit" | "view";
 
@@ -18,11 +19,21 @@ interface Props {
 }
 
 const getCmConfig = (): CmConfig => {
-  // replace for development, @TODO fix, too hacky
-  // delete require.cache[require.resolve("../../../demo-next/cm.config.ts")];
-  // return require("../../../demo-next/cm.config.ts").default;
-  delete require.cache[require.resolve("../../../../../cm.config.ts")];
-  return require("../../../../../cm.config.ts").default as CmConfig;
+  
+  try {
+    return require('../../../../../cm.config.ts').default;
+  } catch (e) {
+    // support overwriting the path in development to support npm link 😭
+    if (process.env.NEXT_PUBLIC_DEVELOPMENT_CM_CONFIG_PATH
+      || process.env.REACT_APP_DEVELOPMENT_CM_CONFIG_PATH) {
+      return require(
+        process.env.NEXT_PUBLIC_DEVELOPMENT_CM_CONFIG_PATH! ||
+        process.env.REACT_APP_DEVELOPMENT_CM_CONFIG_PATH! ||
+        '../../../../../cm.config.ts'
+      ).default;
+    }
+    throw new Error("Could not find cm.config.ts, please create one in the root of your project.");
+  }
 };
 
 export const cmConfig = getCmConfig();

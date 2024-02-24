@@ -90,9 +90,7 @@ interface EditPageProps {
 export const EditPage = (props: EditPageProps) => {
   const { mode } = props;
 
-  const toogleEditMode = (toggle: boolean) => {
-    console.log(toggle);
-  };
+  const toogleEditMode = (toggle: boolean) => {};
 
   // context should keep changed components
 

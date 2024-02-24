@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import { createContext, useContext, useState } from "react";
 import { CMComponentInterface } from "../services/CmComponentGallery";
 import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
@@ -16,11 +16,11 @@ interface CMConfigContextProps {
 
 export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
   mode: "view",
-  setMode: () => {},
+  setMode: () => { },
   changes: {},
-  addChange: () => {},
-  revertLastChange: () => {},
-  saveChanges: () => {},
+  addChange: () => { },
+  revertLastChange: () => { },
+  saveChanges: () => { },
 });
 
 interface CMConfigContextProviderProps {
@@ -36,9 +36,9 @@ export const CMConfigContextProvider = (
     [configId: string]: { [componentId: string]: any };
   }>({});
 
-  const setModeHandler = (mode: "edit" | "view") => {
+  const setModeHandler = useCallback((mode: "edit" | "view") => {
     setMode(mode);
-  };
+  }, [setMode]);
 
   const saveComponent = async (
     configId: string,
@@ -51,7 +51,7 @@ export const CMConfigContextProvider = (
     }
   };
 
-  const saveChanges = async () => {
+  const saveChanges = useCallback(async () => {
     const configIds = Object.keys(changes);
     for (let i = 0; i < configIds.length; i++) {
       const configId = configIds[i];
@@ -67,7 +67,7 @@ export const CMConfigContextProvider = (
       }
     }
     setChanges({});
-  };
+  }, [setChanges, changes]);
 
   const contextValue: CMConfigContextProps = {
     mode: mode,

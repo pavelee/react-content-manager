@@ -99,22 +99,14 @@ The demo is using local file to persist data. It's only for demo purposes. In re
 
 ## How to develop package locally?
 
-1. npm link inside src directory
-2. temporary change inside CMPackage source (temporary solution until I will find better way to do it)
+Project is using relative deps package to develop package locally.
 
-```javascript
-delete require.cache[require.resolve("../../../demo-next/cm.config.ts")];
-return require("../../../demo-next/cm.config.ts").default;
-```
+1. Clone this repository
+2. Run `npm install` in root directory
+3. Run `npm install` in `demo-next` directory
+4. run `npx relative-deps watch` in `demo-next` directory
+5. run `npm run dev` in `demo-next` directory
 
-2. npm link react-content-manager inside demo-next directory
+Project should be rebuild after every change in root directory. (package source code)
 
-```
-npm link react-content-manager
-```
-
-3. spin up demo-next project
-
-```
-npm run dev
-```
+After change you have to run `npm run dev` again in `demo-next` directory to see changes. We have to clean next.js cache to see changes.

@@ -4,6 +4,7 @@ export const tranlations: { [key: string]: string } = {
   MODERATOR_BAR: "Panel moderatora",
   PREVIEW: "Podgląd",
   SAVE_CHANGES: "Zapisz zmiany",
+  APPLY_CHANGES: "Zastosuj zmiany",
   ADD_COMPONENT: "Dodaj komponent",
   SEARCH_BY_TAG: "Szukaj po tagu",
   COMPONENT_DIRECTION: "Kierunek komponentu",

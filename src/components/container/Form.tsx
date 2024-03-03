@@ -353,7 +353,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         usage="primary"
         onClick={setComponentProps}
       >
-        {Translator.translate("SAVE_CHANGES")}
+        {Translator.translate("APPLY_CHANGES")}
       </Button>
     </div>
   );

@@ -4,6 +4,7 @@ export const tranlations: { [key: string]: string } = {
   MODERATOR_BAR: "Moderator bar",
   PREVIEW: "Preview",
   SAVE_CHANGES: "Save changes",
+  APPLY_CHANGES: "Apply changes",
   ADD_COMPONENT: "Add component",
   SEARCH_BY_TAG: "Search by tag",
   COMPONENT_DIRECTION: "Component direction",

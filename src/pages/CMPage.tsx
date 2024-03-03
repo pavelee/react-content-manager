@@ -19,21 +19,7 @@ interface Props {
 }
 
 const getCmConfig = (): CmConfig => {
-  
-  try {
-    return require('../../../../../cm.config.ts').default;
-  } catch (e) {
-    // support overwriting the path in development to support npm link 😭
-    if (process.env.NEXT_PUBLIC_DEVELOPMENT_CM_CONFIG_PATH
-      || process.env.REACT_APP_DEVELOPMENT_CM_CONFIG_PATH) {
-      return require(
-        process.env.NEXT_PUBLIC_DEVELOPMENT_CM_CONFIG_PATH! ||
-        process.env.REACT_APP_DEVELOPMENT_CM_CONFIG_PATH! ||
-        '../../../../../cm.config.ts'
-      ).default;
-    }
-    throw new Error("Could not find cm.config.ts, please create one in the root of your project.");
-  }
+  return require('../../../../../cm.config.ts').default;
 };
 
 export const cmConfig = getCmConfig();

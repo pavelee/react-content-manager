@@ -85,6 +85,8 @@ Library supports container query in tailwindcss. You can use it in your componen
 
 You need plugin to enable it -> https://tailwindcss.com/docs/plugins#container-queries
 
+With tailwindcss v4 container query will be included inside framework! 🥳
+
 ## Run demo locally
 
 It's very easy to run demo locally.

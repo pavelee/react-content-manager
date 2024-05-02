@@ -101,14 +101,33 @@ The demo is using local file to persist data. It's only for demo purposes. In re
 
 ## How to develop package locally?
 
-Project is using relative deps package to develop package locally.
+### setup project with npm link
+
+You can use npm link to develop package locally.
 
 1. Clone this repository
 2. Run `npm install` in root directory
 3. Run `npm install` in `demo-next` directory
-4. run `npx relative-deps watch` in `demo-next` directory
-5. run `npm run dev` in `demo-next` directory
+4. run `npm link` in root directory
+5. run `npm link react-content-manager` in `demo-next` directory
 
-Project should be rebuild after every change in root directory. (package source code)
+### run project in watch mode
 
-After change you have to run `npm run dev` again in `demo-next` directory to see changes. We have to clean next.js cache to see changes.
+1. Run `npm run watch` in root directory
+2. Run `npm run dev` in `demo-next` directory
+
+## NPM link
+
+some useful commands in npm link
+
+to list all npm links
+
+```
+npm ls -g --depth=0 --link=true
+```
+
+to remove npm link globally
+
+```
+npm unlink -g react-content-manager
+```

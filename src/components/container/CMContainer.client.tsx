@@ -36,6 +36,7 @@ export const CMContainerClient = (props: ContainerProps) => {
             }}
             key={componentId.configId}
           >
+            {/* @ts-ignore */}
             <CMComponent
               key={componentId.configId}
               mode={mode}

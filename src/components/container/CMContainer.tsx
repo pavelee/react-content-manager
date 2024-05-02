@@ -40,9 +40,9 @@ export const getCssStyles = (props: ContainerProps, mode: mode) => {
 export const CMContainer = (props: ContainerProps) => {
   const { mode = "edit" } = props;
 
-  if (mode === "edit") {
-    return <CMContainerClient {...props} />;
-  }
+  // if (mode === "edit") {
+  //   return <CMContainerClient {...props} />;
+  // }
 
   return <CMContainerServer {...props} />;
 };

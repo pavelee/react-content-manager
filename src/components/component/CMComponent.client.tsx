@@ -11,7 +11,12 @@ import { containerComponentId } from "../../pages/CMPage";
 import { CMComponentProps } from "./CMComponent";
 import { Skeleton } from "../Skeleton";
 
-export const CMComponentClient = (props: CMComponentProps) => {
+type props = {
+  children?: React.ReactNode;
+} & CMComponentProps;
+
+export const CMComponentClient = (props: props) => {
+  const { children } = props;
   const { mode } = useCMConfig();
   const [visibleForm, setVisibleForm] = useState(false);
   const { setProps, componentProps, component } = useConfig(
@@ -19,23 +24,6 @@ export const CMComponentClient = (props: CMComponentProps) => {
     props.componentId,
     props.initProps,
   );
-
-  const dynamicComponentProps = useMemo(() => {
-    if (componentProps && component) {
-      const p = componentProps;
-      // @todo rething this, it's a bit hacky
-      if (componentProps && component) {
-        if (component.id === containerComponentId) {
-          p.mode = mode;
-        }
-      }
-      return {
-        componentPath: component.componentPath,
-        props: componentProps,
-      };
-    }
-    return undefined;
-  }, [component, componentProps, mode]);
 
   const dynamicFormProps = useMemo(() => {
     if (component && component.formPath) {
@@ -49,17 +37,6 @@ export const CMComponentClient = (props: CMComponentProps) => {
     }
     return undefined;
   }, [setProps, component, componentProps]);
-
-  const DynamicComponentMemoized = useMemo(() => {
-    if (dynamicComponentProps) {
-      return <DynamicComponent {...dynamicComponentProps} />;
-    }
-    return null;
-  }, [dynamicComponentProps]);
-
-  if (!component) {
-    return <Skeleton />;
-  }
 
   return (
     <>
@@ -96,12 +73,12 @@ export const CMComponentClient = (props: CMComponentProps) => {
               />
               <div>
                 <Tag>{props.configId}</Tag>
-                <Tag>{component.id}</Tag>
+                <Tag>{component?.id}</Tag>
               </div>
             </>
           )}
         </div>
-        {DynamicComponentMemoized}
+        {children}
       </div>
     </>
   );

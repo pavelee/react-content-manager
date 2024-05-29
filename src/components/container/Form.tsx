@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { Translator, cmComponentGallery, persistConfigData } from "../../pages/CMPage";
 import { Card, Select, Table, Form as AntdForm, Drawer, Radio } from "antd";
@@ -60,9 +60,9 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
     }
   }, [selectedTags]);
 
-  const closeComponentGallery = () => {
+  const closeComponentGallery = useCallback(() => {
     setComponentGalleryOpen(false);
-  };
+  }, []);
 
   return (
     <>
@@ -172,7 +172,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     }
   }, [props.configIds]);
 
-  const addComponentToContainer = async (component: CMComponentInterface) => {
+  const addComponentToContainer = useCallback(async (component: CMComponentInterface) => {
     const configId = Math.random().toString(36).substring(7);
     const data = {};
     await persistConfigData(configId, component.id, data);
@@ -185,9 +185,9 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         },
       ];
     });
-  };
+  }, [setConfigIds]);
 
-  const addContainer = async () => {
+  const addContainer = useCallback(async () => {
     const component = cmComponentGallery.getComponent("container");
     const configId = Math.random().toString(36).substring(7);
     await persistConfigData(configId, component.id, {});
@@ -200,7 +200,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         },
       ];
     });
-  };
+  }, [setConfigIds]);
 
   const setComponentProps = () => {
     props.setProps({
@@ -214,23 +214,15 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     });
   };
 
-  const deleteComponent = (componentId: string) => {
+  const deleteComponent = useCallback((componentId: string) => {
     setConfigIds((prev) => {
       return prev.filter((config) => {
         return config.configId !== componentId;
       });
     });
-  };
+  }, [setConfigIds]);
 
-  const moveComponentUp = (componentId: string) => {
-    swapComponentPosition(componentId, "up");
-  };
-
-  const moveComponentDown = (componentId: string) => {
-    swapComponentPosition(componentId, "down");
-  };
-
-  const swapComponentPosition = (
+  const swapComponentPosition = useCallback((
     componentId: string,
     direction: "up" | "down",
   ) => {
@@ -258,7 +250,15 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       newComponentIds[index + 1] = component;
       setConfigIds(newComponentIds);
     }
-  };
+  }, [configIds, setConfigIds]);
+
+  const moveComponentUp = useCallback((componentId: string) => {
+    swapComponentPosition(componentId, "up");
+  }, [swapComponentPosition]);
+
+  const moveComponentDown = useCallback((componentId: string) => {
+    swapComponentPosition(componentId, "down");
+  }, [swapComponentPosition]);
 
   return (
     <div

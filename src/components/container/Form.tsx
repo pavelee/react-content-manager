@@ -66,14 +66,18 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
 
   return (
     <>
-      <Button onClick={() => setComponentGalleryOpen(true)}>
+      <Button onClick={() => {
+        setComponentGalleryOpen(true);
+      }}>
         {Translator.translate("ADD_COMPONENT")}
       </Button>
       <Drawer
         title={Translator.translate("COMPONENT_LIBRARY")}
         open={componentGalleryOpen}
         // onCancel={() => setComponentGalleryOpen(false)}
-        onClose={() => closeComponentGallery()}
+        onClose={() => {
+          closeComponentGallery();
+        }}
         width={document.body.clientWidth * 0.5}
         footer={null}
       >

@@ -206,7 +206,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     });
   }, [setConfigIds]);
 
-  const setComponentProps = () => {
+  const setComponentProps = useCallback(() => {
     props.setProps({
       configIds: configIds.map((config) => {
         return {
@@ -216,7 +216,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       }),
       direction: direction,
     });
-  };
+  }, [props.setProps, configIds, direction]);
 
   const deleteComponent = useCallback((componentId: string) => {
     setConfigIds((prev) => {

@@ -8,7 +8,7 @@ export const useConfig = (
   componentId?: string,
   initProps?: object,
 ) => {
-  const { addChange } = useCMConfig();
+  const { addChange, saveChange } = useCMConfig();
   const [componentProps, setComponentProps] = useState<
     { [key: string]: any } | undefined
   >(undefined);
@@ -44,9 +44,14 @@ export const useConfig = (
   };
 
   const setProps = (props: any) => {
-    if (componentId) {
+    let cid = componentId;
+    if (!cid) {
+      cid = 'container';
+    }
+    if (cid) {
       // @todo we should save previous props and compare them to the new ones
-      addChange(configId, componentId, props);
+      // addChange(configId, componentId, props);
+      saveChange(configId, cid, props);
     }
     setComponentProps((prev) => {
       if (prev) {

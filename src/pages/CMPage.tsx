@@ -19,6 +19,7 @@ interface Props {
 }
 
 const getCmConfig = (): CmConfig => {
+  // return require('../../../demo-next/cm.config.ts').default;
   return require('../../../../../cm.config.ts').default;
 };
 

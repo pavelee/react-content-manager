@@ -12,6 +12,11 @@ interface CMConfigContextProps {
   addChange: (configId: string, componentId: string, props: any) => void;
   revertLastChange: () => void;
   saveChanges: () => void;
+  saveChange: (
+    configId: string,
+    componentId: string,
+    props: any,
+  ) => void;
 }
 
 export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
@@ -21,6 +26,11 @@ export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
   addChange: () => { },
   revertLastChange: () => { },
   saveChanges: () => { },
+  saveChange: async (
+    configId: string,
+    componentId: string,
+    props: any,
+  ) => { },
 });
 
 interface CMConfigContextProviderProps {
@@ -35,6 +45,8 @@ export const CMConfigContextProvider = (
   const [changes, setChanges] = useState<{
     [configId: string]: { [componentId: string]: any };
   }>({});
+  let nextRouter = null;
+  nextRouter = require('next/navigation').useRouter();
 
   const setModeHandler = useCallback((mode: "edit" | "view") => {
     setMode(mode);
@@ -56,7 +68,15 @@ export const CMConfigContextProvider = (
       const data = await (await component.writeProps()).default(props);
       await persistConfigData(configId, component.id, data);
     }
+    if (nextRouter) {
+      nextRouter.refresh();
+    }
   };
+
+  const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
+    const component = cmComponentGallery.getComponent(componentId);
+    await saveComponent(configId, component, props);
+  }, []);
 
   const saveChanges = useCallback(async () => {
     const configIds = Object.keys(changes);
@@ -66,7 +86,6 @@ export const CMConfigContextProvider = (
       for (let j = 0; j < componentIds.length; j++) {
         const componentId = componentIds[j];
         const component = cmComponentGallery.getComponent(componentId);
-        console.log("Saving component", componentId);
         await saveComponent(
           configId,
           component,
@@ -93,6 +112,7 @@ export const CMConfigContextProvider = (
       // @TODO
     },
     saveChanges: saveChanges,
+    saveChange: saveChange,
   };
 
   return (

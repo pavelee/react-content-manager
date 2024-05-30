@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { CMComponentInterface } from "../services/CmComponentGallery";
 import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
@@ -40,6 +40,13 @@ export const CMConfigContextProvider = (
     setMode(mode);
   }, [setMode]);
 
+  // @TODO this is shortcut to workaround with RSC
+  useEffect(() => {
+    if (Object.keys(changes).length > 0) {
+      saveChanges();
+    }
+  }, [changes])
+
   const saveComponent = async (
     configId: string,
     component: CMComponentInterface,
@@ -59,6 +66,7 @@ export const CMConfigContextProvider = (
       for (let j = 0; j < componentIds.length; j++) {
         const componentId = componentIds[j];
         const component = cmComponentGallery.getComponent(componentId);
+        console.log("Saving component", componentId);
         await saveComponent(
           configId,
           component,

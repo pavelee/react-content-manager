@@ -8,7 +8,7 @@ export const useConfig = (
   componentId?: string,
   initProps?: object,
 ) => {
-  const { addChange, saveChange } = useCMConfig();
+  const { saveChange } = useCMConfig();
   const [componentProps, setComponentProps] = useState<
     { [key: string]: any } | undefined
   >(undefined);
@@ -17,7 +17,7 @@ export const useConfig = (
   );
 
   useEffect(() => {
-    const fd = async () => {
+  const fd = async () => {
       const config = await fetchConfigData(configId);
       const component = cmComponentGallery.getComponent(
         componentId ? componentId : config.componentId,

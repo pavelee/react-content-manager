@@ -52,31 +52,22 @@ export const CMConfigContextProvider = (
     setMode(mode);
   }, [setMode]);
 
-  // @TODO this is shortcut to workaround with RSC
-  useEffect(() => {
-    if (Object.keys(changes).length > 0) {
-      saveChanges();
-    }
-  }, [changes])
-
-  const saveComponent = async (
-    configId: string,
-    component: CMComponentInterface,
-    props: any,
-  ) => {
-    if (component && component.formPath) {
-      const data = await (await component.writeProps()).default(props);
-      await persistConfigData(configId, component.id, data);
-    }
-    if (nextRouter) {
-      nextRouter.refresh();
-    }
-  };
-
-  const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
-    const component = cmComponentGallery.getComponent(componentId);
-    await saveComponent(configId, component, props);
-  }, []);
+  const saveComponent = useCallback(
+    async (
+      configId: string,
+      component: CMComponentInterface,
+      props: any,
+    ) => {
+      if (component && component.formPath) {
+        const data = await (await component.writeProps()).default(props);
+        await persistConfigData(configId, component.id, data);
+      }
+      if (nextRouter) {
+        nextRouter.refresh();
+      }
+    },
+    [nextRouter]
+  );
 
   const saveChanges = useCallback(async () => {
     const configIds = Object.keys(changes);
@@ -94,7 +85,19 @@ export const CMConfigContextProvider = (
       }
     }
     setChanges({});
-  }, [setChanges, changes]);
+  }, [setChanges, changes, saveComponent]);
+
+  // @TODO this is shortcut to workaround with RSC
+  useEffect(() => {
+    if (Object.keys(changes).length > 0) {
+      saveChanges();
+    }
+  }, [changes, saveChanges])
+
+  const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
+    const component = cmComponentGallery.getComponent(componentId);
+    await saveComponent(configId, component, props);
+  }, [saveComponent]);
 
   const contextValue: CMConfigContextProps = {
     mode: mode,

@@ -216,7 +216,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       }),
       direction: direction,
     });
-  }, [props.setProps, configIds, direction]);
+  }, [configIds, direction, props]);
 
   const deleteComponent = useCallback((componentId: string) => {
     setConfigIds((prev) => {

@@ -14,6 +14,7 @@ export default function Home(props: props) {
   return (
     <CMProvider mode={mode}>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <CMComponent configId="main_top1" componentId={"container"} mode={mode} />
         <CMComponent configId="main_top" componentId={"container"} mode={mode} />
       </main>
     </CMProvider>

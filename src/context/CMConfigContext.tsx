@@ -16,7 +16,7 @@ interface CMConfigContextProps {
     configId: string,
     componentId: string,
     props: any,
-  ) => void;
+  ) => Promise<void>;
 }
 
 export const CMConfigContext = createContext<CMConfigContextProps | undefined>({

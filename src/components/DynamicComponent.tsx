@@ -9,7 +9,9 @@ interface DynamicComponentProps {
 export const DynamicComponent = (props: DynamicComponentProps) => {
   const MyComponent = lazy(() => props.componentPath());
   return (
-    <Suspense fallback={<Skeleton />}>
+    <Suspense
+      key={props.componentPath.toString()}
+      fallback={<Skeleton />}>
       <MyComponent {...props.props} />
     </Suspense>
   );

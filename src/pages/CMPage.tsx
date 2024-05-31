@@ -2,10 +2,6 @@ import React from "react";
 import { CmConfig } from "../services/CmConfig";
 import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
-import { Skeleton } from "../components/Skeleton";
-import { CmComponentGallery } from "../services/CmComponentGallery";
-import { Translator as TranslatorService } from "../services/translator/translator";
-import path from 'path';
 
 export type mode = "edit" | "view";
 

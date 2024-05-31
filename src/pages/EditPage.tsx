@@ -13,7 +13,6 @@ import { cmConfig } from "./CMPage";
 
 interface ModeratorBarProps {
   initPreviewMode: boolean;
-  toggleEditMode: (toggle: boolean) => void;
 }
 
 const ModeratorBar = (props: ModeratorBarProps) => {
@@ -70,7 +69,6 @@ const ModeratorBar = (props: ModeratorBarProps) => {
             checkedChildren={Translator.translate('EDIT')}
             unCheckedChildren={Translator.translate('PREVIEW')}
             onChange={(checked) => {
-              props.toggleEditMode(checked);
               setMode(checked ? "edit" : "view");
             }}
           />
@@ -90,16 +88,13 @@ interface EditPageProps {
 export const EditPage = (props: EditPageProps) => {
   const { mode } = props;
 
-  const toogleEditMode = (toggle: boolean) => {};
-
   // context should keep changed components
 
   return (
     <div>
-      <CMConfigContextProvider mode={props.mode}>
+      <CMConfigContextProvider mode={mode}>
         <ModeratorBar
           initPreviewMode={cmConfig.getPreviewOnInit()}
-          toggleEditMode={toogleEditMode}
         />
         {props.children}
       </CMConfigContextProvider>

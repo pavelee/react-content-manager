@@ -43,7 +43,7 @@ export const useConfig = (
     }
   };
 
-  const setProps = (props: any) => {
+  const setProps = async (props: any) => {
     let cid = componentId;
     if (!cid) {
       cid = 'container';
@@ -51,8 +51,9 @@ export const useConfig = (
     if (cid) {
       // @todo we should save previous props and compare them to the new ones
       // addChange(configId, componentId, props);
-      saveChange(configId, cid, props);
+      await saveChange(configId, cid, props);
     }
+    await reloadProps(props);
     setComponentProps((prev) => {
       if (prev) {
         return {
@@ -60,9 +61,8 @@ export const useConfig = (
           ...props,
         };
       }
-      return prev;
+      return props;
     });
-    reloadProps(props);
   };
 
   return {

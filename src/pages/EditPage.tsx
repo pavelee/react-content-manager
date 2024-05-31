@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { Drawer, Switch, notification } from "antd";
+import { Drawer, FloatButton, Switch, notification } from "antd";
 import { useState } from "react";
 import {
   CMConfigContextProvider,
@@ -10,6 +10,7 @@ import {
 import { Button } from "../components/button/Button";
 import { Translator } from "./CMPage";
 import { cmConfig } from "./CMPage";
+import { EditIcon } from "../components/icons/EditIcon";
 
 interface ModeratorBarProps {
   initPreviewMode: boolean;
@@ -38,17 +39,14 @@ const ModeratorBar = (props: ModeratorBarProps) => {
   return (
     <>
       {contextHolder}
-      <Button
-        extraStyle={{
-          position: "absolute",
-          top: "24px",
-          right: "0",
-          zIndex: 50,
-        }}
+      <FloatButton
         onClick={() => setVisible(true)}
+        icon={<EditIcon />}
+        style={{ top: 100 }}
       >
         {Translator.translate('EDIT')}
-      </Button>
+
+      </FloatButton>
       <Drawer
         title={Translator.translate('MODERATOR_BAR')}
         placement="right"

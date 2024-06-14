@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useConfig } from "../../hooks/useConfig";
 import { Drawer, Tag } from "antd";
 import { EditIcon } from "../icons/EditIcon";
@@ -36,13 +36,17 @@ export const CMComponentClient = (props: props) => {
     return undefined;
   }, [setProps, component, componentProps]);
 
+  const hideForm = useCallback(() => {
+    setVisibleForm(false);
+  }, []);
+
   return (
     <>
       {mode === "edit" && dynamicFormProps && (
         <Drawer
           open={visibleForm}
           width={document.body.clientWidth * 0.5}
-          onClose={() => setVisibleForm(false)}
+          onClose={hideForm}
           footer={null}
         >
           {dynamicFormProps && <DynamicComponent {...dynamicFormProps} />}

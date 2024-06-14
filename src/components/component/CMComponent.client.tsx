@@ -3,13 +3,11 @@
 import React, { useMemo, useState } from "react";
 import { useConfig } from "../../hooks/useConfig";
 import { Drawer, Tag } from "antd";
+import { EditIcon } from "../icons/EditIcon";
 import { OptionsWrapper } from "../OptionsWrapper";
-import { FiSettings } from "react-icons/fi";
 import { DynamicComponent } from "../DynamicComponent";
 import { useCMConfig } from "../../context/CMConfigContext";
-import { containerComponentId } from "../../pages/CMPage";
 import { CMComponentProps } from "./CMComponent";
-import { Skeleton } from "../Skeleton";
 
 type props = {
   children?: React.ReactNode;
@@ -64,7 +62,7 @@ export const CMComponentClient = (props: props) => {
               <OptionsWrapper
                 options={[
                   {
-                    icon: <FiSettings />,
+                    icon: <EditIcon />,
                     callback: () => {
                       setVisibleForm(true);
                     },

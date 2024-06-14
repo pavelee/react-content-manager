@@ -31,13 +31,14 @@ export const CMComponent = async (props: CMComponentProps) => {
   } = cmComponentGallery.getComponent(
     props.componentId ? props.componentId : data.componentId,
   );
+  const isContainerComponent = componentId === containerComponentId;
   const componentReadProps = await (await readProps()).default(data.data);
   const ip = props.initProps ?? {};
   const componentProps = {
     ...ip,
     ...componentReadProps,
   };
-  if (componentId === containerComponentId) {
+  if (isContainerComponent) {
     componentProps.mode = props.mode;
   }
 

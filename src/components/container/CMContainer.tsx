@@ -30,8 +30,8 @@ export const getCssStyles = (props: ContainerProps, mode: mode) => {
     styles = {
       ...styles,
       padding: "0.25rem",
-      border: "2px solid #D1D5DB",
       borderRadius: "0.5rem",
+      outline: "1px solid gray",
     };
   }
   return styles;

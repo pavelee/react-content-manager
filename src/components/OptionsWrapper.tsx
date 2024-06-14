@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Button } from "./button/Button";
 
 interface OptionsWrapperProps {
   options: {
@@ -20,7 +21,7 @@ export const OptionsWrapper = (props: OptionsWrapperProps) => {
       }}
     >
       {props.options.map((option, index) => (
-        <button
+        <Button
           key={index}
           style={{
             backgroundColor: "#D1D5DB",
@@ -30,7 +31,7 @@ export const OptionsWrapper = (props: OptionsWrapperProps) => {
           onClick={option.callback}
         >
           {option.icon}
-        </button>
+        </Button>
       ))}
     </div>
   );

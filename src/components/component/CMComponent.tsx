@@ -44,12 +44,12 @@ export const CMComponent = async (props: CMComponentProps) => {
 
   if (props.mode === "edit") {
     return <CMComponentClient {...props}>
-      <DynamicComponent componentPath={componentPath} props={componentProps} />
+      <DynamicComponent componentId={componentId} componentPath={componentPath} props={componentProps} />
     </CMComponentClient>;
   }
 
   return (
-    <DynamicComponent componentPath={componentPath} props={componentProps} />
+    <DynamicComponent componentId={componentId} componentPath={componentPath} props={componentProps} />
   );
 
   // if (props.mode === "edit") {

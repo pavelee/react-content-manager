@@ -26,6 +26,7 @@ export const CMComponentClient = (props: props) => {
   const dynamicFormProps = useMemo(() => {
     if (component && component.formPath) {
       return {
+        componentId: component.id,
         componentPath: component.formPath,
         props: {
           ...componentProps,
@@ -38,6 +39,10 @@ export const CMComponentClient = (props: props) => {
 
   const hideForm = useCallback(() => {
     setVisibleForm(false);
+  }, []);
+
+  const showForm = useCallback(() => {
+    setVisibleForm(true);
   }, []);
 
   return (
@@ -67,9 +72,7 @@ export const CMComponentClient = (props: props) => {
                 options={[
                   {
                     icon: <EditIcon />,
-                    callback: () => {
-                      setVisibleForm(true);
-                    },
+                    callback: showForm,
                   },
                 ]}
               />

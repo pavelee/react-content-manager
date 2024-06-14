@@ -23,11 +23,12 @@ export const OptionsWrapper = (props: OptionsWrapperProps) => {
       {props.options.map((option, index) => (
         <Button
           key={index}
-          style={{
-            backgroundColor: "#D1D5DB",
-            borderRadius: "9999px",
-            padding: "0.25rem",
-          }}
+          // style={{
+          //   backgroundColor: "#D1D5DB",
+          //   borderRadius: "9999px",
+          //   padding: "0.25rem",
+          // }}
+          size="small"
           onClick={option.callback}
         >
           {option.icon}

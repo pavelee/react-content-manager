@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { Translator, cmComponentGallery, persistConfigData } from "../../pages/CMPage";
 import { Card, Select, Table, Form as AntdForm, Drawer, Radio } from "antd";
 import { CMComponentInterface } from "../../services/CmComponentGallery";
-import { FiArrowDown, FiArrowUp, FiTrash } from "react-icons/fi";
 import { ContainerProps } from "./CMContainer";
 import { CMComponentClient } from "../component/CMComponent.client";
 import { Button } from "../button/Button";
+import { TrashIcon } from "../icons/TrashIcon";
+import { ArrowDownIcon } from "../icons/ArrowDownIcon";
+import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 
 interface ComponentForm {
   setProps: (props: any) => void;
@@ -327,13 +329,13 @@ export const Form = (props: ContainerProps & ComponentForm) => {
                   gap: "0.75rem",
                 }}>
                   <Button onClick={() => moveComponentUp(record.id)}>
-                    <FiArrowUp />
+                    <ArrowUpIcon />
                   </Button>
                   <Button onClick={() => moveComponentDown(record.id)}>
-                    <FiArrowDown />
+                    <ArrowDownIcon />
                   </Button>
                   <Button onClick={() => deleteComponent(record.id)}>
-                    <FiTrash />
+                    <TrashIcon />
                   </Button>
                 </div>
               ),

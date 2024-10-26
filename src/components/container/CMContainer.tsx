@@ -1,7 +1,6 @@
 import React from "react";
 import { EditableProps, mode } from "../../pages/CMPage";
 import { ContainerWrapperId } from "./Form";
-import { CMContainerClient } from "./CMContainer.client";
 import { CMContainerServer } from "./CMContainer.server";
 
 export interface ContainerProps extends EditableProps {
@@ -29,21 +28,15 @@ export const getCssStyles = (props: ContainerProps, mode: mode) => {
   if (mode === "edit") {
     styles = {
       ...styles,
-      padding: "0.25rem",
-      borderRadius: "0.5rem",
-      outline: "1px solid gray",
+      // padding: "0.25rem",
+      // border: "2px solid #D1D5DB",
+      // borderRadius: "0.5rem",
     };
   }
   return styles;
 };
 
 export const CMContainer = (props: ContainerProps) => {
-  const { mode = "edit" } = props;
-
-  // if (mode === "edit") {
-  //   return <CMContainerClient {...props} />;
-  // }
-
   return <CMContainerServer {...props} />;
 };
 

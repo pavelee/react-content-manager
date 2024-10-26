@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { CMComponentInterface } from "../services/CmComponentGallery";
-import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
+// import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 
 interface CMConfigContextProps {
   mode: "edit" | "view";
@@ -58,33 +58,33 @@ export const CMConfigContextProvider = (
       component: CMComponentInterface,
       props: any,
     ) => {
-      if (component && component.formPath) {
-        const data = await (await component.writeProps()).default(props);
-        await persistConfigData(configId, component.id, data);
-      }
-      if (nextRouter) {
-        nextRouter.refresh();
-      }
+      // if (component && component.formPath) {
+      //   const data = await (await component.writeProps()).default(props);
+      //   await persistConfigData(configId, component.id, data);
+      // }
+      // if (nextRouter) {
+      //   nextRouter.refresh();
+      // }
     },
     [nextRouter]
   );
 
   const saveChanges = useCallback(async () => {
-    const configIds = Object.keys(changes);
-    for (let i = 0; i < configIds.length; i++) {
-      const configId = configIds[i];
-      const componentIds = Object.keys(changes[configId]);
-      for (let j = 0; j < componentIds.length; j++) {
-        const componentId = componentIds[j];
-        const component = cmComponentGallery.getComponent(componentId);
-        await saveComponent(
-          configId,
-          component,
-          changes[configId][componentId],
-        );
-      }
-    }
-    setChanges({});
+    // const configIds = Object.keys(changes);
+    // for (let i = 0; i < configIds.length; i++) {
+    //   const configId = configIds[i];
+    //   const componentIds = Object.keys(changes[configId]);
+    //   for (let j = 0; j < componentIds.length; j++) {
+    //     const componentId = componentIds[j];
+    //     const component = cmComponentGallery.getComponent(componentId);
+    //     await saveComponent(
+    //       configId,
+    //       component,
+    //       changes[configId][componentId],
+    //     );
+    //   }
+    // }
+    // setChanges({});
   }, [setChanges, changes, saveComponent]);
 
   // @TODO this is shortcut to workaround with RSC
@@ -95,8 +95,8 @@ export const CMConfigContextProvider = (
   }, [changes, saveChanges])
 
   const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
-    const component = cmComponentGallery.getComponent(componentId);
-    await saveComponent(configId, component, props);
+    // const component = cmComponentGallery.getComponent(componentId);
+    // await saveComponent(configId, component, props);
   }, [saveComponent]);
 
   const contextValue: CMConfigContextProps = {

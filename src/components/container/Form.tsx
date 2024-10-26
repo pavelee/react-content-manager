@@ -2,7 +2,6 @@
 
 import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Translator, cmComponentGallery, persistConfigData } from "../../pages/CMPage";
 import { Card, Select, Table, Form as AntdForm, Drawer, Radio } from "antd";
 import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { ContainerProps } from "./CMContainer";
@@ -11,6 +10,7 @@ import { Button } from "../button/Button";
 import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
+import { Translator } from "../../pages/Translator";
 
 interface ComponentForm {
   setProps: (props: any) => void;
@@ -25,139 +25,135 @@ interface ComponentGalleryProps {
   addComponentToContainer: (component: CMComponentInterface) => void;
 }
 
-const ComponentGallery = (props: ComponentGalleryProps) => {
-  const [componentGalleryOpen, setComponentGalleryOpen] = useState(false);
-  const [components, setComponents] = useState(
-    cmComponentGallery.getPublicComponents(),
-  );
-  const [tags, setTags] = useState<{ label: string; value: string }[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+// const ComponentGallery = (props: ComponentGalleryProps) => {
+//   const [componentGalleryOpen, setComponentGalleryOpen] = useState(false);
+//   const [components, setComponents] = useState(
+//     cmComponentGallery.getPublicComponents(),
+//   );
+//   const [tags, setTags] = useState<{ label: string; value: string }[]>([]);
+//   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  // generate tags from components as options for select
-  useEffect(() => {
-    const t: { label: string; value: string }[] = [];
-    components.forEach((component) => {
-      component.tags.forEach((tag) => {
-        // add only if not already in tags
-        if (!t.find((t) => t.value === tag)) {
-          t.push({
-            label: tag,
-            value: tag,
-          });
-        }
-      });
-    });
-    setTags(t);
-  }, [components]);
+//   // generate tags from components as options for select
+//   useEffect(() => {
+//     const t: { label: string; value: string }[] = [];
+//     components.forEach((component) => {
+//       component.tags.forEach((tag) => {
+//         // add only if not already in tags
+//         if (!t.find((t) => t.value === tag)) {
+//           t.push({
+//             label: tag,
+//             value: tag,
+//           });
+//         }
+//       });
+//     });
+//     setTags(t);
+//   }, [components]);
 
-  // reduce components to only those that match selected tags
-  useEffect(() => {
-    if (selectedTags.length === 0) {
-      setComponents(cmComponentGallery.getPublicComponents());
-    } else {
-      // filter through map of components and return only those that match selected tags
-      const filteredComponents =
-        cmComponentGallery.getPublicComponents(selectedTags);
-      setComponents(filteredComponents);
-    }
-  }, [selectedTags]);
+//   // reduce components to only those that match selected tags
+//   useEffect(() => {
+//     if (selectedTags.length === 0) {
+//       setComponents(cmComponentGallery.getPublicComponents());
+//     } else {
+//       // filter through map of components and return only those that match selected tags
+//       const filteredComponents =
+//         cmComponentGallery.getPublicComponents(selectedTags);
+//       setComponents(filteredComponents);
+//     }
+//   }, [selectedTags]);
 
-  const closeComponentGallery = useCallback(() => {
-    setComponentGalleryOpen(false);
-  }, []);
+//   const closeComponentGallery = useCallback(() => {
+//     setComponentGalleryOpen(false);
+//   }, []);
 
-  return (
-    <>
-      <Button onClick={() => {
-        setComponentGalleryOpen(true);
-      }}>
-        {Translator.translate("ADD_COMPONENT")}
-      </Button>
-      <Drawer
-        title={Translator.translate("COMPONENT_LIBRARY")}
-        open={componentGalleryOpen}
-        // onCancel={() => setComponentGalleryOpen(false)}
-        onClose={() => {
-          closeComponentGallery();
-        }}
-        width={document.body.clientWidth * 0.5}
-        footer={null}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "wrap",
-            gap: "0.75rem",
-          }}
-        >
-          <AntdForm>
-            <AntdForm.Item>
-              <Select
-                mode="multiple"
-                allowClear
-                style={{ width: "100%" }}
-                placeholder={Translator.translate("SEARCH_BY_TAG")}
-                value={selectedTags}
-                onChange={(value) => {
-                  setSelectedTags(value);
-                }}
-                // onChange={handleChange}
-                options={tags}
-              />
-            </AntdForm.Item>
-          </AntdForm>
-          {Array.from(components).map(([key, value]) => {
-            return (
-              <Card
-                title={value.name}
-                extra={
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                    }}
-                  >
-                    <Button
-                      key={"addComponent"}
-                      usage="primary"
-                      onClick={() => {
-                        props.addComponentToContainer(value);
-                        closeComponentGallery();
-                      }}
-                    >
-                      {Translator.translate("ADD_COMPONENT")}
-                    </Button>
-                  </div>
-                }
-                key={key}
-                style={{
-                  boxShadow:
-                    "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    alignItems: "center",
-                  }}
-                >
-                  <CMComponentClient
-                    configId={key}
-                    componentId={value.id}
-                    mode="view"
-                  />
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-      </Drawer>
-    </>
-  );
-};
+//   return (
+//     <>
+//       <Button onClick={() => {
+//         setComponentGalleryOpen(true);
+//       }}>
+//         {Translator.translate("ADD_COMPONENT")}
+//       </Button>
+//       <Drawer
+//         title={Translator.translate("COMPONENT_LIBRARY")}
+//         open={componentGalleryOpen}
+//         // onCancel={() => setComponentGalleryOpen(false)}
+//         onClose={() => {
+//           closeComponentGallery();
+//         }}
+//         width={document.body.clientWidth * 0.5}
+//         footer={null}
+//       >
+//         <div
+//           style={{
+//             display: "flex",
+//             flexDirection: "column",
+//             flexWrap: "wrap",
+//             gap: "0.75rem",
+//           }}
+//         >
+//           <AntdForm>
+//             <AntdForm.Item>
+//               <Select
+//                 mode="multiple"
+//                 allowClear
+//                 style={{ width: "100%" }}
+//                 placeholder={Translator.translate("SEARCH_BY_TAG")}
+//                 value={selectedTags}
+//                 onChange={(value) => {
+//                   setSelectedTags(value);
+//                 }}
+//                 // onChange={handleChange}
+//                 options={tags}
+//               />
+//             </AntdForm.Item>
+//           </AntdForm>
+//           {Array.from(components).map(([key, value]) => {
+//             return (
+//               <Card
+//                 title={value.name}
+//                 extra={
+//                   <div
+//                     style={{
+//                       display: "flex",
+//                       justifyContent: "flex-end",
+//                     }}
+//                   >
+//                     <Button
+//                       key={"addComponent"}
+//                       usage="primary"
+//                       onClick={() => {
+//                         props.addComponentToContainer(value);
+//                         closeComponentGallery();
+//                       }}
+//                     >
+//                       {Translator.translate("ADD_COMPONENT")}
+//                     </Button>
+//                   </div>
+//                 }
+//                 key={key}
+//                 style={{
+//                   boxShadow:
+//                     "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+//                 }}
+//               >
+//                 <div
+//                   style={{
+//                     display: "flex",
+//                     flexDirection: "column",
+//                     height: "100%",
+//                     alignItems: "center",
+//                   }}
+//                 >
+//                   {value.id}
+//                 </div>
+//               </Card>
+//             );
+//           })}
+//         </div>
+//       </Drawer>
+//     </>
+//   );
+// };
 
 export const Form = (props: ContainerProps & ComponentForm) => {
   const [configIds, setConfigIds] = useState<ContainerWrapperId[]>([]);
@@ -166,46 +162,46 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   );
 
   useEffect(() => {
-    if (props.configIds) {
-      setConfigIds(
-        props.configIds.map((configId: ContainerWrapperId) => {
-          return {
-            configId: configId.configId,
-            component: cmComponentGallery.getComponent(configId.component.id),
-          };
-        }),
-      );
-    }
+    // if (props.configIds) {
+    //   setConfigIds(
+    //     props.configIds.map((configId: ContainerWrapperId) => {
+    //       return {
+    //         configId: configId.configId,
+    //         component: cmComponentGallery.getComponent(configId.component.id),
+    //       };
+    //     }),
+    //   );
+    // }
   }, [props.configIds]);
 
   const addComponentToContainer = useCallback(async (component: CMComponentInterface) => {
-    const configId = Math.random().toString(36).substring(7);
-    const data = {};
-    await persistConfigData(configId, component.id, data);
-    setConfigIds((prev) => {
-      return [
-        ...prev,
-        {
-          configId,
-          component,
-        },
-      ];
-    });
+    // const configId = Math.random().toString(36).substring(7);
+    // const data = {};
+    // await persistConfigData(configId, component.id, data);
+    // setConfigIds((prev) => {
+    //   return [
+    //     ...prev,
+    //     {
+    //       configId,
+    //       component,
+    //     },
+    //   ];
+    // });
   }, [setConfigIds]);
 
   const addContainer = useCallback(async () => {
-    const component = cmComponentGallery.getComponent("container");
-    const configId = Math.random().toString(36).substring(7);
-    await persistConfigData(configId, component.id, {});
-    setConfigIds((prev) => {
-      return [
-        ...prev,
-        {
-          configId,
-          component: component,
-        },
-      ];
-    });
+    // const component = cmComponentGallery.getComponent("container");
+    // const configId = Math.random().toString(36).substring(7);
+    // await persistConfigData(configId, component.id, {});
+    // setConfigIds((prev) => {
+    //   return [
+    //     ...prev,
+    //     {
+    //       configId,
+    //       component: component,
+    //     },
+    //   ];
+    // });
   }, [setConfigIds]);
 
   const setComponentProps = useCallback(() => {
@@ -350,7 +346,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           gap: "0.75rem",
         }}
       >
-        <ComponentGallery addComponentToContainer={addComponentToContainer} />
+        {/* <ComponentGallery addComponentToContainer={addComponentToContainer} /> */}
         <Button onClick={addContainer}>
           {Translator.translate("ADD_CONTAINER")}
         </Button>

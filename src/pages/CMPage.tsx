@@ -2,6 +2,7 @@ import React from "react";
 import { CmConfig } from "../services/CmConfig";
 import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
+import { getCmConfig } from "./getCmConfig";
 
 export type mode = "edit" | "view";
 
@@ -14,13 +15,7 @@ interface Props {
   mode: mode;
 }
 
-const getCmConfig = (): CmConfig => {
-  // return require('../../../demo-next/cm.config.ts').default;
-  return require('../../../../../cm.config.ts').default;
-};
-
 export const cmConfig = getCmConfig();
-export const Translator = cmConfig.getTranslator();
 export const containerComponentId = "container";
 export const cmComponentGallery = getCmConfig().getComponentGallery();
 cmComponentGallery.registerComponent({
@@ -42,7 +37,12 @@ export const CMProvider = (props: Props) => {
   const isEditMode = props.mode === "edit";
 
   if (isEditMode) {
-    return <EditPage mode={props.mode}>{props.children}</EditPage>;
+    return <EditPage
+      mode={props.mode}
+      isPreviewOnInit={cmConfig.getPreviewOnInit()}
+    >
+      {props.children}
+    </EditPage>;
   }
   return <ViewPage>{props.children}</ViewPage>;
 };

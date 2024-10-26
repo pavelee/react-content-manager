@@ -27,6 +27,6 @@ export const CMComponentServer = async (props: CMComponentProps) => {
   }
 
   return (
-    <DynamicComponent componentId={componentId} componentPath={componentPath} props={componentProps} />
+    <DynamicComponent componentPath={componentPath} props={componentProps} />
   );
 };

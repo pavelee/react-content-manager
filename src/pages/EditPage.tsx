@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Drawer, FloatButton, Switch, notification } from "antd";
 import { useState } from "react";
 import {
@@ -8,15 +8,10 @@ import {
   useCMConfig,
 } from "../context/CMConfigContext";
 import { Button } from "../components/button/Button";
-import { Translator } from "./CMPage";
-import { cmConfig } from "./CMPage";
 import { EditIcon } from "../components/icons/EditIcon";
+import { Translator } from "./Translator";
 
-interface ModeratorBarProps {
-  initPreviewMode: boolean;
-}
-
-const ModeratorBar = (props: ModeratorBarProps) => {
+const ModeratorBar = () => {
   const [api, contextHolder] = notification.useNotification();
   const { saveChanges, mode, setMode } = useCMConfig();
   const [visible, setVisible] = useState(false);
@@ -24,15 +19,11 @@ const ModeratorBar = (props: ModeratorBarProps) => {
     setVisible(false);
   };
 
-  useEffect(() => {
-    setMode(props.initPreviewMode ? "view" : "edit");
-  }, [setMode, props.initPreviewMode]);
-
   const save = async () => {
     // @todo what if save fails?
     await saveChanges();
     api.success({
-      message: Translator.translate('CHANGES_SAVED'),
+      message: Translator.translate("CHANGES_SAVED"),
       placement: "top",
     });
   };
@@ -44,11 +35,10 @@ const ModeratorBar = (props: ModeratorBarProps) => {
         icon={<EditIcon />}
         style={{ top: 100 }}
       >
-        {Translator.translate('EDIT')}
-
+        {Translator.translate("EDIT")}
       </FloatButton>
       <Drawer
-        title={Translator.translate('MODERATOR_BAR')}
+        title={Translator.translate("MODERATOR_BAR")}
         placement="right"
         onClose={onClose}
         open={visible}
@@ -64,13 +54,15 @@ const ModeratorBar = (props: ModeratorBarProps) => {
         >
           <Switch
             checked={mode === "edit"}
-            checkedChildren={Translator.translate('EDIT')}
-            unCheckedChildren={Translator.translate('PREVIEW')}
+            checkedChildren={Translator.translate("EDIT")}
+            unCheckedChildren={Translator.translate("PREVIEW")}
             onChange={(checked) => {
               setMode(checked ? "edit" : "view");
             }}
           />
-          <Button onClick={() => save()}>{Translator.translate('SAVE_CHANGES')}</Button>
+          <Button onClick={() => save()}>
+            {Translator.translate("SAVE_CHANGES")}
+          </Button>
           {/* <Button onClick={() => revertLastChange()}>Revert last change</Button> */}
         </div>
       </Drawer>
@@ -81,19 +73,32 @@ const ModeratorBar = (props: ModeratorBarProps) => {
 interface EditPageProps {
   mode: "edit" | "view";
   children: React.ReactNode;
+  isPreviewOnInit: boolean;
 }
 
 export const EditPage = (props: EditPageProps) => {
   const { mode } = props;
 
   // context should keep changed components
+  const getInitialMode = useCallback(
+    (isPreviewOnInit: boolean) => {
+      if (mode === "edit") {
+        if (isPreviewOnInit) {
+          return "view";
+        }
+        return mode;
+      }
+      return mode;
+    },
+    [mode],
+  );
 
   return (
     <div>
-      <CMConfigContextProvider mode={mode}>
-        <ModeratorBar
-          initPreviewMode={cmConfig.getPreviewOnInit()}
-        />
+      <CMConfigContextProvider
+        mode={getInitialMode(props.isPreviewOnInit)}
+      >
+        <ModeratorBar />
         {props.children}
       </CMConfigContextProvider>
     </div>

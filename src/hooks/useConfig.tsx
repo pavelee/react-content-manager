@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { cmComponentGallery, fetchConfigData } from "../pages/CMPage";
+// import { cmComponentGallery, fetchConfigData } from "../pages/CMPage";
 import { CMComponentInterface } from "../services/CmComponentGallery";
 import { useCMConfig } from "../context/CMConfigContext";
 
@@ -18,20 +18,20 @@ export const useConfig = (
 
   useEffect(() => {
   const fd = async () => {
-      const config = await fetchConfigData(configId);
-      const component = cmComponentGallery.getComponent(
-        componentId ? componentId : config.componentId,
-      );
-      const props = await (await component.readProps()).default(config.data);
-      if (initProps) {
-        setComponentProps({
-          ...initProps,
-          ...props,
-        });
-      } else {
-        setComponentProps(props);
-      }
-      setComponent(component);
+      // const config = await fetchConfigData(configId);
+      // const component = cmComponentGallery.getComponent(
+      //   componentId ? componentId : config.componentId,
+      // );
+      // const props = await (await component.readProps()).default(config.data);
+      // if (initProps) {
+      //   setComponentProps({
+      //     ...initProps,
+      //     ...props,
+      //   });
+      // } else {
+      //   setComponentProps(props);
+      // }
+      // setComponent(component);
     };
     fd();
   }, [configId, componentId, initProps]);

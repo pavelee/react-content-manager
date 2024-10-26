@@ -1,24 +1,30 @@
 import React from "react";
 
 type SrOnlyProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 const SrOnlyComponent = (props: SrOnlyProps) => {
-  return (<div style={{
-    position: 'absolute',
-    width: '1px',
-    height: '1px',
-    padding: '0',
-    margin: '-1px',
-    overflow: 'hidden',
-    clip: 'rect(0,0,0,0)',
-    whiteSpace: 'nowrap',
-    border: '0'
-  }}>{props.children}</div>)
-}
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: "1px",
+        height: "1px",
+        padding: "0",
+        margin: "-1px",
+        overflow: "hidden",
+        clip: "rect(0,0,0,0)",
+        whiteSpace: "nowrap",
+        border: "0",
+      }}
+    >
+      {props.children}
+    </div>
+  );
+};
 
-export const Skeleton = () => {
+const SkeletonBlock = () => {
   return (
     <div
       role="status"
@@ -28,6 +34,7 @@ export const Skeleton = () => {
         borderRadius: "0.375rem",
         boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
         animation: "pulse 2s infinite",
+        overflow: "hidden",
       }}
     >
       <div
@@ -124,6 +131,19 @@ export const Skeleton = () => {
         </div>
       </div>
       <SrOnlyComponent>Loading...</SrOnlyComponent>
+    </div>
+  );
+};
+
+export const Skeleton = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      <SkeletonBlock />
+      <div className="grid grid-cols-3 gap-4">
+        <SkeletonBlock />
+        <SkeletonBlock />
+        <SkeletonBlock />
+      </div>
     </div>
   );
 };

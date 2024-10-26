@@ -31,25 +31,24 @@ export const CMComponent = async (props: CMComponentProps) => {
   } = cmComponentGallery.getComponent(
     props.componentId ? props.componentId : data.componentId,
   );
-  const isContainerComponent = componentId === containerComponentId;
   const componentReadProps = await (await readProps()).default(data.data);
   const ip = props.initProps ?? {};
   const componentProps = {
     ...ip,
     ...componentReadProps,
   };
-  if (isContainerComponent) {
+  if (componentId === containerComponentId) {
     componentProps.mode = props.mode;
   }
 
   if (props.mode === "edit") {
     return <CMComponentClient {...props}>
-      <DynamicComponent componentId={componentId} componentPath={componentPath} props={componentProps} />
+      <DynamicComponent componentPath={componentPath} props={componentProps} />
     </CMComponentClient>;
   }
 
   return (
-    <DynamicComponent componentId={componentId} componentPath={componentPath} props={componentProps} />
+    <DynamicComponent componentPath={componentPath} props={componentProps} />
   );
 
   // if (props.mode === "edit") {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useConfig } from "../../hooks/useConfig";
 import { Drawer, Tag } from "antd";
 import { EditIcon } from "../icons/EditIcon";
@@ -26,7 +26,6 @@ export const CMComponentClient = (props: props) => {
   const dynamicFormProps = useMemo(() => {
     if (component && component.formPath) {
       return {
-        componentId: component.id,
         componentPath: component.formPath,
         props: {
           ...componentProps,
@@ -37,42 +36,47 @@ export const CMComponentClient = (props: props) => {
     return undefined;
   }, [setProps, component, componentProps]);
 
-  const hideForm = useCallback(() => {
-    setVisibleForm(false);
-  }, []);
-
-  const showForm = useCallback(() => {
-    setVisibleForm(true);
-  }, []);
-
   return (
     <>
       {mode === "edit" && dynamicFormProps && (
         <Drawer
           open={visibleForm}
           width={document.body.clientWidth * 0.5}
-          onClose={hideForm}
+          onClose={() => setVisibleForm(false)}
           footer={null}
         >
           {dynamicFormProps && <DynamicComponent {...dynamicFormProps} />}
         </Drawer>
       )}
-      <div>
+      <div
+        style={mode === "edit" ? {
+          border: "1px solid lightgray",
+          padding: "0.25rem",
+          borderRadius: "0.25rem",
+        } : {}}
+      >
         <div
           style={{
-            padding: "0.25rem",
-            display: "flex",
-            gap: "0.75rem",
-            alignItems: "center",
+            // padding: "0.25rem",
+            // display: "flex",
+            // gap: "0.75rem",
+            // alignItems: "center",
           }}
         >
           {mode === "edit" && (
-            <>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.25rem",
+              marginBottom: "0.25rem",
+            }}>
               <OptionsWrapper
                 options={[
                   {
                     icon: <EditIcon />,
-                    callback: showForm,
+                    callback: () => {
+                      setVisibleForm(true);
+                    },
                   },
                 ]}
               />
@@ -80,7 +84,7 @@ export const CMComponentClient = (props: props) => {
                 <Tag>{props.configId}</Tag>
                 <Tag>{component?.id}</Tag>
               </div>
-            </>
+            </div>
           )}
         </div>
         {children}

@@ -17,6 +17,7 @@ export const CMComponentClient = (props: props) => {
   const { children } = props;
   const { mode } = useCMConfig();
   const [visibleForm, setVisibleForm] = useState(false);
+  console.log('props', props);  
   const { setProps, componentProps, component } = useConfig(
     props.configId,
     props.componentId,

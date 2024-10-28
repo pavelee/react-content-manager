@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { CMComponentInterface } from "../services/CmComponentGallery";
+import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 // import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 
 interface CMConfigContextProps {
@@ -58,13 +59,14 @@ export const CMConfigContextProvider = (
       component: CMComponentInterface,
       props: any,
     ) => {
-      // if (component && component.formPath) {
-      //   const data = await (await component.writeProps()).default(props);
-      //   await persistConfigData(configId, component.id, data);
-      // }
-      // if (nextRouter) {
-      //   nextRouter.refresh();
-      // }
+      if (component && component.formPath) {
+        const data = await (await component.writeProps()).default(props);
+        await persistConfigData(configId, component.id, data);
+      }
+      if (nextRouter) {
+        window.location.reload();
+        // nextRouter.refresh();
+      }
     },
     [nextRouter]
   );
@@ -87,16 +89,16 @@ export const CMConfigContextProvider = (
     // setChanges({});
   }, [setChanges, changes, saveComponent]);
 
-  // @TODO this is shortcut to workaround with RSC
-  useEffect(() => {
-    if (Object.keys(changes).length > 0) {
-      saveChanges();
-    }
-  }, [changes, saveChanges])
+  // // @TODO this is shortcut to workaround with RSC
+  // useEffect(() => {
+  //   if (Object.keys(changes).length > 0) {
+  //     saveChanges();
+  //   }
+  // }, [changes, saveChanges])
 
   const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
-    // const component = cmComponentGallery.getComponent(componentId);
-    // await saveComponent(configId, component, props);
+    const component = cmComponentGallery.getComponent(componentId);
+    await saveComponent(configId, component, props);
   }, [saveComponent]);
 
   const contextValue: CMConfigContextProps = {

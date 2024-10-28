@@ -24,6 +24,7 @@ export const fetchConfigIds = async (configId: string) => {
 
 export const CMComponent = async (props: CMComponentProps) => {
   const data = await fetchConfigData(props.configId);
+  console.log('data', data);
   const {
     id: componentId,
     componentPath,
@@ -42,7 +43,7 @@ export const CMComponent = async (props: CMComponentProps) => {
   }
 
   if (props.mode === "edit") {
-    return <CMComponentClient {...props}>
+    return <CMComponentClient {...props} componentId={data.componentId}>
       <DynamicComponent componentPath={componentPath} props={componentProps} />
     </CMComponentClient>;
   }

@@ -63,7 +63,6 @@ const ModeratorBar = () => {
           <Button onClick={() => save()}>
             {Translator.translate("SAVE_CHANGES")}
           </Button>
-          {/* <Button onClick={() => revertLastChange()}>Revert last change</Button> */}
         </div>
       </Drawer>
     </>

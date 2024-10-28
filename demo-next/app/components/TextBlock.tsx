@@ -4,19 +4,37 @@ const fetchRandomCatFact = async () => {
   return data.fact;
 }
 
-const TextBlock = async () => {
+const fetchListOfRandomCatFacts = async (limit: number = 2) => {
+  const facts = [];
+  for (let i = 0; i < limit; i++) {
+    facts.push(await fetchRandomCatFact());
+  }
+  return facts;
+}
 
-  const catFact = await fetchRandomCatFact();
+export type TextBlockProps = {
+  limit?: number;
+}
+
+const TextBlock = async (
+  props: TextBlockProps
+) => {
+  const { limit } = props;
+
+  const catFacts = await fetchListOfRandomCatFacts(limit);
 
   // const catFact = 'Cats are cute!'
 
   return (
-    <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-      Get started by editing&nbsp;
-      <code className="font-mono font-bold">
-        {catFact}
-      </code>
-    </p>
+    <div className="bg-white p-4 rounded-xl">
+      <ul className="list-disc list-inside">
+        {
+          catFacts.map((fact, index) => (
+            <li className="font-mono font-bold" key={index}>{fact}</li>
+          ))
+        }
+      </ul>
+    </div>
   );
 };
 

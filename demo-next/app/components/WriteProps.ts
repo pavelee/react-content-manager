@@ -1,8 +1,8 @@
-export const writeProps = async (props: any) => {
+import { TextBlockProps } from "./TextBlock";
+
+export const writeProps = async (props: TextBlockProps) => {
   const data = {
-    title: props.title,
-    text: props.text,
-    link: props.link,
+    limit: props.limit ?? 2,
   };
   return data;
 };

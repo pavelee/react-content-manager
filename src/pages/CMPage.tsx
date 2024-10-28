@@ -1,5 +1,4 @@
 import React from "react";
-import { CmConfig } from "../services/CmConfig";
 import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
 import { getCmConfig } from "./getCmConfig";

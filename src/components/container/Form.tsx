@@ -11,6 +11,7 @@ import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
+import { cmComponentGallery } from "../../pages/CMPage";
 
 interface ComponentForm {
   setProps: (props: any) => void;
@@ -162,16 +163,16 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   );
 
   useEffect(() => {
-    // if (props.configIds) {
-    //   setConfigIds(
-    //     props.configIds.map((configId: ContainerWrapperId) => {
-    //       return {
-    //         configId: configId.configId,
-    //         component: cmComponentGallery.getComponent(configId.component.id),
-    //       };
-    //     }),
-    //   );
-    // }
+    if (props.configIds) {
+      setConfigIds(
+        props.configIds.map((configId: ContainerWrapperId) => {
+          return {
+            configId: configId.configId,
+            component: cmComponentGallery.getComponent(configId.component.id),
+          };
+        }),
+      );
+    }
   }, [props.configIds]);
 
   const addComponentToContainer = useCallback(async (component: CMComponentInterface) => {

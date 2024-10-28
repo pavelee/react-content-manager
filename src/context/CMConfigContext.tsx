@@ -47,7 +47,7 @@ export const CMConfigContextProvider = (
     [configId: string]: { [componentId: string]: any };
   }>({});
   let nextRouter = null;
-  nextRouter = require('next/navigation').useRouter();
+  // nextRouter = require('next/navigation').useRouter();
 
   const setModeHandler = useCallback((mode: "edit" | "view") => {
     setMode(mode);
@@ -63,10 +63,10 @@ export const CMConfigContextProvider = (
         const data = await (await component.writeProps()).default(props);
         await persistConfigData(configId, component.id, data);
       }
-      if (nextRouter) {
-        window.location.reload();
+      // if (nextRouter) {
+      window.location.reload();
         // nextRouter.refresh();
-      }
+      // }
     },
     [nextRouter]
   );

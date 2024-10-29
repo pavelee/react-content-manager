@@ -1,55 +1,70 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { useConfig } from "../../hooks/useConfig";
-import { Drawer, Tag } from "antd";
+import { Button, Drawer, Tag } from "antd";
 import { EditIcon } from "../icons/EditIcon";
 import { OptionsWrapper } from "../OptionsWrapper";
 import { DynamicComponent } from "../DynamicComponent";
 import { useCMConfig } from "../../context/CMConfigContext";
-import { CMComponentProps } from "./CMComponent";
 
 type props = {
   children?: React.ReactNode;
-} & CMComponentProps;
+  // componentProps: any;
+  // setProps: string;
+  // configId?: string;
+  // componentId?: string;
+  // formPath: string
+}
 
 export const CMComponentClient = (props: props) => {
   const { children } = props;
+  // console.log('componentProps', componentProps);
   const { mode } = useCMConfig();
   const [visibleForm, setVisibleForm] = useState(false);
-  console.log('props', props);  
-  const { setProps, componentProps, component } = useConfig(
-    props.configId,
-    props.componentId,
-    props.initProps,
-  );
+  console.log('props', props);
+  // const { setProps, component } = useConfig(
+  //   props.configId,
+  //   props.componentId,
+  //   props.initProps,
+  // );
 
-  const dynamicFormProps = useMemo(() => {
-    if (component && component.formPath) {
-      return {
-        componentPath: component.formPath,
-        props: {
-          ...componentProps,
-          setProps: setProps,
-        },
-      };
-    }
-    return undefined;
-  }, [setProps, component, componentProps]);
+  // const dynamicFormProps = useMemo(() => {
+  //   if (formPath) {
+  //     return {
+  //       componentPath: () => import(formPath),
+  //       props: {
+  //         ...componentProps,
+  //         setProps: setProps,
+  //       },
+  //     };
+  //   }
+  //   return undefined;
+  // }, [setProps, componentProps]);
 
   return (
     <>
-      {mode === "edit" && dynamicFormProps && (
-        <Drawer
-          open={visibleForm}
-          width={document.body.clientWidth * 0.5}
-          onClose={() => setVisibleForm(false)}
-          footer={null}
-        >
-          {dynamicFormProps && <DynamicComponent {...dynamicFormProps} />}
-        </Drawer>
+      {mode === "edit" && (
+        <>
+          <Button
+            icon={<EditIcon />}
+            onClick={() => {
+              setVisibleForm(true);
+            }}
+          >
+            Edytuj
+          </Button>
+          <Drawer
+            open={visibleForm}
+            width={document.body.clientWidth * 0.5}
+            onClose={() => setVisibleForm(false)}
+            footer={null}
+          >
+            {children}
+            {/* {dynamicFormProps && <DynamicComponent {...dynamicFormProps} />} */}
+          </Drawer>
+        </>
       )}
-      <div
+      {/* <div
         style={mode === "edit" ? {
           border: "1px solid lightgray",
           padding: "0.25rem",
@@ -83,13 +98,13 @@ export const CMComponentClient = (props: props) => {
               />
               <div>
                 <Tag>{props.configId}</Tag>
-                <Tag>{component?.id}</Tag>
+                <Tag>{props.componentId}</Tag>
               </div>
             </div>
           )}
         </div>
         {children}
-      </div>
+      </div> */}
     </>
   );
 };

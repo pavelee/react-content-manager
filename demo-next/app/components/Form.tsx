@@ -23,6 +23,7 @@ const Form = (props: TextBlockProps & ComponentForm) => {
         <div>
           <input
             type="number"
+            name="limit"
             value={limit}
             onChange={(e) => setLimit(parseInt(e.target.value))}
             className="bg-white p-2 rounded-lg border border-gray-300"

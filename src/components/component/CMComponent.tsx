@@ -28,6 +28,7 @@ export const CMComponent = async (props: CMComponentProps) => {
   const {
     id: componentId,
     componentPath,
+    formPath,
     readProps,
   } = cmComponentGallery.getComponent(
     props.componentId ? props.componentId : data.componentId,
@@ -42,14 +43,29 @@ export const CMComponent = async (props: CMComponentProps) => {
     componentProps.mode = props.mode;
   }
 
-  if (props.mode === "edit") {
-    return <CMComponentClient {...props} componentId={data.componentId}>
-      <DynamicComponent componentPath={componentPath} props={componentProps} />
-    </CMComponentClient>;
-  }
+  // if (props.mode === "edit") {
+  //   return <CMComponentClient
+  //     configId={props.configId}
+  //     componentId={props.componentId}
+  //     componentProps={data.data}
+  //     setProps={'http://localhost:3000/api/configs/'}
+  //     formPath={'@/_modules/content/components/news-feed/alert/Form'}
+  //   >
+  //     <DynamicComponent componentPath={componentPath} props={componentProps} />
+  //   </CMComponentClient>;
+  // }
 
   return (
-    <DynamicComponent componentPath={componentPath} props={componentProps} />
+    <>
+      {
+        props.mode === "edit" && formPath && (
+          <CMComponentClient>
+            <DynamicComponent componentPath={formPath} props={componentProps} />
+          </CMComponentClient>
+        )
+      }
+      <DynamicComponent componentPath={componentPath} props={componentProps} />
+    </>
   );
 
   // if (props.mode === "edit") {

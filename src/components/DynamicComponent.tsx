@@ -5,6 +5,8 @@ interface DynamicComponentProps {
   componentPath: () => any;
   props?: any;
   useSuspense?: boolean;
+  configId?: string;
+  componentId?: string;
 }
 
 export const DynamicComponent = (props: DynamicComponentProps) => {
@@ -14,7 +16,11 @@ export const DynamicComponent = (props: DynamicComponentProps) => {
   if (useSuspense) {
     return (
       <Suspense key={props.componentPath.toString()} fallback={<Skeleton />}>
-        <MyComponent {...props.props} />
+        <MyComponent 
+          {...props.props}
+          configId={props.configId}
+          componentId={props.componentId}
+        />
       </Suspense>
     );
   }

@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { CMComponentInterface } from "../services/CmComponentGallery";
+import { getPersister } from "../pages/getPersister";
 // import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 // import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 
@@ -35,7 +36,7 @@ export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
 });
 
 interface CMConfigContextProviderProps {
-  mode: "edit" | "view";
+  mode: "edit" | "view"; 
   children: React.ReactNode;
 }
 
@@ -97,9 +98,11 @@ export const CMConfigContextProvider = (
   // }, [changes, saveChanges])
 
   const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
+    // const persister = getPersister();
+    // await persister(configId, componentId, props);
     // const component = cmComponentGallery.getComponent(componentId);
     // await saveComponent(configId, component, props);
-  }, [saveComponent]);
+  }, []);
 
   const contextValue: CMConfigContextProps = {
     mode: mode,

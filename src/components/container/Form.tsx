@@ -10,10 +10,13 @@ import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
+import { getPersister } from "../../pages/getPersister";
 // import { cmComponentGallery } from "../../pages/CMPage";
 
 interface ComponentForm {
   setProps: (props: any) => void;
+  configId: string;
+  componentId: string;
 }
 
 export type ContainerWrapperId = {
@@ -160,6 +163,8 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   const [direction, setDirection] = useState<"row" | "column">(
     props.direction ? props.direction : "column",
   );
+  let nextRouter = null;
+  nextRouter = require('next/navigation').useRouter();
 
   useEffect(() => {
     if (props.configIds) {
@@ -204,7 +209,24 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     // });
   }, [setConfigIds]);
 
-  const setComponentProps = useCallback(() => {
+  const setComponentProps = useCallback(async () => {
+    const persister = getPersister();
+    await persister(
+      props.configId,
+      props.componentId,
+      {
+        configIds: configIds.map((config) => {
+          return {
+            configId: config.configId,
+            // component: config.component,
+          };
+        }),
+        direction: direction,
+      },
+    )
+    if (nextRouter) {
+      nextRouter.refresh();
+    }
     // props.setProps({
     //   configIds: configIds.map((config) => {
     //     return {

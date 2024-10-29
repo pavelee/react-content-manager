@@ -60,7 +60,12 @@ export const CMComponent = async (props: CMComponentProps) => {
       {
         props.mode === "edit" && formPath && (
           <CMComponentClient>
-            <DynamicComponent componentPath={formPath} props={componentProps} />
+            <DynamicComponent 
+              componentPath={formPath} 
+              props={componentProps} 
+              configId={props.configId}
+              componentId={componentId}
+            />
           </CMComponentClient>
         )
       }

@@ -2,16 +2,15 @@
 
 import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Card, Select, Table, Form as AntdForm, Drawer, Radio } from "antd";
-import { CMComponentInterface } from "../../services/CmComponentGallery";
+import { Table, Form as AntdForm, Radio } from "antd";
+// import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { ContainerProps } from "./CMContainer";
-import { CMComponentClient } from "../component/CMComponent.client";
 import { Button } from "../button/Button";
 import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
-import { cmComponentGallery } from "../../pages/CMPage";
+// import { cmComponentGallery } from "../../pages/CMPage";
 
 interface ComponentForm {
   setProps: (props: any) => void;
@@ -19,12 +18,12 @@ interface ComponentForm {
 
 export type ContainerWrapperId = {
   configId: string;
-  component: CMComponentInterface;
+  // component: CMComponentInterface;
 };
 
-interface ComponentGalleryProps {
-  addComponentToContainer: (component: CMComponentInterface) => void;
-}
+// interface ComponentGalleryProps {
+//   addComponentToContainer: (component: CMComponentInterface) => void;
+// }
 
 // const ComponentGallery = (props: ComponentGalleryProps) => {
 //   const [componentGalleryOpen, setComponentGalleryOpen] = useState(false);
@@ -168,27 +167,27 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         props.configIds.map((configId: ContainerWrapperId) => {
           return {
             configId: configId.configId,
-            component: cmComponentGallery.getComponent(configId.component.id),
+            // component: cmComponentGallery.getComponent(configId.component.id),
           };
         }),
       );
     }
   }, [props.configIds]);
 
-  const addComponentToContainer = useCallback(async (component: CMComponentInterface) => {
-    // const configId = Math.random().toString(36).substring(7);
-    // const data = {};
-    // await persistConfigData(configId, component.id, data);
-    // setConfigIds((prev) => {
-    //   return [
-    //     ...prev,
-    //     {
-    //       configId,
-    //       component,
-    //     },
-    //   ];
-    // });
-  }, [setConfigIds]);
+  // const addComponentToContainer = useCallback(async (component: CMComponentInterface) => {
+  //   // const configId = Math.random().toString(36).substring(7);
+  //   // const data = {};
+  //   // await persistConfigData(configId, component.id, data);
+  //   // setConfigIds((prev) => {
+  //   //   return [
+  //   //     ...prev,
+  //   //     {
+  //   //       configId,
+  //   //       component,
+  //   //     },
+  //   //   ];
+  //   // });
+  // }, [setConfigIds]);
 
   const addContainer = useCallback(async () => {
     // const component = cmComponentGallery.getComponent("container");
@@ -206,15 +205,15 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   }, [setConfigIds]);
 
   const setComponentProps = useCallback(() => {
-    props.setProps({
-      configIds: configIds.map((config) => {
-        return {
-          configId: config.configId,
-          component: config.component,
-        };
-      }),
-      direction: direction,
-    });
+    // props.setProps({
+    //   configIds: configIds.map((config) => {
+    //     return {
+    //       configId: config.configId,
+    //       component: config.component,
+    //     };
+    //   }),
+    //   direction: direction,
+    // });
   }, [configIds, direction, props]);
 
   const deleteComponent = useCallback((componentId: string) => {
@@ -292,7 +291,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           dataSource={configIds.map((id) => {
             return {
               id: id.configId,
-              component: id.component,
+              // component: id.component,
             };
           })}
           rowKey={(record) => record.id}
@@ -312,7 +311,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
                     gap: "0.75rem",
                   }}
                 >
-                  <div>{record.component.name}</div>
+                  {/* <div>{record.component.name}</div> */}
                 </div>
               ),
             },

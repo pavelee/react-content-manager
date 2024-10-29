@@ -7,7 +7,7 @@ export const writeProps = async (props: ContainerProps) => {
     const configIds = props.configIds.map((configId) => {
       return {
         configId: configId.configId,
-        componentId: configId.component.id,
+        // componentId: configId.component.id,
       };
     });
     data.configIds = configIds;

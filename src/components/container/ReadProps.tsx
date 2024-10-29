@@ -1,6 +1,6 @@
 // import { fetchConfigIds } from "../CMWrapper";
 
-import { cmComponentGallery } from "../../pages/CMPage";
+// import { cmComponentGallery } from "../../pages/CMPage";
 import { ContainerWrapperId } from "./Form";
 
 const readProps = async (serailizedProps?: any) => {
@@ -22,7 +22,7 @@ const readProps = async (serailizedProps?: any) => {
     configIds = configIds.map((configId: any) => {
       data.push({
         configId: configId.configId,
-        component: cmComponentGallery.getComponent(configId.component.id),
+        // component: cmComponentGallery.getComponent(configId.component.id),
       });
     });
     props.configIds = data;

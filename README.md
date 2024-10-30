@@ -61,9 +61,10 @@ export default cmConfig;
 
 3. Create cm.persister.config.js in your root directory. 
 
-```
+`
+Architecture Note:
 We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity
-```
+`
 
 ```javascript
 "use client";

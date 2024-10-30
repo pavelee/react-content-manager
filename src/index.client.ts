@@ -1,0 +1,1 @@
+export { useCMConfig } from './context/CMConfigContext';

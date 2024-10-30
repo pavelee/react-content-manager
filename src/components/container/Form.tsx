@@ -10,7 +10,7 @@ import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
-import { getPersister } from "../../pages/getPersister";
+import { useCMConfig } from "../../context/CMConfigContext";
 // import { cmComponentGallery } from "../../pages/CMPage";
 
 interface ComponentForm {
@@ -64,6 +64,7 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
 };
 
 export const Form = (props: ContainerProps & ComponentForm) => {
+  const { saveChange } = useCMConfig();
   const [configIds, setConfigIds] = useState<ContainerWrapperId[]>([]);
   const [direction, setDirection] = useState<"row" | "column">(
     props.direction ? props.direction : "column",
@@ -90,7 +91,6 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     configIds: ContainerWrapperId[],
     direction?: "row" | "column",
   ) => {
-    const persister = getPersister();
     const data: {
       configIds: {
         configId: string;
@@ -108,7 +108,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     if (direction) {
       data.direction = direction;
     }
-    await persister(
+    await saveChange(
       props.configId,
       props.componentId,
       data
@@ -125,12 +125,11 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     //   }),
     //   direction: direction,
     // });
-  }, [props, nextRouter]);
+  }, [props, nextRouter, saveChange]);
 
   const addContainer = useCallback(async () => {
     const configId = Math.random().toString(36).substring(7);
-    const persister = getPersister();
-    await persister(configId, 'container', {});
+    await saveChange(configId, 'container', {});
     const newConfigIds = [
       ...configIds,
       {
@@ -144,12 +143,11 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       newConfigIds,
       direction,
     );
-  }, [configIds, direction, props, setComponentProps]);
+  }, [configIds, direction, props, setComponentProps, saveChange]);
 
   const addComponentToContainer = useCallback(async (componentId: string) => {
     const configId = Math.random().toString(36).substring(7);
-    const persister = getPersister();
-    await persister(configId, componentId, {});
+    await saveChange(configId, componentId, {});
     const newConfigIds = [
       ...configIds,
       {
@@ -163,7 +161,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       newConfigIds,
       direction,
     );
-  }, [configIds, direction, props, setComponentProps]);
+  }, [configIds, direction, props, setComponentProps, saveChange]);
 
   const deleteComponent = useCallback((componentId: string) => {
     setConfigIds((prev) => {

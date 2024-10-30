@@ -7,6 +7,7 @@ interface DynamicComponentProps {
   useSuspense?: boolean;
   configId?: string;
   componentId?: string;
+  components?: string[]
 }
 
 export const DynamicComponent = (props: DynamicComponentProps) => {
@@ -20,6 +21,7 @@ export const DynamicComponent = (props: DynamicComponentProps) => {
           {...props.props}
           configId={props.configId}
           componentId={props.componentId}
+          components={props.components}
         />
       </Suspense>
     );

@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Table, Form as AntdForm, Radio } from "antd";
+import { Table, Form as AntdForm, Radio, Drawer } from "antd";
 // import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { ContainerProps } from "./CMContainer";
 import { Button } from "../button/Button";
@@ -17,6 +17,7 @@ interface ComponentForm {
   setProps: (props: any) => void;
   configId: string;
   componentId: string;
+  components: string[]
 }
 
 export type ContainerWrapperId = {
@@ -24,139 +25,43 @@ export type ContainerWrapperId = {
   // component: CMComponentInterface;
 };
 
-// interface ComponentGalleryProps {
-//   addComponentToContainer: (component: CMComponentInterface) => void;
-// }
+interface ComponentGalleryProps {
+  addComponentToContainer: (componentId: string) => void;
+  components: string[];
+}
 
-// const ComponentGallery = (props: ComponentGalleryProps) => {
-//   const [componentGalleryOpen, setComponentGalleryOpen] = useState(false);
-//   const [components, setComponents] = useState(
-//     cmComponentGallery.getPublicComponents(),
-//   );
-//   const [tags, setTags] = useState<{ label: string; value: string }[]>([]);
-//   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+const ComponentGallery = (props: ComponentGalleryProps) => {
+  const { addComponentToContainer, components } = props;
+  const [showGallery, setShowGallery] = useState(false);
 
-//   // generate tags from components as options for select
-//   useEffect(() => {
-//     const t: { label: string; value: string }[] = [];
-//     components.forEach((component) => {
-//       component.tags.forEach((tag) => {
-//         // add only if not already in tags
-//         if (!t.find((t) => t.value === tag)) {
-//           t.push({
-//             label: tag,
-//             value: tag,
-//           });
-//         }
-//       });
-//     });
-//     setTags(t);
-//   }, [components]);
-
-//   // reduce components to only those that match selected tags
-//   useEffect(() => {
-//     if (selectedTags.length === 0) {
-//       setComponents(cmComponentGallery.getPublicComponents());
-//     } else {
-//       // filter through map of components and return only those that match selected tags
-//       const filteredComponents =
-//         cmComponentGallery.getPublicComponents(selectedTags);
-//       setComponents(filteredComponents);
-//     }
-//   }, [selectedTags]);
-
-//   const closeComponentGallery = useCallback(() => {
-//     setComponentGalleryOpen(false);
-//   }, []);
-
-//   return (
-//     <>
-//       <Button onClick={() => {
-//         setComponentGalleryOpen(true);
-//       }}>
-//         {Translator.translate("ADD_COMPONENT")}
-//       </Button>
-//       <Drawer
-//         title={Translator.translate("COMPONENT_LIBRARY")}
-//         open={componentGalleryOpen}
-//         // onCancel={() => setComponentGalleryOpen(false)}
-//         onClose={() => {
-//           closeComponentGallery();
-//         }}
-//         width={document.body.clientWidth * 0.5}
-//         footer={null}
-//       >
-//         <div
-//           style={{
-//             display: "flex",
-//             flexDirection: "column",
-//             flexWrap: "wrap",
-//             gap: "0.75rem",
-//           }}
-//         >
-//           <AntdForm>
-//             <AntdForm.Item>
-//               <Select
-//                 mode="multiple"
-//                 allowClear
-//                 style={{ width: "100%" }}
-//                 placeholder={Translator.translate("SEARCH_BY_TAG")}
-//                 value={selectedTags}
-//                 onChange={(value) => {
-//                   setSelectedTags(value);
-//                 }}
-//                 // onChange={handleChange}
-//                 options={tags}
-//               />
-//             </AntdForm.Item>
-//           </AntdForm>
-//           {Array.from(components).map(([key, value]) => {
-//             return (
-//               <Card
-//                 title={value.name}
-//                 extra={
-//                   <div
-//                     style={{
-//                       display: "flex",
-//                       justifyContent: "flex-end",
-//                     }}
-//                   >
-//                     <Button
-//                       key={"addComponent"}
-//                       usage="primary"
-//                       onClick={() => {
-//                         props.addComponentToContainer(value);
-//                         closeComponentGallery();
-//                       }}
-//                     >
-//                       {Translator.translate("ADD_COMPONENT")}
-//                     </Button>
-//                   </div>
-//                 }
-//                 key={key}
-//                 style={{
-//                   boxShadow:
-//                     "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-//                 }}
-//               >
-//                 <div
-//                   style={{
-//                     display: "flex",
-//                     flexDirection: "column",
-//                     height: "100%",
-//                     alignItems: "center",
-//                   }}
-//                 >
-//                   {value.id}
-//                 </div>
-//               </Card>
-//             );
-//           })}
-//         </div>
-//       </Drawer>
-//     </>
-//   );
-// };
+  return (<>
+    <Button onClick={() => setShowGallery(true)}>
+      {Translator.translate("ADD_COMPONENT")}
+    </Button>
+    <Drawer
+      title={Translator.translate("COMPONENT_LIBRARY")}
+      placement="right"
+      onClose={() => setShowGallery(false)}
+      open={showGallery}
+    >
+      <div className="p-5 flex flex-col gap-4">
+        {components.map((component) => {
+          return (
+            <Button
+              key={component}
+              onClick={() => {
+                addComponentToContainer(component);
+                setShowGallery(false);
+              }}
+            >
+              {component}
+            </Button>
+          );
+        })}
+      </div>
+    </Drawer>
+  </>)
+};
 
 export const Form = (props: ContainerProps & ComponentForm) => {
   const [configIds, setConfigIds] = useState<ContainerWrapperId[]>([]);
@@ -165,21 +70,6 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   );
   let nextRouter = null;
   nextRouter = require('next/navigation').useRouter();
-
-  // const addComponentToContainer = useCallback(async (component: CMComponentInterface) => {
-  //   // const configId = Math.random().toString(36).substring(7);
-  //   // const data = {};
-  //   // await persistConfigData(configId, component.id, data);
-  //   // setConfigIds((prev) => {
-  //   //   return [
-  //   //     ...prev,
-  //   //     {
-  //   //       configId,
-  //   //       component,
-  //   //     },
-  //   //   ];
-  //   // });
-  // }, [setConfigIds]);
 
   useEffect(() => {
     if (props.configIds) {
@@ -198,21 +88,30 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     configId: string,
     componentId: string,
     configIds: ContainerWrapperId[],
-    direction: "row" | "column",
+    direction?: "row" | "column",
   ) => {
     const persister = getPersister();
+    const data: {
+      configIds: {
+        configId: string;
+        // component: CMComponentInterface;
+      }[];
+      direction?: "row" | "column";
+    } = {
+      configIds: configIds.map((config) => {
+        return {
+          configId: config.configId,
+          // component: config.component,
+        };
+      }),
+    };
+    if (direction) {
+      data.direction = direction;
+    }
     await persister(
       props.configId,
       props.componentId,
-      {
-        configIds: configIds.map((config) => {
-          return {
-            configId: config.configId,
-            // component: config.component,
-          };
-        }),
-        direction: direction,
-      },
+      data
     )
     if (nextRouter) {
       nextRouter.refresh();
@@ -232,6 +131,25 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     const configId = Math.random().toString(36).substring(7);
     const persister = getPersister();
     await persister(configId, 'container', {});
+    const newConfigIds = [
+      ...configIds,
+      {
+        configId,
+        // component: cmComponentGallery.getComponent('container'),
+      },
+    ]
+    await setComponentProps(
+      props.configId,
+      props.componentId,
+      newConfigIds,
+      direction,
+    );
+  }, [configIds, direction, props, setComponentProps]);
+
+  const addComponentToContainer = useCallback(async (componentId: string) => {
+    const configId = Math.random().toString(36).substring(7);
+    const persister = getPersister();
+    await persister(configId, componentId, {});
     const newConfigIds = [
       ...configIds,
       {
@@ -377,7 +295,10 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           gap: "0.75rem",
         }}
       >
-        {/* <ComponentGallery addComponentToContainer={addComponentToContainer} /> */}
+        <ComponentGallery
+          addComponentToContainer={addComponentToContainer}
+          components={props.components}
+        />
         <Button onClick={addContainer}>
           {Translator.translate("ADD_CONTAINER")}
         </Button>

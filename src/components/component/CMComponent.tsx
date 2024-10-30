@@ -22,6 +22,16 @@ export const fetchConfigIds = async (configId: string) => {
   return [];
 };
 
+const getAvailableComponentIdList = (): string[] => {
+  const c = cmComponentGallery.getPublicComponents();
+  const componentIdList: string[] = [];
+  // list map
+  c.forEach((component) => {
+    componentIdList.push(component.id);
+  });
+  return componentIdList;
+}
+
 export const CMComponent = async (props: CMComponentProps) => {
   const data = await fetchConfigData(props.configId);
   console.log('data', data);
@@ -55,6 +65,11 @@ export const CMComponent = async (props: CMComponentProps) => {
   //   </CMComponentClient>;
   // }
 
+  let componentIdList: string[] = [];
+  if (props.mode === "edit") {
+    componentIdList = getAvailableComponentIdList();
+  }
+
   return (
     <>
       {
@@ -65,6 +80,7 @@ export const CMComponent = async (props: CMComponentProps) => {
               props={componentProps} 
               configId={props.configId}
               componentId={componentId}
+              components={componentIdList}
             />
           </CMComponentClient>
         )

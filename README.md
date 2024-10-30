@@ -2,9 +2,9 @@
 
 ## Important!
 
-**Package is now compatibile with Next.js framework and React Server Components**. Still working on integration with other frameworks.
+**Package is now ONLY compatible with Next.js framework and React Server Components**. Still working on integration with other frameworks.
 
-It is still in development process, so it is not recommended to use it in production yet. If you want to test it, you can do it by cloning this repository and running `npm run dev` or `yarn dev` in `example` directory.
+Package is now stable, it could be used on production.
 
 ## What is it?
 
@@ -59,7 +59,41 @@ cmConfig.getComponentGallery().registerComponent({
 export default cmConfig;
 ```
 
-3. Edit your page.tsx and wrap your page with CmProvider. Example:
+3. Create cm.persister.config.js in your root directory. 
+
+```
+We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity
+```
+
+```javascript
+"use client";
+
+const persister = async (configId: string, componentId: string, data: any) => {
+  const d = await fetch(`/YOUR_API_ADDRESS`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      configId,
+      componentId,
+      data,
+    }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      console.error(err);
+      return {};
+    });
+};
+
+export default persister;
+
+```
+
+4. Edit your page.tsx and wrap your page with CmProvider. Example:
 
 ```javascript
 import { CMComponent, CMProvider } from "react-content-manager";
@@ -77,7 +111,7 @@ export default function Home() {
 }
 ```
 
-4. Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
+5. Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
 
 ## Support for container query in tailwindcss
 

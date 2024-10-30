@@ -166,19 +166,6 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   let nextRouter = null;
   nextRouter = require('next/navigation').useRouter();
 
-  useEffect(() => {
-    if (props.configIds) {
-      setConfigIds(
-        props.configIds.map((configId: ContainerWrapperId) => {
-          return {
-            configId: configId.configId,
-            // component: cmComponentGallery.getComponent(configId.component.id),
-          };
-        }),
-      );
-    }
-  }, [props.configIds]);
-
   // const addComponentToContainer = useCallback(async (component: CMComponentInterface) => {
   //   // const configId = Math.random().toString(36).substring(7);
   //   // const data = {};
@@ -194,22 +181,47 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   //   // });
   // }, [setConfigIds]);
 
-  const addContainer = useCallback(async () => {
-    // const component = cmComponentGallery.getComponent("container");
-    // const configId = Math.random().toString(36).substring(7);
-    // await persistConfigData(configId, component.id, {});
-    // setConfigIds((prev) => {
-    //   return [
-    //     ...prev,
-    //     {
-    //       configId,
-    //       component: component,
-    //     },
-    //   ];
-    // });
-  }, [setConfigIds]);
+    useEffect(() => {
+    if (props.configIds) {
+      setConfigIds(
+        props.configIds.map((configId: ContainerWrapperId) => {
+          return {
+            configId: configId.configId,
+            // component: cmComponentGallery.getComponent(configId.component.id),
+          };
+        }),
+      );
+    }
+  }, [props.configIds]);
 
-  const setComponentProps = useCallback(async () => {
+  const addContainer = useCallback(async () => {
+    const configId = Math.random().toString(36).substring(7);
+    const persister = getPersister();
+    await persister(configId, 'container', {});
+    const newConfigIds = [
+      ...configIds,
+      {
+        configId,
+        // component: cmComponentGallery.getComponent('container'),
+      },
+    ]
+    await setComponentProps(
+      props.configId,
+      props.componentId,
+      newConfigIds,
+      direction,
+    );
+    // if (nextRouter) {
+    //   nextRouter.refresh();
+    // }
+  }, [setConfigIds, configIds, direction, props]);
+
+  const setComponentProps = useCallback(async (
+    configId: string,
+    componentId: string,
+    configIds: ContainerWrapperId[],
+    direction: "row" | "column",
+  ) => {
     const persister = getPersister();
     await persister(
       props.configId,
@@ -375,7 +387,14 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       </div>
       <Button
         usage="primary"
-        onClick={setComponentProps}
+        onClick={() => {
+          setComponentProps(
+            props.configId,
+            props.componentId,
+            configIds,
+            direction,
+          );
+        }}
       >
         {Translator.translate("APPLY_CHANGES")}
       </Button>

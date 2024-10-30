@@ -181,7 +181,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   //   // });
   // }, [setConfigIds]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (props.configIds) {
       setConfigIds(
         props.configIds.map((configId: ContainerWrapperId) => {
@@ -193,28 +193,6 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       );
     }
   }, [props.configIds]);
-
-  const addContainer = useCallback(async () => {
-    const configId = Math.random().toString(36).substring(7);
-    const persister = getPersister();
-    await persister(configId, 'container', {});
-    const newConfigIds = [
-      ...configIds,
-      {
-        configId,
-        // component: cmComponentGallery.getComponent('container'),
-      },
-    ]
-    await setComponentProps(
-      props.configId,
-      props.componentId,
-      newConfigIds,
-      direction,
-    );
-    // if (nextRouter) {
-    //   nextRouter.refresh();
-    // }
-  }, [setConfigIds, configIds, direction, props]);
 
   const setComponentProps = useCallback(async (
     configId: string,
@@ -248,7 +226,26 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     //   }),
     //   direction: direction,
     // });
-  }, [configIds, direction, props]);
+  }, [props, nextRouter]);
+
+  const addContainer = useCallback(async () => {
+    const configId = Math.random().toString(36).substring(7);
+    const persister = getPersister();
+    await persister(configId, 'container', {});
+    const newConfigIds = [
+      ...configIds,
+      {
+        configId,
+        // component: cmComponentGallery.getComponent('container'),
+      },
+    ]
+    await setComponentProps(
+      props.configId,
+      props.componentId,
+      newConfigIds,
+      direction,
+    );
+  }, [configIds, direction, props, setComponentProps]);
 
   const deleteComponent = useCallback((componentId: string) => {
     setConfigIds((prev) => {

@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Table, Form as AntdForm, Radio, Drawer, Card } from "antd";
+import { Table, Form as AntdForm, Radio, Drawer } from "antd";
 // import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { ContainerProps } from "./CMContainer";
 import { Button } from "../button/Button";
@@ -12,6 +12,7 @@ import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
 import { useCMConfig } from "../../context/CMConfigContext";
 import { ComponentDetails, ComponentDetailsList } from "../../types";
+import Card from "../card/Card";
 // import { cmComponentGallery } from "../../pages/CMPage";
 
 interface ComponentForm {
@@ -54,43 +55,20 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
             <Card
               key={component.id}
               title={component.name}
-              actions={
-                [
-                  <Button
-                    key="add"
-                    onClick={() => {
-                      addComponentToContainer(component.id);
-                      setShowGallery(false);
-                    }}
-                  >
-                    {Translator.translate("ADD_COMPONENT")}
-                  </Button>
-                ]
-              }
-            >
-              {component.desc && (
-                <div className="text-gray-500">
-                  {component.desc}
-                </div>
-              )}
-            </Card>
+              description={component.desc}
+              actions={[
+                <Button
+                  key="add"
+                  onClick={() => {
+                    addComponentToContainer(component.id);
+                    setShowGallery(false);
+                  }}
+                >
+                  {Translator.translate("ADD_COMPONENT")}
+                </Button>
+              ]}
+            />
           )
-          return (
-            <Button
-              key={component.id}
-              onClick={() => {
-                addComponentToContainer(component.id);
-                setShowGallery(false);
-              }}
-            >
-              {component.name}
-              {component.desc && (
-                <div>
-                  {component.desc}
-                </div>
-              )}
-            </Button>
-          );
         })}
       </div>
     </Drawer>

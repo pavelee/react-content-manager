@@ -7,6 +7,7 @@ import { cmComponentGallery } from "../../services/CmComponentGallery";
 import { DynamicComponent } from "../DynamicComponent";
 import { CMComponentClient } from "./CMComponent.client";
 import { ComponentDetailsList } from "../../types";
+import { CMComponentFormWrapper } from "./CMComponentForm";
 
 export interface CMComponentProps extends EditableProps {
   configId: string;
@@ -75,22 +76,25 @@ export const CMComponent = async (props: CMComponentProps) => {
   }
 
   return (
-    <>
+    <CMComponentClient
+      configId={props.configId}
+      componentId={componentId}
+    >
       {
         props.mode === "edit" && formPath && (
-          <CMComponentClient>
-            <DynamicComponent 
-              componentPath={formPath} 
-              props={componentProps} 
+          <CMComponentFormWrapper>
+            <DynamicComponent
+              componentPath={formPath}
+              props={componentProps}
               configId={props.configId}
               componentId={componentId}
               components={componentIdList}
             />
-          </CMComponentClient>
+          </CMComponentFormWrapper>
         )
       }
       <DynamicComponent componentPath={componentPath} props={componentProps} />
-    </>
+    </CMComponentClient>
   );
 
   // if (props.mode === "edit") {

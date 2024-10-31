@@ -18,10 +18,8 @@ type props = {
 
 export const CMComponentClient = (props: props) => {
   const { children } = props;
-  // console.log('componentProps', componentProps);
   const { mode } = useCMConfig();
   const [visibleForm, setVisibleForm] = useState(false);
-  console.log('props', props);
   // const { setProps, component } = useConfig(
   //   props.configId,
   //   props.componentId,

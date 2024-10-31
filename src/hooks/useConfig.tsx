@@ -45,9 +45,7 @@ export const useConfig = (
   };
 
   const setProps = async (props: any) => {
-    console.log('setProps', props);
     let cid = componentId;
-    console.log('cid', cid);
     if (!cid) {
       cid = 'container';
     }

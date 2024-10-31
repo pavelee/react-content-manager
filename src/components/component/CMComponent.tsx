@@ -34,7 +34,6 @@ const getAvailableComponentIdList = (): string[] => {
 
 export const CMComponent = async (props: CMComponentProps) => {
   const data = await fetchConfigData(props.configId);
-  console.log('data', data);
   const {
     id: componentId,
     componentPath,

@@ -22,7 +22,7 @@ const readProps = async (serailizedProps?: any) => {
     configIds = configIds.map((configId: any) => {
       data.push({
         configId: configId.configId,
-        // component: cmComponentGallery.getComponent(configId.component.id),
+        componentId: configId.componentId
       });
     });
     props.configIds = data;

@@ -11,23 +11,27 @@ import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
 import { useCMConfig } from "../../context/CMConfigContext";
+import { ComponentDetails, ComponentDetailsList } from "../../types";
 // import { cmComponentGallery } from "../../pages/CMPage";
 
 interface ComponentForm {
   setProps: (props: any) => void;
   configId: string;
   componentId: string;
-  components: string[]
+  components: ComponentDetailsList
 }
 
 export type ContainerWrapperId = {
   configId: string;
-  // component: CMComponentInterface;
+  componentId: string;
 };
+
+type SelectedComponent = ComponentDetails & { configId: string }
+type selectedComponentList = SelectedComponent[];
 
 interface ComponentGalleryProps {
   addComponentToContainer: (componentId: string) => void;
-  components: string[];
+  components: ComponentDetailsList;
 }
 
 const ComponentGallery = (props: ComponentGalleryProps) => {
@@ -48,13 +52,13 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
         {components.map((component) => {
           return (
             <Button
-              key={component}
+              key={component.id}
               onClick={() => {
-                addComponentToContainer(component);
+                addComponentToContainer(component.id);
                 setShowGallery(false);
               }}
             >
-              {component}
+              {component.name}
             </Button>
           );
         })}
@@ -64,6 +68,7 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
 };
 
 export const Form = (props: ContainerProps & ComponentForm) => {
+  const { components } = props;
   const { saveChange } = useCMConfig();
   const [configIds, setConfigIds] = useState<ContainerWrapperId[]>([]);
   const [direction, setDirection] = useState<"row" | "column">(
@@ -72,13 +77,36 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   let nextRouter = null;
   nextRouter = require('next/navigation').useRouter();
 
+  const getComponentListForSelectedIds = useCallback(() => {
+    const c: selectedComponentList = [];
+    configIds.forEach((config) => {
+      if (config.componentId === "container") {
+        c.push({
+          id: config.configId,
+          name: "Container",
+          configId: config.configId,
+        });
+      }
+      const filtered = components.filter((component) => {
+        return component.id === config.componentId;
+      });
+      if (filtered.length > 0) {
+        c.push({
+          ...filtered[0],
+          configId: config.configId,
+        });
+      }
+    });
+    return c;
+  }, [components, configIds]);
+
   useEffect(() => {
     if (props.configIds) {
       setConfigIds(
         props.configIds.map((configId: ContainerWrapperId) => {
           return {
             configId: configId.configId,
-            // component: cmComponentGallery.getComponent(configId.component.id),
+            componentId: configId.componentId,
           };
         }),
       );
@@ -94,14 +122,14 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     const data: {
       configIds: {
         configId: string;
-        // component: CMComponentInterface;
+        componentId: string;
       }[];
       direction?: "row" | "column";
     } = {
       configIds: configIds.map((config) => {
         return {
           configId: config.configId,
-          // component: config.component,
+          componentId: config.componentId,
         };
       }),
     };
@@ -134,7 +162,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       ...configIds,
       {
         configId,
-        // component: cmComponentGallery.getComponent('container'),
+        componentId: 'container',
       },
     ]
     await setComponentProps(
@@ -152,7 +180,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       ...configIds,
       {
         configId,
-        // component: cmComponentGallery.getComponent('container'),
+        componentId: componentId,
       },
     ]
     await setComponentProps(
@@ -235,30 +263,27 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         </AntdForm.Item>
         <Table
           pagination={false}
-          dataSource={configIds.map((id) => {
-            return {
-              id: id.configId,
-              // component: id.component,
-            };
-          })}
-          rowKey={(record) => record.id}
+          dataSource={getComponentListForSelectedIds()}
+          rowKey={(record) => record.configId}
           columns={[
             {
               title: "ID",
-              dataIndex: "id",
               key: "id",
+              render: (record: SelectedComponent) => (
+                <div>{record.configId}</div>
+              ),
             },
             {
               title: Translator.translate("COMPONENT"),
               key: "komponent",
-              render: (text, record) => (
+              render: (record: SelectedComponent) => (
                 <div
                   style={{
                     display: "flex",
                     gap: "0.75rem",
                   }}
                 >
-                  {/* <div>{record.component.name}</div> */}
+                  <div>{record.name}</div>
                 </div>
               ),
             },
@@ -295,7 +320,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       >
         <ComponentGallery
           addComponentToContainer={addComponentToContainer}
-          components={props.components}
+          components={components}
         />
         <Button onClick={addContainer}>
           {Translator.translate("ADD_CONTAINER")}

@@ -1,3 +1,4 @@
+import { ComponentDetailsList } from "../types";
 import { Skeleton } from "./Skeleton";
 import React, { Suspense, lazy } from "react";
 
@@ -7,7 +8,7 @@ interface DynamicComponentProps {
   useSuspense?: boolean;
   configId?: string;
   componentId?: string;
-  components?: string[]
+  components?: ComponentDetailsList
 }
 
 export const DynamicComponent = (props: DynamicComponentProps) => {

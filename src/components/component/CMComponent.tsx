@@ -6,6 +6,7 @@ import { fetchConfigData } from "../../pages/CMPage";
 import { cmComponentGallery } from "../../services/CmComponentGallery";
 import { DynamicComponent } from "../DynamicComponent";
 import { CMComponentClient } from "./CMComponent.client";
+import { ComponentDetailsList } from "../../types";
 
 export interface CMComponentProps extends EditableProps {
   configId: string;
@@ -22,12 +23,15 @@ export const fetchConfigIds = async (configId: string) => {
   return [];
 };
 
-const getAvailableComponentIdList = (): string[] => {
+const getAvailableComponentIdList = (): ComponentDetailsList => {
   const c = cmComponentGallery.getPublicComponents();
-  const componentIdList: string[] = [];
+  const componentIdList: ComponentDetailsList = [];
   // list map
   c.forEach((component) => {
-    componentIdList.push(component.id);
+    componentIdList.push({
+      id: component.id,
+      name: component.name,
+    });
   });
   return componentIdList;
 }
@@ -64,7 +68,7 @@ export const CMComponent = async (props: CMComponentProps) => {
   //   </CMComponentClient>;
   // }
 
-  let componentIdList: string[] = [];
+  let componentIdList: ComponentDetailsList = [];
   if (props.mode === "edit") {
     componentIdList = getAvailableComponentIdList();
   }

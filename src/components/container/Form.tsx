@@ -345,7 +345,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           );
         }}
       >
-        {Translator.translate("APPLY_CHANGES")}
+        {Translator.translate("SAVE_CHANGES")}
       </Button>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { Drawer, Switch, notification } from "antd";
 import { useState } from "react";
 import {

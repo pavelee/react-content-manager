@@ -298,19 +298,19 @@ export const Form = (props: ContainerProps & ComponentForm) => {
             {
               title: Translator.translate("ACTIONS"),
               key: "actions",
-              render: (text, record) => (
+              render: (record: SelectedComponent) => (
                 <div style={{
                   transform: "translateY(0.5rem)",
                   display: "flex",
                   gap: "0.75rem",
                 }}>
-                  <Button onClick={() => moveComponentUp(record.id)}>
+                  <Button onClick={() => moveComponentUp(record.configId)}>
                     <ArrowUpIcon />
                   </Button>
-                  <Button onClick={() => moveComponentDown(record.id)}>
+                  <Button onClick={() => moveComponentDown(record.configId)}>
                     <ArrowDownIcon />
                   </Button>
-                  <Button onClick={() => deleteComponent(record.id)}>
+                  <Button onClick={() => deleteComponent(record.configId)}>
                     <TrashIcon />
                   </Button>
                 </div>

@@ -31,6 +31,7 @@ const getAvailableComponentIdList = (): ComponentDetailsList => {
     componentIdList.push({
       id: component.id,
       name: component.name,
+      desc: component.desc,
     });
   });
   return componentIdList;

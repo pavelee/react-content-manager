@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 import { useEffect, useState } from "react";
-import { Table, Form as AntdForm, Radio, Drawer } from "antd";
+import { Table, Form as AntdForm, Radio, Drawer, Card } from "antd";
 // import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { ContainerProps } from "./CMContainer";
 import { Button } from "../button/Button";
@@ -51,6 +51,31 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
       <div className="p-5 flex flex-col gap-4">
         {components.map((component) => {
           return (
+            <Card
+              key={component.id}
+              title={component.name}
+              actions={
+                [
+                  <Button
+                    key="add"
+                    onClick={() => {
+                      addComponentToContainer(component.id);
+                      setShowGallery(false);
+                    }}
+                  >
+                    {Translator.translate("ADD_COMPONENT")}
+                  </Button>
+                ]
+              }
+            >
+              {component.desc && (
+                <div className="text-gray-500">
+                  {component.desc}
+                </div>
+              )}
+            </Card>
+          )
+          return (
             <Button
               key={component.id}
               onClick={() => {
@@ -59,6 +84,11 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
               }}
             >
               {component.name}
+              {component.desc && (
+                <div>
+                  {component.desc}
+                </div>
+              )}
             </Button>
           );
         })}

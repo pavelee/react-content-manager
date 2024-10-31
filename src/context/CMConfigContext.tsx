@@ -9,7 +9,6 @@ import { getPersister } from "../pages/getPersister";
 interface CMConfigContextProps {
   mode: "edit" | "view";
   setMode: (mode: "edit" | "view") => void;
-  saveChanges: () => void;
   saveChange: (
     configId: string,
     componentId: string,
@@ -20,7 +19,6 @@ interface CMConfigContextProps {
 export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
   mode: "view",
   setMode: () => { },
-  saveChanges: () => { },
   saveChange: async (
     configId: string,
     componentId: string,
@@ -44,9 +42,6 @@ export const CMConfigContextProvider = (
     setMode(mode);
   }, [setMode]);
 
-  const saveChanges = useCallback(async () => {
-  }, []);
-
   const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
     const persister = getPersister();
     await persister(configId, componentId, props);
@@ -58,7 +53,6 @@ export const CMConfigContextProvider = (
   const contextValue: CMConfigContextProps = {
     mode: mode,
     setMode: setModeHandler,
-    saveChanges: saveChanges,
     saveChange: saveChange,
   };
 

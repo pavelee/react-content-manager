@@ -1,36 +1,24 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { Drawer, Switch, notification } from "antd";
+import { Drawer, Switch } from "antd";
 import { useState } from "react";
 import {
   CMConfigContextProvider,
   useCMConfig,
 } from "../context/CMConfigContext";
-import { Button } from "../components/button/Button";
 import { EditIcon } from "../components/icons/EditIcon";
 import { Translator } from "./Translator";
 import { FloatButton } from "../components/float-button/FloatButton";
 
 const ModeratorBar = () => {
-  const [api, contextHolder] = notification.useNotification();
-  const { saveChanges, mode, setMode } = useCMConfig();
+  const { mode, setMode } = useCMConfig();
   const [visible, setVisible] = useState(false);
   const onClose = () => {
     setVisible(false);
   };
-
-  const save = async () => {
-    // @todo what if save fails?
-    await saveChanges();
-    api.success({
-      message: Translator.translate("CHANGES_SAVED"),
-      placement: "top",
-    });
-  };
   return (
     <>
-      {contextHolder}
       <FloatButton
         onClick={() => {
           setVisible(true);
@@ -55,15 +43,12 @@ const ModeratorBar = () => {
         >
           <Switch
             checked={mode === "edit"}
-            checkedChildren={Translator.translate("EDIT")}
-            unCheckedChildren={Translator.translate("PREVIEW")}
+            checkedChildren={Translator.translate("PREVIEW")}
+            unCheckedChildren={Translator.translate("EDIT")}
             onChange={(checked) => {
               setMode(checked ? "edit" : "view");
             }}
           />
-          <Button onClick={() => save()}>
-            {Translator.translate("SAVE_CHANGES")}
-          </Button>
         </div>
       </Drawer>
     </>

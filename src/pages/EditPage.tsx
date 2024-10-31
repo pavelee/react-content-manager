@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect } from "react";
-import { Drawer, FloatButton, Switch, notification } from "antd";
+import { Drawer, Switch, notification } from "antd";
 import { useState } from "react";
 import {
   CMConfigContextProvider,
@@ -10,6 +10,7 @@ import {
 import { Button } from "../components/button/Button";
 import { EditIcon } from "../components/icons/EditIcon";
 import { Translator } from "./Translator";
+import { FloatButton } from "../components/float-button/FloatButton";
 
 const ModeratorBar = () => {
   const [api, contextHolder] = notification.useNotification();
@@ -31,11 +32,11 @@ const ModeratorBar = () => {
     <>
       {contextHolder}
       <FloatButton
-        onClick={() => setVisible(true)}
-        icon={<EditIcon />}
-        style={{ top: 100 }}
+        onClick={() => {
+          setVisible(true);
+        }}
       >
-        {Translator.translate("EDIT")}
+        <EditIcon />
       </FloatButton>
       <Drawer
         title={Translator.translate("MODERATOR_BAR")}

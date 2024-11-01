@@ -1,7 +1,7 @@
 import React from "react";
 import { EditableProps, mode } from "../../pages/CMPage";
 import { ContainerWrapperId } from "./Form";
-import { CMContainerServer } from "./CMContainer.server";
+import { CMComponent } from "../../index";
 
 export interface ContainerProps extends EditableProps {
   id: string;
@@ -9,15 +9,7 @@ export interface ContainerProps extends EditableProps {
   direction?: "row" | "column";
 }
 
-export const getPropsWithDefaults = (props: ContainerProps) => {
-  return {
-    ...props,
-    configIds: props.configIds ?? [],
-    direction: props.direction ?? "column",
-  };
-};
-
-export const getCssStyles = (props: ContainerProps, mode: mode) => {
+const getCssStyles = (props: ContainerProps, mode: mode) => {
   let styles: any = {
     display: "flex",
     gap: "2rem",
@@ -28,16 +20,41 @@ export const getCssStyles = (props: ContainerProps, mode: mode) => {
   if (mode === "edit") {
     styles = {
       ...styles,
-      // padding: "0.25rem",
-      // border: "2px solid #D1D5DB",
-      // borderRadius: "0.5rem",
     };
   }
   return styles;
 };
-
 export const CMContainer = (props: ContainerProps) => {
-  return <CMContainerServer {...props} />;
+  const { mode = "edit" } = props;
+
+  const styles = getCssStyles(props, mode);
+
+  if (!props.configIds || props.configIds?.length === 0) {
+    return null;
+  }
+
+  return (
+    <div style={styles} className="@container">
+      {props.configIds?.map((componentId: any) => {
+        return (
+          <div
+            style={{
+              flexGrow: 1,
+            }}
+            key={componentId.configId}
+          >
+            {/* @ts-ignore */}
+            <CMComponent
+              key={componentId.configId}
+              mode={mode}
+              configId={componentId.configId}
+              componentId={componentId.componentId}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default CMContainer;

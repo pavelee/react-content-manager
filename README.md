@@ -8,46 +8,34 @@ Package is now stable, it could be used on production.
 
 ## What is it?
 
-React Content Manager is a package that allows you to manage content of your website in a very easy way. It is based on React and Next.js. It is a perfect solution for people who need CMS feature using react stack.
+React Content Manager is a package that allows you to build your app from manageable components, that can be edited by users for their needs.
+
+## Roadmap
+
+- Add support to customize UI of the package
+- Drop antd library for smaller size of the package
 
 ## How to use it?
 
-1. Install package using npm or yarn
+### Install package using npm or yarn
 
 ```
 npm install react-content-manager
 ```
 
-or
-
-```
-yarn add react-content-manager
-```
-
-2. Create cm.config.js file in your project root directory and export your configuration. Example configuration:
+### Create cm.config.js file in your project root directory and export your configuration. Example configuration:
 
 ```javascript
 import { CmConfig } from "react-content-manager";
 
-// define function that will fetch data from your persistance layer, eg. database
-const fetcher = async (configId: string): Promise<any> => {
-  return {};
-};
-
-// define function that will save data to your persistance layer, eg. database
-const persister = async (
-  configId: string,
-  componentId: string,
-  data: any
-) => {};
-
 // optionally last parameter is language, default is 'en', we support 'pl' as well
-const cmConfig = new CmConfig(fetcher, persister, 'en');
+const cmConfig = new CmConfig("en");
 
 // register your components
 cmConfig.getComponentGallery().registerComponent({
   id: "text-block", // unique id of component, you will use it in your code
   name: "Text Block", // name of component, it will be visible in component gallery
+  desc: "optionally you can add description for the user", // description of component, it will be visible in component gallery
   public: true, // should be visible in component gallery for users
   componentPath: () => import("@/app/components/TextBlock"), // path to component that will be rendered
   formPath: () => import("@/app/components/Form"), // path to component with form that will be use to edit component props
@@ -59,12 +47,10 @@ cmConfig.getComponentGallery().registerComponent({
 export default cmConfig;
 ```
 
-3. Create cm.persister.config.js in your root directory. 
+### Create cm.persister.ts in your root directory.
 
-`
-Architecture Note:
-We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity
-`
+`Architecture Note:
+We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity`
 
 ```javascript
 "use client";
@@ -94,7 +80,41 @@ export default persister;
 
 ```
 
-4. Edit your page.tsx and wrap your page with CmProvider. Example:
+### Create cm.fetcher.ts in your root directory.
+
+`Architecture Note:
+We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity`
+
+As you can see below, we are using `server-only` import. It's a the decision that code will always run on the server side. It's possible with the Next.js usage.
+
+```javascript
+import "server-only";
+
+import { SiteDetector } from "@/_config/site";
+import client from "@/_features/prismadb/prismadb";
+
+const fetcher = async (configId: string): Promise<any> => {
+  const site = await SiteDetector.detect();
+  const d = await client.contentManager.findFirst({
+    where: {
+      id: configId,
+      site_id: site.getId(),
+    },
+  });
+
+  if (!d) {
+    return {};
+  }
+
+  return d;
+};
+
+export default fetcher;
+
+
+```
+
+### Edit your page.tsx and wrap your page with CmProvider. Example:
 
 ```javascript
 import { CMComponent, CMProvider } from "react-content-manager";
@@ -112,7 +132,7 @@ export default function Home() {
 }
 ```
 
-5. Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
+### Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
 
 ## Support for container query in tailwindcss
 

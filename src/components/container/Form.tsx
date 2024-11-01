@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Table, Form as AntdForm, Radio, Drawer } from "antd";
-// import { CMComponentInterface } from "../../services/CmComponentGallery";
 import { ContainerProps } from "./CMContainer";
 import { Button } from "../button/Button";
 import { TrashIcon } from "../icons/TrashIcon";
@@ -13,7 +12,7 @@ import { Translator } from "../../pages/Translator";
 import { ComponentDetails, ComponentDetailsList } from "../../types";
 import Card from "../card/Card";
 import { useCMConfig } from "../../index.client";
-// import { cmComponentGallery } from "../../pages/CMPage";
+import { generateConfigId } from "../../services/generateConfigId";
 
 interface ComponentForm {
   setProps: (props: any) => void;
@@ -78,12 +77,18 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
 export const Form = (props: ContainerProps & ComponentForm) => {
   const { components } = props;
   const { saveChange } = useCMConfig();
-  const [configIds, setConfigIds] = useState<ContainerWrapperId[]>([]);
+  const [configIds, setConfigIds] = useState<ContainerWrapperId[]>(props.configIds && props.configIds?.length > 0 ?
+    props.configIds.map((configId: ContainerWrapperId) => {
+      return {
+        configId: configId.configId,
+        componentId: configId.componentId,
+      };
+    })
+    : []
+  );
   const [direction, setDirection] = useState<"row" | "column">(
     props.direction ? props.direction : "column",
   );
-  let nextRouter = null;
-  nextRouter = require('next/navigation').useRouter();
 
   const getComponentListForSelectedIds = useCallback(() => {
     const c: selectedComponentList = [];
@@ -108,20 +113,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     return c;
   }, [components, configIds]);
 
-  useEffect(() => {
-    if (props.configIds) {
-      setConfigIds(
-        props.configIds.map((configId: ContainerWrapperId) => {
-          return {
-            configId: configId.configId,
-            componentId: configId.componentId,
-          };
-        }),
-      );
-    }
-  }, [props.configIds]);
-
-  const setComponentProps = useCallback(async (
+  const saveComponentProps = useCallback(async (
     configId: string,
     componentId: string,
     configIds: ContainerWrapperId[],
@@ -145,38 +137,16 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       data.direction = direction;
     }
     await saveChange(
-      props.configId,
-      props.componentId,
+      configId,
+      componentId,
       data
     )
-    if (nextRouter) {
-      nextRouter.refresh();
-    }
-    // props.setProps({
-    //   configIds: configIds.map((config) => {
-    //     return {
-    //       configId: config.configId,
-    //       component: config.component,
-    //     };
-    //   }),
-    //   direction: direction,
-    // });
-  }, [props, nextRouter, saveChange]);
+  }, [props, saveChange]);
 
   const addContainer = useCallback(async () => {
-    const configId = Math.random().toString(36).substring(7);
-    const newConfigIds = [
-      ...configIds,
-      {
-        configId,
-        componentId: 'container',
-      },
-    ];
-    setConfigIds(newConfigIds);
-  }, [configIds, direction, props, setComponentProps, saveChange]);
-
-  const addComponentToContainer = useCallback(async (componentId: string) => {
-    const configId = Math.random().toString(36).substring(7);
+    const configId = generateConfigId();
+    const componentId = "container";
+    await saveChange(configId, componentId, {});
     const newConfigIds = [
       ...configIds,
       {
@@ -185,7 +155,20 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       },
     ];
     setConfigIds(newConfigIds);
-  }, [configIds, direction, props, setComponentProps, saveChange]);
+  }, [configIds, direction, props, saveComponentProps, saveChange]);
+
+  const addComponentToContainer = useCallback(async (componentId: string) => {
+    const configId = generateConfigId();
+    await saveChange(configId, componentId, {});
+    const newConfigIds = [
+      ...configIds,
+      {
+        configId,
+        componentId: componentId,
+      },
+    ];
+    setConfigIds(newConfigIds);
+  }, [configIds, direction, props, saveComponentProps, saveChange]);
 
   const deleteComponent = useCallback((componentId: string) => {
     setConfigIds((prev) => {
@@ -325,7 +308,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       <Button
         usage="primary"
         onClick={() => {
-          setComponentProps(
+          saveComponentProps(
             props.configId,
             props.componentId,
             configIds,

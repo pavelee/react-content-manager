@@ -1,5 +1,5 @@
 // @ts-expect-error - no types for cmConfig
-import persister from "/cm.persister.config.ts";
+import persister from "/cm.persister.ts";
 
 export const getPersister = (): ((
   configId: string,

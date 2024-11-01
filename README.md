@@ -23,6 +23,8 @@ React Content Manager is a package that allows you to build your app from manage
 npm install react-content-manager
 ```
 
+### As small as possible example
+
 ### Create cm.config.js file in your project root directory and export your configuration. Example configuration:
 
 ```javascript

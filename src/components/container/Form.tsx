@@ -165,38 +165,26 @@ export const Form = (props: ContainerProps & ComponentForm) => {
 
   const addContainer = useCallback(async () => {
     const configId = Math.random().toString(36).substring(7);
-    await saveChange(configId, 'container', {});
     const newConfigIds = [
       ...configIds,
       {
         configId,
         componentId: 'container',
       },
-    ]
-    await setComponentProps(
-      props.configId,
-      props.componentId,
-      newConfigIds,
-      direction,
-    );
+    ];
+    setConfigIds(newConfigIds);
   }, [configIds, direction, props, setComponentProps, saveChange]);
 
   const addComponentToContainer = useCallback(async (componentId: string) => {
     const configId = Math.random().toString(36).substring(7);
-    await saveChange(configId, componentId, {});
     const newConfigIds = [
       ...configIds,
       {
         configId,
         componentId: componentId,
       },
-    ]
-    await setComponentProps(
-      props.configId,
-      props.componentId,
-      newConfigIds,
-      direction,
-    );
+    ];
+    setConfigIds(newConfigIds);
   }, [configIds, direction, props, setComponentProps, saveChange]);
 
   const deleteComponent = useCallback((componentId: string) => {

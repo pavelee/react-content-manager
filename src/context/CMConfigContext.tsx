@@ -36,6 +36,7 @@ export const CMConfigContextProvider = (
 ) => {
   const [mode, setMode] = useState<"edit" | "view">(props.mode);
   let nextRouter = null;
+  // @TODO remove it or load it a way that it will support Vite
   nextRouter = require('next/navigation').useRouter();
 
   const setModeHandler = useCallback((mode: "edit" | "view") => {

@@ -18,7 +18,8 @@
     "prepublishOnly": "npm test",
     "format": "prettier --write .",
     "watch": "nodemon --watch './src/**/*' -e js,json,jsx,ts,tsx --exec 'npm run build'",
-    "lint": "eslint ./src --ext .ts,.tsx"
+    "lint": "eslint ./src --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

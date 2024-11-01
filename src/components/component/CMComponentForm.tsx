@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { Button, Drawer } from "antd";
 import { EditIcon } from "../icons/EditIcon";
-import { useCMConfig } from "../../context/CMConfigContext";
 import { Translator } from "../../pages/Translator";
+import { useCMConfig } from "../../index.client";
 
 type props = {
   children?: React.ReactNode;

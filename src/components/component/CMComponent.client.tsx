@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { useCMConfig } from "../../context/CMConfigContext";
 import { Tag } from "../tag/Tag";
+import { useCMConfig } from "../../index.client";
 
 type props = {
   children?: React.ReactNode;

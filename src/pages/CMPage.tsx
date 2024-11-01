@@ -28,10 +28,6 @@ cmComponentGallery.registerComponent({
   tags: ["layout"],
 });
 
-export const fetchConfigData = cmConfig.getFetcher();
-
-export const persistConfigData = cmConfig.getPersister();
-
 export const CMProvider = (props: Props) => {
   const isEditMode = props.mode === "edit";
 

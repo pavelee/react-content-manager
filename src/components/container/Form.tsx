@@ -10,9 +10,9 @@ import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
-import { useCMConfig } from "../../context/CMConfigContext";
 import { ComponentDetails, ComponentDetailsList } from "../../types";
 import Card from "../card/Card";
+import { useCMConfig } from "../../index.client";
 // import { cmComponentGallery } from "../../pages/CMPage";
 
 interface ComponentForm {

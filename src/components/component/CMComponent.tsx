@@ -1,13 +1,11 @@
 import React from "react";
 import { EditableProps, containerComponentId } from "../../pages/CMPage";
-// import { CMComponentServer } from "./CMComponent.server";
-// import { CMComponentClient } from "./CMComponent.client";
-import { fetchConfigData } from "../../pages/CMPage";
 import { cmComponentGallery } from "../../services/CmComponentGallery";
 import { DynamicComponent } from "../DynamicComponent";
 import { CMComponentClient } from "./CMComponent.client";
 import { ComponentDetailsList } from "../../types";
 import { CMComponentFormWrapper } from "./CMComponentForm";
+import { getFetcher } from "../../pages/getFetcher";
 
 export interface CMComponentProps extends EditableProps {
   configId: string;
@@ -15,14 +13,6 @@ export interface CMComponentProps extends EditableProps {
   componentProps?: any;
   initProps?: object;
 }
-
-export const fetchConfigIds = async (configId: string) => {
-  const data = await fetchConfigData(configId);
-  if (data?.data?.configIds) {
-    return data.data.configIds;
-  }
-  return [];
-};
 
 const getAvailableComponentIdList = (): ComponentDetailsList => {
   const c = cmComponentGallery.getPublicComponents();
@@ -39,7 +29,8 @@ const getAvailableComponentIdList = (): ComponentDetailsList => {
 }
 
 export const CMComponent = async (props: CMComponentProps) => {
-  const data = await fetchConfigData(props.configId);
+  const fetcher = getFetcher();
+  const data = await fetcher(props.configId);
   const {
     id: componentId,
     componentPath,
@@ -57,18 +48,6 @@ export const CMComponent = async (props: CMComponentProps) => {
   if (componentId === containerComponentId) {
     componentProps.mode = props.mode;
   }
-
-  // if (props.mode === "edit") {
-  //   return <CMComponentClient
-  //     configId={props.configId}
-  //     componentId={props.componentId}
-  //     componentProps={data.data}
-  //     setProps={'http://localhost:3000/api/configs/'}
-  //     formPath={'@/_modules/content/components/news-feed/alert/Form'}
-  //   >
-  //     <DynamicComponent componentPath={componentPath} props={componentProps} />
-  //   </CMComponentClient>;
-  // }
 
   let componentIdList: ComponentDetailsList = [];
   if (props.mode === "edit") {
@@ -96,11 +75,4 @@ export const CMComponent = async (props: CMComponentProps) => {
       <DynamicComponent componentPath={componentPath} props={componentProps} />
     </CMComponentClient>
   );
-
-  // if (props.mode === "edit") {
-  //   return <CMComponentClient {...props} />;
-  // }
-
-  // // @ts-ignore
-  // return <CMComponentServer {...props} />;
 };

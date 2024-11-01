@@ -5,11 +5,11 @@ import { Drawer, Switch } from "antd";
 import { useState } from "react";
 import {
   CMConfigContextProvider,
-  useCMConfig,
 } from "../context/CMConfigContext";
 import { EditIcon } from "../components/icons/EditIcon";
 import { Translator } from "./Translator";
 import { FloatButton } from "../components/float-button/FloatButton";
+import { useCMConfig } from "../index.client";
 
 const ModeratorBar = () => {
   const { mode, setMode } = useCMConfig();

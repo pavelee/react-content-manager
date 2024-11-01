@@ -1,1 +1,1 @@
-export { useCMConfig } from './context/CMConfigContext';
+export { useCMConfig } from './hooks/useCMConfig';

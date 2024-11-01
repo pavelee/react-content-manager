@@ -6,7 +6,7 @@ import { getPersister } from "../pages/getPersister";
 // import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 // import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
 
-interface CMConfigContextProps {
+export interface CMConfigContextProps {
   mode: "edit" | "view";
   setMode: (mode: "edit" | "view") => void;
   saveChange: (
@@ -61,16 +61,4 @@ export const CMConfigContextProvider = (
       {props.children}
     </CMConfigContext.Provider>
   );
-};
-
-export const useCMConfig = () => {
-  const context = useContext(CMConfigContext);
-
-  if (context === undefined) {
-    throw new Error(
-      "useCMConfig must be used within a CMConfigContextProvider",
-    );
-  }
-
-  return context;
 };

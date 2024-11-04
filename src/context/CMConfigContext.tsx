@@ -64,21 +64,24 @@ export const CMConfigContextProvider = (
       if (nextRouter) {
         nextRouter.refresh();
       }
-      onSuccess && onSuccess();
-      api.success({
-        message: Translator.translate("CHANGES_SAVED"),
-      })
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error(error);
-        api.error({
-          message: Translator.translate("ERROR"),
-          description: error.message,
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        api.success({
+          message: Translator.translate("CHANGES_SAVED"),
         });
       }
+    } catch (error: unknown) {
       if (onError) {
         onError(error);
       } else {
+        if (error instanceof Error) {
+          console.error(error);
+          api.error({
+            message: Translator.translate("ERROR"),
+            description: error.message,
+          });
+        }
         throw error;
       }
     } finally {

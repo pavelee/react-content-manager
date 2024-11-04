@@ -76,7 +76,7 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
 
 export const Form = (props: ContainerProps & ComponentForm) => {
   const { components } = props;
-  const { saveChange } = useCMConfig();
+  const { saveChange, isSaving } = useCMConfig();
   const [configIds, setConfigIds] = useState<ContainerWrapperId[]>(props.configIds && props.configIds?.length > 0 ?
     props.configIds.map((configId: ContainerWrapperId) => {
       return {

@@ -15,4 +15,5 @@ export const tranlations: { [key: string]: string } = {
   COMPONENT_LIBRARY: "Biblioteka komponentów",
   ADD_CONTAINER: "Dodaj kontener",
   CHANGES_SAVED: "Zmiany zapisane",
+  ERROR: "Błąd",
 };

@@ -11,7 +11,7 @@ import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../pages/Translator";
 import { ComponentDetails, ComponentDetailsList } from "../../types";
 import Card from "../card/Card";
-import { useCMConfig } from "../../index.client";
+import { useCMConfig } from "../../client/useCMConfig";
 import { generateConfigId } from "../../services/generateConfigId";
 
 interface ComponentForm {

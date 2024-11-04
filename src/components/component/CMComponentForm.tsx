@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button, Drawer } from "antd";
 import { EditIcon } from "../icons/EditIcon";
 import { Translator } from "../../pages/Translator";
-import { useCMConfig } from "../../index.client";
+import { useCMConfig } from "../../client/useCMConfig";
 
 type props = {
   children?: React.ReactNode;

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Tag } from "../tag/Tag";
-import { useCMConfig } from "../../index.client";
+import { useCMConfig } from "../../client/useCMConfig";
 
 type props = {
   children?: React.ReactNode;

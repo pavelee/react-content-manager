@@ -9,7 +9,7 @@ import {
 import { EditIcon } from "../components/icons/EditIcon";
 import { Translator } from "./Translator";
 import { FloatButton } from "../components/float-button/FloatButton";
-import { useCMConfig } from "../index.client";
+import { useCMConfig } from "../client/useCMConfig";
 
 const ModeratorBar = () => {
   const { mode, setMode } = useCMConfig();

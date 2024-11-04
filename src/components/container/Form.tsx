@@ -2,9 +2,8 @@
 
 import React, { useCallback } from "react";
 import { useState } from "react";
-import { Table, Form as AntdForm, Radio, Drawer } from "antd";
+import { Table, Form as AntdForm, Radio, Drawer, Button } from "antd";
 import { ContainerProps } from "./CMContainer";
-import { Button } from "../button/Button";
 import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
@@ -306,7 +305,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         </Button>
       </div>
       <Button
-        usage="primary"
+        type="primary"
         onClick={() => {
           saveComponentProps(
             props.configId,

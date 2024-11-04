@@ -145,7 +145,8 @@ export const Form = (props: ContainerProps & ComponentForm) => {
   const addContainer = useCallback(async () => {
     const configId = generateConfigId();
     const componentId = "container";
-    await saveChange(configId, componentId, {});
+    // we override onSuccess because we don't want to show the default success message for the user
+    await saveChange(configId, componentId, {}, () => {});
     const newConfigIds = [
       ...configIds,
       {
@@ -158,7 +159,8 @@ export const Form = (props: ContainerProps & ComponentForm) => {
 
   const addComponentToContainer = useCallback(async (componentId: string) => {
     const configId = generateConfigId();
-    await saveChange(configId, componentId, {});
+    // we override onSuccess because we don't want to show the default success message for the user
+    await saveChange(configId, componentId, {}, () => {});
     const newConfigIds = [
       ...configIds,
       {
@@ -306,6 +308,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
       </div>
       <Button
         type="primary"
+        loading={isSaving}
         onClick={() => {
           saveComponentProps(
             props.configId,

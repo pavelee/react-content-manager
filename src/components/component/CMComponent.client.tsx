@@ -20,7 +20,6 @@ export const CMComponentClient = (props: props) => {
         style={{
           border: "2px dotted lightgray",
           padding: "0.25rem",
-          borderRadius: "0.25rem",
         }}
       >
         <div

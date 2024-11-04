@@ -1,24 +1,28 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { getPersister } from "../pages/getPersister";
-// import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
-// import { cmComponentGallery, persistConfigData } from "../pages/CMPage";
+import { notification } from "antd";
+import { Translator } from "../pages/Translator";
 
 export interface CMConfigContextProps {
   mode: "edit" | "view";
   setMode: (mode: "edit" | "view") => void;
+  isSaving: boolean;
   saveChange: (
     configId: string,
     componentId: string,
     props: any,
+    onSuccess?: () => void,
+    onError?: (error: unknown) => void
   ) => Promise<void>;
 }
 
 export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
   mode: "view",
   setMode: () => { },
+  isSaving: false,
   saveChange: async (
     configId: string,
     componentId: string,
@@ -35,6 +39,9 @@ export const CMConfigContextProvider = (
   props: CMConfigContextProviderProps,
 ) => {
   const [mode, setMode] = useState<"edit" | "view">(props.mode);
+  const [isSaving, setIsSaving] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
+
   let nextRouter = null;
   // @TODO remove it or load it a way that it will support Vite
   nextRouter = require('next/navigation').useRouter();
@@ -43,22 +50,52 @@ export const CMConfigContextProvider = (
     setMode(mode);
   }, [setMode]);
 
-  const saveChange = useCallback(async (configId: string, componentId: string, props: any) => {
-    const persister = getPersister();
-    await persister(configId, componentId, props);
-    if (nextRouter) {
-      nextRouter.refresh();
+  const saveChange = useCallback(async (
+    configId: string,
+    componentId: string,
+    props: any,
+    onSuccess?: () => void,
+    onError?: (error: unknown) => void
+  ) => {
+    try {
+      setIsSaving(true);
+      const persister = getPersister();
+      await persister(configId, componentId, props);
+      if (nextRouter) {
+        nextRouter.refresh();
+      }
+      onSuccess && onSuccess();
+      api.success({
+        message: Translator.translate("CHANGES_SAVED"),
+      })
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error);
+        api.error({
+          message: Translator.translate("ERROR"),
+          description: error.message,
+        });
+      }
+      if (onError) {
+        onError(error);
+      } else {
+        throw error;
+      }
+    } finally {
+      setIsSaving(false);
     }
   }, [nextRouter]);
 
   const contextValue: CMConfigContextProps = {
     mode: mode,
     setMode: setModeHandler,
+    isSaving: isSaving,
     saveChange: saveChange,
   };
 
   return (
     <CMConfigContext.Provider value={contextValue}>
+      {contextHolder}
       {props.children}
     </CMConfigContext.Provider>
   );

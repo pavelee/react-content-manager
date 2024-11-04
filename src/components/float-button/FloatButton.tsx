@@ -24,6 +24,7 @@ export const FloatButton = (props: FloatButtonProps) => {
         justifyContent: "center",
         alignItems: "center",
         cursor: "pointer",
+        zIndex: 1000,
       }}
     >
       {children}

@@ -37,7 +37,7 @@
     "lint": "eslint ./src --ext .ts,.tsx",
     "type-check": "tsc --noEmit",
     "check-exports": "attw --pack .",
-    "ci": "npm run build && npm run check-format && npm run check-exports"
+    "ci": "npm run build && npm run test && npm run check-format && npm run check-exports"
   },
   "peerDependencies": {
     "react": ">=16"

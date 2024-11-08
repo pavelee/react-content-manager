@@ -1,6 +1,6 @@
 {
   "name": "react-content-manager",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "enable editable components in your react app",
   "keywords": [
     "react",
@@ -16,6 +16,9 @@
     "url": "git+https://github.com/pavelee/react-content-manager.git"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",

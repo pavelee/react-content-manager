@@ -8,7 +8,7 @@ type props = {
   children?: React.ReactNode;
   configId: string;
   componentId: string;
-}
+};
 
 export const CMComponentClient = (props: props) => {
   const { children } = props;

@@ -139,7 +139,13 @@ export const Skeleton = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       <SkeletonBlock />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "1rem",
+        }}
+      >
         <SkeletonBlock />
         <SkeletonBlock />
         <SkeletonBlock />

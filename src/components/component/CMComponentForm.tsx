@@ -8,7 +8,7 @@ import { useCMConfig } from "../../client/useCMConfig";
 
 type props = {
   children?: React.ReactNode;
-}
+};
 
 export const CMComponentFormWrapper = (props: props) => {
   const { children } = props;
@@ -17,10 +17,12 @@ export const CMComponentFormWrapper = (props: props) => {
 
   if (mode === "edit") {
     return (
-      <div style={{
-        marginTop: "1rem",
-        marginBottom: "1rem",
-      }}>
+      <div
+        style={{
+          marginTop: "1rem",
+          marginBottom: "1rem",
+        }}
+      >
         <Button
           icon={<EditIcon />}
           onClick={() => {
@@ -38,7 +40,7 @@ export const CMComponentFormWrapper = (props: props) => {
           {children}
         </Drawer>
       </div>
-    )
+    );
   }
 
   return null;

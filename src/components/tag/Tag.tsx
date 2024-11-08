@@ -2,7 +2,7 @@ import React from "react";
 
 type TagProps = {
   children: React.ReactNode;
-}
+};
 
 export const Tag = (props: TagProps) => {
   const { children } = props;

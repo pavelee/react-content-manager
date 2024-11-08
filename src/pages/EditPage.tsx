@@ -3,9 +3,7 @@
 import React, { useCallback } from "react";
 import { Drawer, Switch } from "antd";
 import { useState } from "react";
-import {
-  CMConfigContextProvider,
-} from "../context/CMConfigContext";
+import { CMConfigContextProvider } from "../context/CMConfigContext";
 import { EditIcon } from "../components/icons/EditIcon";
 import { Translator } from "./Translator";
 import { FloatButton } from "../components/float-button/FloatButton";
@@ -80,9 +78,7 @@ export const EditPage = (props: EditPageProps) => {
 
   return (
     <div>
-      <CMConfigContextProvider
-        mode={getInitialMode(props.isPreviewOnInit)}
-      >
+      <CMConfigContextProvider mode={getInitialMode(props.isPreviewOnInit)}>
         <ModeratorBar />
         {props.children}
       </CMConfigContextProvider>

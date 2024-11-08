@@ -17,7 +17,7 @@ interface ComponentForm {
   setProps: (props: any) => void;
   configId: string;
   componentId: string;
-  components: ComponentDetailsList
+  components: ComponentDetailsList;
 }
 
 export type ContainerWrapperId = {
@@ -25,7 +25,7 @@ export type ContainerWrapperId = {
   componentId: string;
 };
 
-type SelectedComponent = ComponentDetails & { configId: string }
+type SelectedComponent = ComponentDetails & { configId: string };
 type selectedComponentList = SelectedComponent[];
 
 interface ComponentGalleryProps {
@@ -37,53 +37,56 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
   const { addComponentToContainer, components } = props;
   const [showGallery, setShowGallery] = useState(false);
 
-  return (<>
-    <Button onClick={() => setShowGallery(true)}>
-      {Translator.translate("ADD_COMPONENT")}
-    </Button>
-    <Drawer
-      title={Translator.translate("COMPONENT_LIBRARY")}
-      placement="right"
-      onClose={() => setShowGallery(false)}
-      open={showGallery}
-    >
-      <div className="p-5 flex flex-col gap-4">
-        {components.map((component) => {
-          return (
-            <Card
-              key={component.id}
-              title={component.name}
-              description={component.desc}
-              actions={[
-                <Button
-                  key="add"
-                  onClick={() => {
-                    addComponentToContainer(component.id);
-                    setShowGallery(false);
-                  }}
-                >
-                  {Translator.translate("ADD_COMPONENT")}
-                </Button>
-              ]}
-            />
-          )
-        })}
-      </div>
-    </Drawer>
-  </>)
+  return (
+    <>
+      <Button onClick={() => setShowGallery(true)}>
+        {Translator.translate("ADD_COMPONENT")}
+      </Button>
+      <Drawer
+        title={Translator.translate("COMPONENT_LIBRARY")}
+        placement="right"
+        onClose={() => setShowGallery(false)}
+        open={showGallery}
+      >
+        <div className="p-5 flex flex-col gap-4">
+          {components.map((component) => {
+            return (
+              <Card
+                key={component.id}
+                title={component.name}
+                description={component.desc}
+                actions={[
+                  <Button
+                    key="add"
+                    onClick={() => {
+                      addComponentToContainer(component.id);
+                      setShowGallery(false);
+                    }}
+                  >
+                    {Translator.translate("ADD_COMPONENT")}
+                  </Button>,
+                ]}
+              />
+            );
+          })}
+        </div>
+      </Drawer>
+    </>
+  );
 };
 
 export const Form = (props: ContainerProps & ComponentForm) => {
   const { components } = props;
   const { saveChange, isSaving } = useCMConfig();
-  const [configIds, setConfigIds] = useState<ContainerWrapperId[]>(props.configIds && props.configIds?.length > 0 ?
-    props.configIds.map((configId: ContainerWrapperId) => {
-      return {
-        configId: configId.configId,
-        componentId: configId.componentId,
-      };
-    })
-    : []
+  const [configIds, setConfigIds] = useState<ContainerWrapperId[]>(
+    props.configIds && props.configIds?.length > 0
+      ? props.configIds.map((configId: ContainerWrapperId) => {
+          return {
+            configId: configId.configId,
+            componentId: configId.componentId,
+          };
+        })
+      : [],
   );
   const [direction, setDirection] = useState<"row" | "column">(
     props.direction ? props.direction : "column",
@@ -112,35 +115,34 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     return c;
   }, [components, configIds]);
 
-  const saveComponentProps = useCallback(async (
-    configId: string,
-    componentId: string,
-    configIds: ContainerWrapperId[],
-    direction?: "row" | "column",
-  ) => {
-    const data: {
-      configIds: {
-        configId: string;
-        componentId: string;
-      }[];
-      direction?: "row" | "column";
-    } = {
-      configIds: configIds.map((config) => {
-        return {
-          configId: config.configId,
-          componentId: config.componentId,
-        };
-      }),
-    };
-    if (direction) {
-      data.direction = direction;
-    }
-    await saveChange(
-      configId,
-      componentId,
-      data
-    )
-  }, [props, saveChange]);
+  const saveComponentProps = useCallback(
+    async (
+      configId: string,
+      componentId: string,
+      configIds: ContainerWrapperId[],
+      direction?: "row" | "column",
+    ) => {
+      const data: {
+        configIds: {
+          configId: string;
+          componentId: string;
+        }[];
+        direction?: "row" | "column";
+      } = {
+        configIds: configIds.map((config) => {
+          return {
+            configId: config.configId,
+            componentId: config.componentId,
+          };
+        }),
+      };
+      if (direction) {
+        data.direction = direction;
+      }
+      await saveChange(configId, componentId, data);
+    },
+    [props, saveChange],
+  );
 
   const addContainer = useCallback(async () => {
     const configId = generateConfigId();
@@ -157,65 +159,77 @@ export const Form = (props: ContainerProps & ComponentForm) => {
     setConfigIds(newConfigIds);
   }, [configIds, direction, props, saveComponentProps, saveChange]);
 
-  const addComponentToContainer = useCallback(async (componentId: string) => {
-    const configId = generateConfigId();
-    // we override onSuccess because we don't want to show the default success message for the user
-    await saveChange(configId, componentId, {}, () => {});
-    const newConfigIds = [
-      ...configIds,
-      {
-        configId,
-        componentId: componentId,
-      },
-    ];
-    setConfigIds(newConfigIds);
-  }, [configIds, direction, props, saveComponentProps, saveChange]);
+  const addComponentToContainer = useCallback(
+    async (componentId: string) => {
+      const configId = generateConfigId();
+      // we override onSuccess because we don't want to show the default success message for the user
+      await saveChange(configId, componentId, {}, () => {});
+      const newConfigIds = [
+        ...configIds,
+        {
+          configId,
+          componentId: componentId,
+        },
+      ];
+      setConfigIds(newConfigIds);
+    },
+    [configIds, direction, props, saveComponentProps, saveChange],
+  );
 
-  const deleteComponent = useCallback((componentId: string) => {
-    setConfigIds((prev) => {
-      return prev.filter((config) => {
-        return config.configId !== componentId;
+  const deleteComponent = useCallback(
+    (componentId: string) => {
+      setConfigIds((prev) => {
+        return prev.filter((config) => {
+          return config.configId !== componentId;
+        });
       });
-    });
-  }, [setConfigIds]);
+    },
+    [setConfigIds],
+  );
 
-  const swapComponentPosition = useCallback((
-    componentId: string,
-    direction: "up" | "down",
-  ) => {
-    const index = configIds.findIndex((config) => {
-      return config.configId === componentId;
-    });
-    const component = configIds[index];
-    if (index === undefined) {
-      return;
-    }
-    if (direction === "up") {
-      if (index === 0) {
+  const swapComponentPosition = useCallback(
+    (componentId: string, direction: "up" | "down") => {
+      const index = configIds.findIndex((config) => {
+        return config.configId === componentId;
+      });
+      const component = configIds[index];
+      if (index === undefined) {
         return;
       }
-      const newComponentIds = [...configIds];
-      newComponentIds[index] = configIds[index - 1];
-      newComponentIds[index - 1] = component;
-      setConfigIds(newComponentIds);
-    } else {
-      if (index === configIds.length - 1) {
-        return;
+      if (direction === "up") {
+        if (index === 0) {
+          return;
+        }
+        const newComponentIds = [...configIds];
+        newComponentIds[index] = configIds[index - 1];
+        newComponentIds[index - 1] = component;
+        setConfigIds(newComponentIds);
+      } else {
+        if (index === configIds.length - 1) {
+          return;
+        }
+        const newComponentIds = [...configIds];
+        newComponentIds[index] = configIds[index + 1];
+        newComponentIds[index + 1] = component;
+        setConfigIds(newComponentIds);
       }
-      const newComponentIds = [...configIds];
-      newComponentIds[index] = configIds[index + 1];
-      newComponentIds[index + 1] = component;
-      setConfigIds(newComponentIds);
-    }
-  }, [configIds, setConfigIds]);
+    },
+    [configIds, setConfigIds],
+  );
 
-  const moveComponentUp = useCallback((componentId: string) => {
-    swapComponentPosition(componentId, "up");
-  }, [swapComponentPosition]);
+  const moveComponentUp = useCallback(
+    (componentId: string) => {
+      swapComponentPosition(componentId, "up");
+    },
+    [swapComponentPosition],
+  );
 
-  const moveComponentDown = useCallback((componentId: string) => {
-    swapComponentPosition(componentId, "down");
-  }, [swapComponentPosition]);
+  const moveComponentDown = useCallback(
+    (componentId: string) => {
+      swapComponentPosition(componentId, "down");
+    },
+    [swapComponentPosition],
+  );
 
   return (
     <div
@@ -236,9 +250,18 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         layout="vertical"
       >
         <AntdForm.Item label={Translator.translate("COMPONENT_DIRECTION")}>
-          <Radio.Group size="middle" className="flex" value={direction} onChange={(ev) => setDirection(ev.target.value)}>
-            <Radio.Button className="w-full" value="row">{Translator.translate("COMPONENT_DIRECTION_HORIZONTAL")}</Radio.Button>
-            <Radio.Button className="w-full" value="column">{Translator.translate("COMPONENT_DIRECTION_VERTICAL")}</Radio.Button>
+          <Radio.Group
+            size="middle"
+            className="flex"
+            value={direction}
+            onChange={(ev) => setDirection(ev.target.value)}
+          >
+            <Radio.Button className="w-full" value="row">
+              {Translator.translate("COMPONENT_DIRECTION_HORIZONTAL")}
+            </Radio.Button>
+            <Radio.Button className="w-full" value="column">
+              {Translator.translate("COMPONENT_DIRECTION_VERTICAL")}
+            </Radio.Button>
           </Radio.Group>
         </AntdForm.Item>
         <Table
@@ -271,11 +294,13 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               title: Translator.translate("ACTIONS"),
               key: "actions",
               render: (record: SelectedComponent) => (
-                <div style={{
-                  transform: "translateY(0.5rem)",
-                  display: "flex",
-                  gap: "0.75rem",
-                }}>
+                <div
+                  style={{
+                    transform: "translateY(0.5rem)",
+                    display: "flex",
+                    gap: "0.75rem",
+                  }}
+                >
                   <Button onClick={() => moveComponentUp(record.configId)}>
                     <ArrowUpIcon />
                   </Button>

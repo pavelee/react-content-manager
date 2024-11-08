@@ -1,6 +1,6 @@
-import React from 'react';
-import { ArrowUpOutlined } from '@ant-design/icons';
+import React from "react";
+import { ArrowUpOutlined } from "@ant-design/icons";
 
 export const ArrowUpIcon = () => {
-  return (<ArrowUpOutlined />);
+  return <ArrowUpOutlined />;
 };

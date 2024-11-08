@@ -12,7 +12,8 @@ const Form = (props: TextBlockProps & ComponentForm) => {
 
   return (
     <>
-      <form className="p-5 flex flex-col gap-4"
+      <form
+        className="p-5 flex flex-col gap-4"
         onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);

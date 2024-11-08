@@ -26,7 +26,7 @@ const getAvailableComponentIdList = (): ComponentDetailsList => {
     });
   });
   return componentIdList;
-}
+};
 
 export const CMComponent = async (props: CMComponentProps) => {
   const fetcher = getFetcher();
@@ -55,23 +55,18 @@ export const CMComponent = async (props: CMComponentProps) => {
   }
 
   return (
-    <CMComponentClient
-      configId={props.configId}
-      componentId={componentId}
-    >
-      {
-        props.mode === "edit" && formPath && (
-          <CMComponentFormWrapper>
-            <DynamicComponent
-              componentPath={formPath}
-              props={componentProps}
-              configId={props.configId}
-              componentId={componentId}
-              components={componentIdList}
-            />
-          </CMComponentFormWrapper>
-        )
-      }
+    <CMComponentClient configId={props.configId} componentId={componentId}>
+      {props.mode === "edit" && formPath && (
+        <CMComponentFormWrapper>
+          <DynamicComponent
+            componentPath={formPath}
+            props={componentProps}
+            configId={props.configId}
+            componentId={componentId}
+            components={componentIdList}
+          />
+        </CMComponentFormWrapper>
+      )}
       <DynamicComponent componentPath={componentPath} props={componentProps} />
     </CMComponentClient>
   );

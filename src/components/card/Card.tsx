@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 interface CardProps {
   title: string;
   description?: string;
-  actions: ReactNode[]
+  actions: ReactNode[];
 }
 
 const Card: React.FC<CardProps> = (props: CardProps) => {

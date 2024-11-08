@@ -32,12 +32,11 @@ export const CMProvider = (props: Props) => {
   const isEditMode = props.mode === "edit";
 
   if (isEditMode) {
-    return <EditPage
-      mode={props.mode}
-      isPreviewOnInit={cmConfig.getPreviewOnInit()}
-    >
-      {props.children}
-    </EditPage>;
+    return (
+      <EditPage mode={props.mode} isPreviewOnInit={cmConfig.getPreviewOnInit()}>
+        {props.children}
+      </EditPage>
+    );
   }
   return <ViewPage>{props.children}</ViewPage>;
 };

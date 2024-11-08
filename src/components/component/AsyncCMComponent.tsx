@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import { useEffect, useState } from "react";
@@ -7,8 +7,8 @@ import { CMComponent, CMComponentProps } from "./CMComponent";
 /**
  * Component that asynchronously loads a CMComponent when using client side rendering.
  * Use this instead of CMComponent when you develop with Vite or next.js page that is set as client side rendering.
- * @param props 
- * @returns 
+ * @param props
+ * @returns
  */
 export const AsyncCMComponent = (props: CMComponentProps) => {
   const { configId, componentId, mode } = props;
@@ -41,4 +41,4 @@ export const AsyncCMComponent = (props: CMComponentProps) => {
   }
 
   return <>{component}</>;
-}
+};

@@ -3,7 +3,7 @@ import React from "react";
 type FloatButtonProps = {
   onClick: () => void;
   children?: React.ReactNode;
-}
+};
 
 export const FloatButton = (props: FloatButtonProps) => {
   const { onClick, children } = props;
@@ -29,5 +29,5 @@ export const FloatButton = (props: FloatButtonProps) => {
     >
       {children}
     </button>
-  )
-}
+  );
+};

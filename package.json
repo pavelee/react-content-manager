@@ -1,6 +1,21 @@
 {
   "name": "react-content-manager",
   "version": "2.1.0",
+  "description": "enable editable components in your react app",
+  "keywords": [
+    "react",
+    "content-manager"
+  ],
+  "homepage": "https://github.com/pavelee/react-content-manager#readme",
+  "bugs": {
+    "url": "https://github.com/pavelee/react-content-manager/issues"
+  },
+  "author": "Paweł Ciosek",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavelee/react-content-manager.git"
+  },
+  "license": "MIT",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -21,20 +36,6 @@
     "lint": "eslint ./src --ext .ts,.tsx",
     "type-check": "tsc --noEmit"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pavelee/react-content-manager.git"
-  },
-  "keywords": [
-    "react",
-    "content-manager"
-  ],
-  "author": "Paweł Ciosek",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/pavelee/react-content-manager/issues"
-  },
-  "homepage": "https://github.com/pavelee/react-content-manager#readme",
   "peerDependencies": {
     "react": ">=16"
   },

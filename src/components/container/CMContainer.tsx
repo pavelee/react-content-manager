@@ -17,6 +17,12 @@ const getCssStyles = (props: ContainerProps, mode: mode) => {
   if (props.direction === "column") {
     styles = { ...styles, flexDirection: "column" };
   }
+  if (props.direction === "row") {
+    styles = {
+      ...styles,
+      flexWrap: "wrap",
+    };
+  }
   if (mode === "edit") {
     styles = {
       ...styles,

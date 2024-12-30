@@ -4,7 +4,7 @@ const readProps = async (
   serializedProps?: ComponentProps,
 ): Promise<ComponentProps> => {
   return {
-    text: serializedProps?.text ?? 'Default text, edit me!',
+    text: serializedProps?.text ?? "Default text, edit me!",
   };
 };
 

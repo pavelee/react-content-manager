@@ -15,5 +15,15 @@ cmConfig.getComponentGallery().registerComponent({
   writeProps: () => import("./src/components/vite/WriteProps"), // path to function that will serialize component props to your persistance layer
   tags: ["content", "alert"], // tags that will be used to filter components in component gallery
 });
+cmConfig.getComponentGallery().registerComponent({
+  id: "cat-facts",
+  name: "Fun cat facts",
+  public: true,
+  componentPath: () => import("./src/components/cat-facts/Component"),
+  formPath: () => import("./src/components/cat-facts/Form"),
+  readProps: () => import("./src/components/cat-facts/ReadProps"),
+  writeProps: () => import("./src/components/cat-facts/WriteProps"),
+  tags: ["content", "alert"],
+});
 
 export default cmConfig;

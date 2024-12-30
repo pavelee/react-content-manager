@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCMConfig } from "react-content-manager/dist/esm/client/useCMConfig";
 import { TextBlockProps } from "./Component";
+import { useRouter } from "next/navigation";
 
 interface ComponentForm {
   configId: string;
@@ -10,6 +11,7 @@ interface ComponentForm {
 }
 
 const Form = (props: TextBlockProps & ComponentForm) => {
+  const router = useRouter();
   const { saveChange, isSaving } = useCMConfig();
   const [limit, setLimit] = useState(props.limit);
 
@@ -21,9 +23,16 @@ const Form = (props: TextBlockProps & ComponentForm) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const limit = formData.get("limit") as string;
-          await saveChange(props.configId, props.componentId, {
-            limit: limit,
-          });
+          await saveChange(
+            props.configId,
+            props.componentId,
+            {
+              limit: limit,
+            },
+            () => {
+              router.refresh();
+            },
+          );
         }}
       >
         <div>

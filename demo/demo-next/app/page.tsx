@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CMComponent, CMProvider } from "react-content-manager";
+import "@ant-design/v5-patch-for-react-19";
 
 type mode = "edit" | "view";
 
@@ -10,7 +11,7 @@ type props = {
 };
 
 export default async function Home(props: props) {
-  const { mode = "view" } = (await props.searchParams);
+  const { mode = "view" } = await props.searchParams;
   return (
     <CMProvider mode={mode}>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">

@@ -38,10 +38,6 @@ export const CMConfigContextProvider = (
   const [isSaving, setIsSaving] = useState(false);
   const [api, contextHolder] = notification.useNotification();
 
-  let nextRouter = null;
-  // @TODO remove it or load it a way that it will support Vite
-  nextRouter = require("next/navigation").useRouter();
-
   const setModeHandler = useCallback(
     (mode: "edit" | "view") => {
       setMode(mode);
@@ -61,9 +57,6 @@ export const CMConfigContextProvider = (
         setIsSaving(true);
         const persister = getPersister();
         await persister(configId, componentId, props);
-        if (nextRouter) {
-          nextRouter.refresh();
-        }
         if (onSuccess) {
           onSuccess();
         } else {
@@ -88,7 +81,7 @@ export const CMConfigContextProvider = (
         setIsSaving(false);
       }
     },
-    [nextRouter],
+    [],
   );
 
   const contextValue: CMConfigContextProps = {

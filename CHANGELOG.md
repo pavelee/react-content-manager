@@ -1,5 +1,11 @@
 # react-content-manager
 
+## 2.2.0
+
+### Minor Changes
+
+- Removed support to execute useRouter from next.js, because it blocked way to work with Vite and forces developer to always refresh RSC (react server components). If you want to still have this feature you can pass it inside onSuccess/onFailure as params of saveChange
+
 ## 2.1.5
 
 ### Patch Changes

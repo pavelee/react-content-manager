@@ -1,5 +1,12 @@
 # react-content-manager
 
+## 2.3.0
+
+### Minor changes
+
+- Updated spec bumps
+- Added support for React 19 with antd (adapter)
+
 ## 2.2.1
 
 ### Patch changes

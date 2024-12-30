@@ -1,5 +1,11 @@
 # react-content-manager
 
+## 2.2.1
+
+### Patch changes
+
+- Updated README about using next.js router to refresh RSC components to see changes
+
 ## 2.2.0
 
 ### Minor Changes

@@ -72,6 +72,14 @@ interface ComponentForm {
 }
 
 const Form = (props: ComponentProps & ComponentForm) => {
+  /**
+   * // If you are using next.js you might want refresh page after saving changes
+   * const router = useRouter();
+   * // then pass the onSuccess as parameter of saveChange function
+   * const OnSuccess = () => {
+   *  router.refresh();
+   * }
+   **/
   const { saveChange, isSaving } = useCMConfig();
   const [limit, setLimit] = useState(props.text);
 

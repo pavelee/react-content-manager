@@ -1,6 +1,6 @@
 {
   "name": "react-content-manager",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "enable editable components in your react app",
   "keywords": [
     "react",
@@ -19,7 +19,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/cjs/index.js",
+  "main": "./dist/cjs/index.js",  
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "files": [

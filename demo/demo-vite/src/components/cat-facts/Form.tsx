@@ -10,7 +10,7 @@ interface ComponentForm {
 }
 
 const Form = (props: TextBlockProps & ComponentForm) => {
-  const { saveChange, isSaving } = useCMConfig();
+  const { saveChange } = useCMConfig();
   const [limit, setLimit] = useState(props.limit);
 
   return (

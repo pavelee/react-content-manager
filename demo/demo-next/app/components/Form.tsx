@@ -1,24 +1,30 @@
 "use client";
 
 import { useState } from "react";
+import { useCMConfig } from "react-content-manager/dist/esm/client/useCMConfig";
 import { TextBlockProps } from "./TextBlock";
 
 interface ComponentForm {
   setProps: (props: any) => void;
+  configId: string;
+  componentId: string;
 }
 
 const Form = (props: TextBlockProps & ComponentForm) => {
+  const { saveChange, isSaving } = useCMConfig();
   const [limit, setLimit] = useState(props.limit);
 
   return (
     <>
       <form
         className="p-5 flex flex-col gap-4"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
           const limit = formData.get("limit") as string;
-          props.setProps({ limit: limit });
+          await saveChange(props.configId, props.componentId, {
+            limit: limit,
+          });
         }}
       >
         <div>

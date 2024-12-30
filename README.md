@@ -25,107 +25,7 @@ npm install react-content-manager
 
 ### As small as possible example
 
-### Create cm.config.js file in your project root directory and export your configuration. Example configuration:
-
-```javascript
-import { CmConfig } from "react-content-manager";
-
-// optionally last parameter is language, default is 'en', we support 'pl' as well
-const cmConfig = new CmConfig("en");
-
-// register your components
-cmConfig.getComponentGallery().registerComponent({
-  id: "text-block", // unique id of component, you will use it in your code
-  name: "Text Block", // name of component, it will be visible in component gallery
-  desc: "optionally you can add description for the user", // description of component, it will be visible in component gallery
-  public: true, // should be visible in component gallery for users
-  componentPath: () => import("@/app/components/TextBlock"), // path to component that will be rendered
-  formPath: () => import("@/app/components/Form"), // path to component with form that will be use to edit component props
-  readProps: () => import("@/app/components/ReadProps"), // path to function that will deserialize component props from your persistence layer
-  writeProps: () => import("@/app/components/WriteProps"), // path to function that will serialize component props to your persistence layer
-  tags: ["content", "alert"], // tags that will be used to filter components in component gallery
-});
-
-export default cmConfig;
-```
-
-### Create cm.persister.ts in your root directory.
-
-`Architecture Note:
-We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity`
-
-```javascript
-"use client";
-
-const persister = async (configId: string, componentId: string, data: any) => {
-  const d = await fetch(`/YOUR_API_ADDRESS`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      configId,
-      componentId,
-      data,
-    }),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .catch((err) => {
-      console.error(err);
-      return {};
-    });
-};
-
-export default persister;
-
-```
-
-### Create cm.fetcher.ts in your root directory.
-
-`Architecture Note:
-As you can see below, we are using `server-only` import. It's a the decision that code will always run on the server side. It's possible with the Next.js usage.
-
-```javascript
-import "server-only";
-
-const fetcher = async (configId: string): Promise<any> => {
-  // here you fetch data, it depends on you. It could be connect to database or some API
-  const d = YOUR_DB_PROVIDER.fetchData();
-
-  // we should always return empty object if there is no data for configId to keep mechanism healthy
-  if (!d) {
-    return {};
-  }
-
-  return d;
-};
-
-export default fetcher;
-
-
-```
-
-### Edit your page.tsx and wrap your page with CmProvider. Example:
-
-```javascript
-import { CMComponent, CMProvider } from "react-content-manager";
-
-export default function Home() {
-  return (
-    <CMProvider mode={"edit"}>
-      <CMComponent
-        configId="main_top"
-        componentId={"text-block"}
-        mode={"edit"}
-      />
-    </CMProvider>
-  );
-}
-```
-
-### Build your first manageable component
+### Create TextEdit component (simple example)
 
 You need 4 files:
 
@@ -137,63 +37,43 @@ You need 4 files:
 minimal example for components (live inside demo-next app)
 
 `Component.tsx`
+
 ```typescript
-const fetchRandomCatFact = async () => {
-  const response = await fetch("https://catfact.ninja/fact");
-  const data = await response.json();
-  return data.fact;
+export type ComponentProps = {
+  text?: string;
 };
 
-const fetchListOfRandomCatFacts = async (limit: number = 2) => {
-  const facts = [];
-  for (let i = 0; i < limit; i++) {
-    facts.push(await fetchRandomCatFact());
-  }
-  return facts;
-};
-
-export type TextBlockProps = {
-  limit?: number;
-};
-
-const TextBlock = async (props: TextBlockProps) => {
-  const { limit } = props;
-
-  const catFacts = await fetchListOfRandomCatFacts(limit);
+const Component = async (props: ComponentProps) => {
+  const { text } = props;
 
   return (
     <div className="bg-white p-4 rounded-xl">
-      <ul className="list-disc list-inside">
-        {catFacts.map((fact, index) => (
-          <li className="font-mono font-bold" key={index}>
-            {fact}
-          </li>
-        ))}
-      </ul>
+      <div className="text-black">{text}</div>
     </div>
   );
 };
 
-// Important! we need to make it default export!
-export default TextBlock;
+// remember to export default the component!
+export default Component;
 ```
 
 `Form.tsx`
+
 ```typescript
 "use client";
 
 import { useState } from "react";
 import { useCMConfig } from "react-content-manager/dist/esm/client/useCMConfig";
-import { TextBlockProps } from "./TextBlock";
+import { ComponentProps } from "./Component";
 
 interface ComponentForm {
   configId: string;
   componentId: string;
 }
 
-const Form = (props: TextBlockProps & ComponentForm) => {
+const Form = (props: ComponentProps & ComponentForm) => {
   const { saveChange, isSaving } = useCMConfig();
-  const [limit, setLimit] = useState(props.limit);
+  const [limit, setLimit] = useState(props.text);
 
   return (
     <>
@@ -202,18 +82,17 @@ const Form = (props: TextBlockProps & ComponentForm) => {
         onSubmit={async (e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
-          const limit = formData.get("limit") as string;
+          const text = formData.get("text") as string;
           await saveChange(props.configId, props.componentId, {
-            limit: limit,
+            text: text,
           });
         }}
       >
         <div>
           <input
-            type="number"
-            name="limit"
-            value={limit}
-            onChange={(e) => setLimit(parseInt(e.target.value))}
+            type="text"
+            name="text"
+            defaultValue={props.text}
             className="bg-white p-2 rounded-lg border border-gray-300"
           />
         </div>
@@ -234,12 +113,15 @@ export default Form;
 ```
 
 `ReadProps.tsx`
-```typescript
-import { TextBlockProps } from "./TextBlock";
 
-const readProps = async (serializedProps?: TextBlockProps): Promise<TextBlockProps> => {
+```typescript
+import { ComponentProps } from "./Component";
+
+const readProps = async (
+  serializedProps?: ComponentProps,
+): Promise<ComponentProps> => {
   return {
-    limit: serializedProps?.limit ?? 2,
+    text: serializedProps?.text ?? "Default text, edit me!",
   };
 };
 
@@ -247,17 +129,106 @@ export default readProps;
 ```
 
 `WriteProps.tsx`
-```typescript
-import { TextBlockProps } from "./TextBlock";
 
-export const writeProps = async (props: TextBlockProps) => {
+```typescript
+import { ComponentProps } from "./Component";
+
+export const writeProps = async (props: ComponentProps) => {
   const data = {
-    limit: props.limit ?? 2,
+    text: props.text,
   };
   return data;
 };
 
 export default writeProps;
+```
+
+### Create cm.config.js file in your project root directory and export your configuration. Example configuration:
+
+```javascript
+import { CmConfig } from "react-content-manager";
+
+// optionally last parameter is language, default is 'en', we support 'pl' as well
+const cmConfig = new CmConfig("en");
+
+// register your components
+cmConfig.getComponentGallery().registerComponent({
+  id: "text-block", // unique id of component, you will use it in your code
+  name: "Text Block", // name of component, it will be visible in component gallery
+  desc: "optionally you can add description for the user", // description of component, it will be visible in component gallery
+  public: true, // should be visible in component gallery for users
+  componentPath: () => import("@/app/components/text-block/Component"), // path to component that will be rendered
+  formPath: () => import("@/app/components/text-block/Form"), // path to component with form that will be use to edit component props
+  readProps: () => import("@/app/components/text-block/ReadProps"), // path to function that will deserialize component props from your persistence layer
+  writeProps: () => import("@/app/components/text-block/WriteProps"), // path to function that will serialize component props to your persistence layer
+  tags: ["content", "alert"], // tags that will be used to filter components in component gallery
+});
+
+export default cmConfig;
+```
+
+### Create cm.persister.ts in your root directory.
+
+`Architecture Note:
+We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity`
+
+```javascript
+"use client";
+
+import { CmHostHandler } from "react-content-manager";
+
+const persister = async (configId: string, componentId: string, data: any) => {
+  const host = CmHostHandler.getHost();
+  const response = await fetch(`${host}/api/store`, {
+    method: "POST",
+    body: JSON.stringify({
+      configId: configId,
+      componentId: componentId,
+      data: data,
+    }),
+  });
+};
+
+export default persister;
+
+```
+
+### Create cm.fetcher.ts in your root directory.
+
+`Architecture Note:
+As you can see below, we are using `server-only` import. It's a the decision that code will always run on the server side. It's possible with the Next.js usage.
+
+```javascript
+import { CmHostHandler } from "react-content-manager";
+
+const fetcher = async (componentId: string): Promise<any> => {
+  let host = CmHostHandler.getHost();
+  const data = await fetch(`${host}/api/store?configId=${componentId}`, {
+    cache: "no-cache",
+  });
+  const json = await data.json();
+  return json;
+};
+
+export default fetcher;
+```
+
+### Edit your page.tsx and wrap your page with CmProvider. Example:
+
+```javascript
+import { CMComponent, CMProvider } from "react-content-manager";
+
+export default function Home() {
+  return (
+    <CMProvider mode={"edit"}>
+      <CMComponent
+        configId="main_top"
+        componentId={"text-block"}
+        mode={"edit"}
+      />
+    </CMProvider>
+  );
+}
 ```
 
 ### Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.

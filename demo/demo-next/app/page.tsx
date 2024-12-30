@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { CMComponent, CMProvider } from "react-content-manager";
-import "@ant-design/v5-patch-for-react-19";
 
 type mode = "edit" | "view";
 

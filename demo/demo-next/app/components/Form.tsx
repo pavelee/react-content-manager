@@ -5,7 +5,6 @@ import { useCMConfig } from "react-content-manager/dist/esm/client/useCMConfig";
 import { TextBlockProps } from "./TextBlock";
 
 interface ComponentForm {
-  setProps: (props: any) => void;
   configId: string;
   componentId: string;
 }

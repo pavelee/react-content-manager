@@ -1,8 +1,8 @@
 import { TextBlockProps } from "./TextBlock";
 
-const readProps = async (serailizedProps?: TextBlockProps): Promise<any> => {
+const readProps = async (serializedProps?: TextBlockProps): Promise<TextBlockProps> => {
   return {
-    limit: serailizedProps?.limit ?? 2,
+    limit: serializedProps?.limit ?? 2,
   };
 };
 

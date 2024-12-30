@@ -16,7 +16,7 @@ export type TextBlockProps = {
   limit?: number;
 };
 
-const TextBlock = async (props: TextBlockProps) => {
+const Component = async (props: TextBlockProps) => {
   const { limit } = props;
 
   const catFacts = await fetchListOfRandomCatFacts(limit);
@@ -36,4 +36,4 @@ const TextBlock = async (props: TextBlockProps) => {
   );
 };
 
-export default TextBlock;
+export default Component;

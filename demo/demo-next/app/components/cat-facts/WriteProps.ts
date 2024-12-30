@@ -1,4 +1,4 @@
-import { TextBlockProps } from "./TextBlock";
+import { TextBlockProps } from "./Component";
 
 export const writeProps = async (props: TextBlockProps) => {
   const data = {

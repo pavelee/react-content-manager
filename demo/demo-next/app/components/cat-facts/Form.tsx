@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useCMConfig } from "react-content-manager/dist/esm/client/useCMConfig";
-import { TextBlockProps } from "./TextBlock";
+import { TextBlockProps } from "./Component";
 
 interface ComponentForm {
   configId: string;

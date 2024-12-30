@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
 import { StoreInterface } from "@/app/_store/StoreInterface";
 import { LocalFileStore } from "@/app/_store/file/LocalFileStore";
 

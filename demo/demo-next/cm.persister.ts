@@ -1,3 +1,5 @@
+"use client";
+
 import { CmHostHandler } from "react-content-manager";
 
 const persister = async (configId: string, componentId: string, data: any) => {

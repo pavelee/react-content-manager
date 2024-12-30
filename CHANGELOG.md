@@ -1,5 +1,11 @@
 # react-content-manager
 
+## 2.1.5
+
+### Patch Changes
+
+- Clean up in readme, better starting example provided
+
 ## 2.1.4
 
 ### Patch Changes

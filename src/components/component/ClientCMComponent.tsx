@@ -10,7 +10,7 @@ import { CMComponent, CMComponentProps } from "./CMComponent";
  * @param props
  * @returns
  */
-export const AsyncCMComponent = (props: CMComponentProps) => {
+export const ClientCMComponent = (props: CMComponentProps) => {
   const { configId, componentId, mode } = props;
 
   const [component, setComponent] = useState<React.ReactNode>(null);

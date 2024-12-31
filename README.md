@@ -2,8 +2,6 @@
 
 ## Important!
 
-**Package is now ONLY compatible with Next.js framework and React Server Components**. Still working on integration with other frameworks.
-
 Package is now stable, it could be used on production.
 
 ## What is it?
@@ -13,19 +11,121 @@ React Content Manager is a package that allows you to build your app from manage
 ## Roadmap
 
 - Add support to customize UI of the package
+- Add support to customize Skeleton
 - Drop antd library for smaller size of the package
 
 ## How to use it?
 
-### Install package using npm or yarn
+### Install package with your choice package manager
 
 ```
 npm install react-content-manager
 ```
 
-### As small as possible example
+or
 
-### Create TextEdit component (simple example)
+```
+yarn add react-content-manager
+```
+
+### Integrate with your framework/bundler
+
+#### Usage with Next.js
+
+inside your next.config.js add or merge with existing one:
+
+```typescript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // .. your other options
+  webpack: (config) => {
+    const path = require("path");
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "cm.config.ts": path.resolve(__dirname, "cm.config.ts"),
+      "cm.fetcher.ts": path.resolve(__dirname, "cm.fetcher.ts"),
+      "cm.persister.ts": path.resolve(__dirname, "cm.persister.ts"),
+    };
+    return config;
+  },
+};
+
+module.exports = nextConfig;
+```
+
+#### Usage with Vite
+
+Inside your vite.config.ts add or merge with existing one:
+
+```typescript
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "cm.config.ts": path.resolve(__dirname, "cm.config.ts"),
+      "cm.fetcher.ts": path.resolve(__dirname, "cm.fetcher.ts"),
+      "cm.persister.ts": path.resolve(__dirname, "cm.persister.ts"),
+    },
+  },
+});
+```
+
+### Add necessary files to your root directory
+
+### Create cm.config.ts
+
+```typescript
+import { CmConfig } from "react-content-manager";
+
+// optionally last parameter is language, default is 'en', we support 'pl' as well
+const cmConfig = new CmConfig("en");
+
+export default cmConfig;
+```
+
+### Create cm.fetcher.ts
+
+```typescript
+import { CmHostHandler } from "react-content-manager";
+
+const fetcher = async (componentId: string): Promise<any> => {
+  return {};
+};
+
+export default fetcher;
+```
+
+### Create cm.persister.ts
+
+```typescript
+"use client";
+
+import { CmHostHandler } from "react-content-manager";
+
+const persister = async (configId: string, componentId: string, data: any) => {
+  return {};
+};
+
+export default persister;
+```
+
+## Minimal example of usage - TextEdit component
+
+### Working example in code
+
+You can find working example inside demo catalog
+
+- demo-next
+  - Demo with latest Next.js framework
+- demo-vite
+  - Demo with latest Vite
+
+### How to add TextEdit component?
 
 You need 4 files:
 
@@ -151,9 +251,9 @@ export const writeProps = async (props: ComponentProps) => {
 export default writeProps;
 ```
 
-### Create cm.config.js file in your project root directory and export your configuration. Example configuration:
+`cm.config.ts`
 
-```javascript
+```typescript
 import { CmConfig } from "react-content-manager";
 
 // optionally last parameter is language, default is 'en', we support 'pl' as well
@@ -175,7 +275,7 @@ cmConfig.getComponentGallery().registerComponent({
 export default cmConfig;
 ```
 
-### Create cm.persister.ts in your root directory.
+`cm.persister.ts`
 
 `Architecture Note:
 We are separating persister from configuration because of nature of React Server Component. We need to asure it will work on client side, because component edition need interactivity`
@@ -198,15 +298,14 @@ const persister = async (configId: string, componentId: string, data: any) => {
 };
 
 export default persister;
-
 ```
 
-### Create cm.fetcher.ts in your root directory.
+`cm.fetcher.ts`
 
 `Architecture Note:
-As you can see below, we are using `server-only` import. It's a the decision that code will always run on the server side. It's possible with the Next.js usage.
+If you are using Next.js framework code below will run on the server, otherwise it will run on client side`
 
-```javascript
+```typescript
 import { CmHostHandler } from "react-content-manager";
 
 const fetcher = async (componentId: string): Promise<any> => {
@@ -221,7 +320,7 @@ const fetcher = async (componentId: string): Promise<any> => {
 export default fetcher;
 ```
 
-### Edit your page.tsx and wrap your page with CmProvider. Example:
+`page.tsx`
 
 ```javascript
 import { CMComponent, CMProvider } from "react-content-manager";
@@ -239,7 +338,7 @@ export default function Home() {
 }
 ```
 
-### Run your project and go to http://localhost:3000/your-page-route to see component gallery and edit mode.
+Run your project and go to http://localhost:3000 to see component gallery and edit mode.
 
 ## Support for container query in tailwindcss
 
@@ -259,7 +358,7 @@ npm install
 npm run dev
 ```
 
-The demo is using local file to persist data. It's only for demo purposes. In real project you should use your own persistance layer.
+The demo is using local file to persist data. It's only for demo purposes. In real project you should use your own persistence layer.
 
 ## How to develop package locally?
 

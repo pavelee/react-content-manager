@@ -1,5 +1,12 @@
 # react-content-manager
 
+## 3.0.0
+
+### Major changes
+
+- New way of setting entrance files for library, right now you can pass path to files inside bundler configuration. **Check README for more information how to upgrade**
+- Change name from AsyncCMComponent to ClientCMComponent to make it more clear as usage on client side instead of server one.
+
 ## 2.3.0
 
 ### Minor changes

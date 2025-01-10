@@ -47,10 +47,10 @@
     "react": ">=16"
   },
   "dependencies": {
-    "antd": "^5.22.7"
+    "antd": "^5.22.7",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3"
   },
   "devDependencies": {
-    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@arethetypeswrong/cli": "^0.17.2",
     "@changesets/cli": "^2.27.11",
     "@eslint/js": "^9.17.0",

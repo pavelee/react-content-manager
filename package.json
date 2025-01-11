@@ -47,8 +47,7 @@
     "react": ">=16"
   },
   "dependencies": {
-    "antd": "^5.22.7",
-    "@ant-design/v5-patch-for-react-19": "^1.0.3"
+    "antd": "^5.22.7"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.2",

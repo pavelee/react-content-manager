@@ -28,6 +28,14 @@ or
 yarn add react-content-manager
 ```
 
+### If you are using React 19
+
+You need to install `@ant-design/v5-patch-for-react-19`, more here: https://ant.design/docs/react/v5-for-19#compatibility-package
+
+```
+npm install --save-dev @ant-design/v5-patch-for-react-19
+```
+
 ### Integrate with your framework/bundler
 
 #### Usage with Next.js

@@ -1,5 +1,12 @@
 # react-content-manager
 
+## 3.1.0
+
+### Minor changes
+
+- Added support for React 19 with antd (adapter)
+- Added instruction to use `@ant-design/v5-patch-for-react-19` to use antd with React 19
+
 ## 3.0.0
 
 ### Major changes

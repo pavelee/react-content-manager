@@ -1,6 +1,6 @@
 {
   "name": "react-content-manager",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "enable editable components in your react app",
   "keywords": [
     "react",
@@ -47,20 +47,20 @@
     "react": ">=16"
   },
   "dependencies": {
-    "antd": "^5.22.7"
+    "antd": "^5.23.1"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.17.2",
+    "@arethetypeswrong/cli": "^0.17.3",
     "@changesets/cli": "^2.27.11",
-    "@eslint/js": "^9.17.0",
+    "@eslint/js": "^9.18.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.14",
-    "@types/react": "^19.0.2",
-    "@typescript-eslint/eslint-plugin": "^8.19.0",
-    "@typescript-eslint/parser": "^8.19.0",
-    "eslint": "^9.17.0",
-    "eslint-plugin-react": "^7.37.3",
+    "@types/react": "^19.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.18.0",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
@@ -73,7 +73,7 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.19.0"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
   }
 }

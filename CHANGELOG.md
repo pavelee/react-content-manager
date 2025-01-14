@@ -1,5 +1,9 @@
 # react-content-manager
 
+## 3.1.1
+
+- bump deps
+
 ## 3.1.0
 
 ### Minor changes

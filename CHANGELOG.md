@@ -1,5 +1,9 @@
 # react-content-manager
 
+## 3.1.2
+
+- fixed error in docs
+
 ## 3.1.1
 
 - bump deps

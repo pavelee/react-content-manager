@@ -151,7 +151,7 @@ export type ComponentProps = {
   text?: string;
 };
 
-const Component = async (props: ComponentProps) => {
+const Component = (props: ComponentProps) => {
   const { text } = props;
 
   return (

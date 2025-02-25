@@ -1,5 +1,10 @@
 # react-content-manager
 
+## 3.2.0
+
+- Added config object to CMProvider
+- Added config option to enable Nextjs router refresh on save
+
 ## 3.1.2
 
 - fixed error in docs

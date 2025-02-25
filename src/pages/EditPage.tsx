@@ -8,6 +8,7 @@ import { EditIcon } from "../components/icons/EditIcon";
 import { Translator } from "./Translator";
 import { FloatButton } from "../components/float-button/FloatButton";
 import { useCMConfig } from "../client/useCMConfig";
+import type { ProviderConfig } from "../types";
 
 const ModeratorBar = () => {
   const { mode, setMode } = useCMConfig();
@@ -57,6 +58,7 @@ interface EditPageProps {
   mode: "edit" | "view";
   children: React.ReactNode;
   isPreviewOnInit: boolean;
+  config?: ProviderConfig;
 }
 
 export const EditPage = (props: EditPageProps) => {
@@ -78,7 +80,7 @@ export const EditPage = (props: EditPageProps) => {
 
   return (
     <div>
-      <CMConfigContextProvider mode={getInitialMode(props.isPreviewOnInit)}>
+      <CMConfigContextProvider mode={getInitialMode(props.isPreviewOnInit)} config={props.config}>
         <ModeratorBar />
         {props.children}
       </CMConfigContextProvider>

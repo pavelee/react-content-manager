@@ -5,6 +5,7 @@ import { createContext, useState } from "react";
 import { getPersister } from "../pages/getPersister";
 import { notification } from "antd";
 import { Translator } from "../pages/Translator";
+import type { ProviderConfig } from "../types";
 
 export interface CMConfigContextProps {
   mode: "edit" | "view";
@@ -29,14 +30,28 @@ export const CMConfigContext = createContext<CMConfigContextProps | undefined>({
 interface CMConfigContextProviderProps {
   mode: "edit" | "view";
   children: React.ReactNode;
+  config?: ProviderConfig;
 }
 
 export const CMConfigContextProvider = (
   props: CMConfigContextProviderProps,
 ) => {
+  const { config } = props;
   const [mode, setMode] = useState<"edit" | "view">(props.mode);
   const [isSaving, setIsSaving] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+
+  let nextRouter = null;
+  if (config?.nextjs?.useRouterRefreshOnSave === true) {
+    try {
+      let nr = require("next/navigation");
+      if (nr) {
+        nextRouter = nr.useRouter();
+      }
+    } catch (error) {
+      console.log(`[CMConfigContext] Could not load next/navigation: ${error}`);
+    }
+  }
 
   const setModeHandler = useCallback(
     (mode: "edit" | "view") => {
@@ -63,6 +78,9 @@ export const CMConfigContextProvider = (
           api.success({
             message: Translator.translate("CHANGES_SAVED"),
           });
+        }
+        if (nextRouter) {
+          nextRouter.refresh();
         }
       } catch (error: unknown) {
         if (onError) {

@@ -3,6 +3,7 @@ import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
 import { getCmConfig } from "./getCmConfig";
 import "@ant-design/v5-patch-for-react-19";
+import type { ProviderConfig } from "../types";
 
 export type mode = "edit" | "view";
 
@@ -13,6 +14,7 @@ export interface EditableProps {
 interface Props {
   children: React.ReactNode;
   mode: mode;
+  config?: ProviderConfig;
 }
 
 export const cmConfig = getCmConfig();
@@ -34,7 +36,7 @@ export const CMProvider = (props: Props) => {
 
   if (isEditMode) {
     return (
-      <EditPage mode={props.mode} isPreviewOnInit={cmConfig.getPreviewOnInit()}>
+      <EditPage mode={props.mode} isPreviewOnInit={cmConfig.getPreviewOnInit()} config={props.config}>
         {props.children}
       </EditPage>
     );

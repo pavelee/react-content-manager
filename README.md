@@ -346,6 +346,37 @@ export default function Home() {
 }
 ```
 
+## Configuration
+
+You can pass configuration by parameter `config` to `CMProvider` component.
+
+options:
+
+- `nextjs`
+  - `useRouterRefreshOnSave` -> if true, when you save config, it will refresh RSC components with new state
+
+example of config usage:
+
+```typescript
+import { CMComponent, CMProvider } from "react-content-manager";
+
+export default function Home() {
+  return (
+    <CMProvider mode={"edit"} config={{
+      nextjs: {
+        useRouterRefreshOnSave: true,
+      }
+    }}>
+      <CMComponent
+        configId="main_top"
+        componentId={"text-block"}
+        mode={"edit"}
+      />
+    </CMProvider>
+  );
+}
+```
+
 Run your project and go to http://localhost:3000 to see component gallery and edit mode.
 
 ## Support for container query in tailwindcss

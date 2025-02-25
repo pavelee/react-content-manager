@@ -2,6 +2,7 @@ import React from "react";
 import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
 import { getCmConfig } from "./getCmConfig";
+import '@ant-design/v5-patch-for-react-19';
 
 export type mode = "edit" | "view";
 

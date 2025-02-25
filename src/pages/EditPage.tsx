@@ -80,7 +80,10 @@ export const EditPage = (props: EditPageProps) => {
 
   return (
     <div>
-      <CMConfigContextProvider mode={getInitialMode(props.isPreviewOnInit)} config={props.config}>
+      <CMConfigContextProvider
+        mode={getInitialMode(props.isPreviewOnInit)}
+        config={props.config}
+      >
         <ModeratorBar />
         {props.children}
       </CMConfigContextProvider>

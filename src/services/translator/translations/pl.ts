@@ -16,4 +16,7 @@ export const tranlations: { [key: string]: string } = {
   ADD_CONTAINER: "Dodaj kontener",
   CHANGES_SAVED: "Zmiany zapisane",
   ERROR: "Błąd",
+  ACTIVE: "Aktywny",
+  YES: "Tak",
+  NO: "Nie"
 };

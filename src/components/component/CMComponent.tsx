@@ -6,6 +6,7 @@ import { CMComponentClient } from "./CMComponent.client";
 import { ComponentDetailsList } from "../../types";
 import { CMComponentFormWrapper } from "./CMComponentForm";
 import { getFetcher } from "../../config/getFetcher";
+import { ComponentService } from "../../services/ComponentService";
 
 export interface CMComponentProps extends EditableProps {
   configId: string;
@@ -14,61 +15,76 @@ export interface CMComponentProps extends EditableProps {
   initProps?: object;
 }
 
-const getAvailableComponentIdList = (): ComponentDetailsList => {
+const getAvailableComponentIdList = async (): Promise<ComponentDetailsList> => {
   const c = cmComponentGallery.getPublicComponents();
+  const cArray = Array.from(c);
   const componentIdList: ComponentDetailsList = [];
   // list map
-  c.forEach((component) => {
+  for (let i = 0; i < cArray.length; i++) {
+    const component = cArray[i][1];
+    if ((await ComponentService.isComponentVisible(component)) === false) {
+      continue;
+    }
     componentIdList.push({
       id: component.id,
       name: component.name,
       desc: component.desc,
+      active: true,
     });
-  });
+  }
+  // c.forEach(async (component) => {
+  //   componentIdList.push({
+  //     id: component.id,
+  //     name: component.name,
+  //     desc: component.desc,
+  //   });
+  // });
   return componentIdList;
 };
 
 export const CMComponent = async (props: CMComponentProps) => {
   const fetcher = getFetcher();
   const data = await fetcher(props.configId);
-  const {
-    id: componentId,
-    componentPath,
-    formPath,
-    readProps,
-    config,
-  } = cmComponentGallery.getComponent(
+  const component = cmComponentGallery.getComponent(
     props.componentId ? props.componentId : data.componentId,
   );
-  const componentReadProps = await (await readProps()).default(data.data);
+
+  const isVisible = await ComponentService.isComponentVisible(component);
+  if (isVisible === false) {
+    return null;
+  }
+
+  const componentReadProps = await (
+    await component.readProps()
+  ).default(data.data);
   const ip = props.initProps ?? {};
   const componentProps = {
     ...ip,
     ...componentReadProps,
   };
-  if (componentId === containerComponentId) {
+  if (component.id === containerComponentId) {
     componentProps.mode = props.mode;
   }
 
   let componentIdList: ComponentDetailsList = [];
   if (props.mode === "edit") {
-    componentIdList = getAvailableComponentIdList();
+    componentIdList = await getAvailableComponentIdList();
 
     return (
-      <CMComponentClient configId={props.configId} componentId={componentId}>
-        {formPath && (
+      <CMComponentClient configId={props.configId} componentId={component.id}>
+        {component.formPath && (
           <CMComponentFormWrapper>
             <DynamicComponent
-              componentPath={formPath}
+              componentPath={component.formPath}
               props={componentProps}
               configId={props.configId}
-              componentId={componentId}
+              componentId={component.id}
               components={componentIdList}
             />
           </CMComponentFormWrapper>
         )}
         <DynamicComponent
-          componentPath={componentPath}
+          componentPath={component.componentPath}
           props={componentProps}
         />
       </CMComponentClient>
@@ -76,6 +92,9 @@ export const CMComponent = async (props: CMComponentProps) => {
   }
 
   return (
-    <DynamicComponent componentPath={componentPath} props={componentProps} />
+    <DynamicComponent
+      componentPath={component.componentPath}
+      props={componentProps}
+    />
   );
 };

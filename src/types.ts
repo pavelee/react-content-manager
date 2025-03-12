@@ -7,6 +7,7 @@ export type ProviderConfig = {
 export type ComponentDetails = {
   id: string;
   name: string;
+  active: boolean;
   desc?: string;
 };
 

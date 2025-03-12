@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 import { useState } from "react";
-import { Table, Form as AntdForm, Radio, Drawer, Button } from "antd";
+import { Table, Form as AntdForm, Radio, Drawer, Button, Tag } from "antd";
 import { ContainerProps } from "./CMContainer";
 import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
@@ -100,6 +100,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
           id: config.configId,
           name: "Container",
           configId: config.configId,
+          active: true,
         });
       }
       const filtered = components.filter((component) => {
@@ -109,6 +110,15 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         c.push({
           ...filtered[0],
           configId: config.configId,
+          active: true,
+        });
+      } else {
+        c.push({
+          id: config.componentId,
+          // @TODO how to know name of component if it not listed?
+          name: config.componentId,
+          configId: config.configId,
+          active: false,
         });
       }
     });
@@ -289,6 +299,17 @@ export const Form = (props: ContainerProps & ComponentForm) => {
                   <div>{record.name}</div>
                 </div>
               ),
+            },
+            {
+              title: Translator.translate("ACTIVE"),
+              key: "active",
+              render: (record: SelectedComponent) => {
+                return (
+                  <Tag color={record.active ? "green" : "red"}>
+                    {record.active ? Translator.translate("YES") : Translator.translate("NO")}
+                  </Tag>
+                );
+              },
             },
             {
               title: Translator.translate("ACTIONS"),

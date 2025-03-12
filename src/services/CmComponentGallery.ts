@@ -1,6 +1,6 @@
 export type ConfigReturnType = {
   active?: boolean;
-}
+};
 
 export interface CMComponentInterface {
   id: string;

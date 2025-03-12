@@ -18,5 +18,5 @@ export const tranlations: { [key: string]: string } = {
   ERROR: "Błąd",
   ACTIVE: "Aktywny",
   YES: "Tak",
-  NO: "Nie"
+  NO: "Nie",
 };

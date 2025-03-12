@@ -306,7 +306,9 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               render: (record: SelectedComponent) => {
                 return (
                   <Tag color={record.active ? "green" : "red"}>
-                    {record.active ? Translator.translate("YES") : Translator.translate("NO")}
+                    {record.active
+                      ? Translator.translate("YES")
+                      : Translator.translate("NO")}
                   </Tag>
                 );
               },

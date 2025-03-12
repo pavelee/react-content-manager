@@ -36,6 +36,7 @@ export const CMComponent = async (props: CMComponentProps) => {
     componentPath,
     formPath,
     readProps,
+    config,
   } = cmComponentGallery.getComponent(
     props.componentId ? props.componentId : data.componentId,
   );
@@ -52,22 +53,29 @@ export const CMComponent = async (props: CMComponentProps) => {
   let componentIdList: ComponentDetailsList = [];
   if (props.mode === "edit") {
     componentIdList = getAvailableComponentIdList();
+
+    return (
+      <CMComponentClient configId={props.configId} componentId={componentId}>
+        {formPath && (
+          <CMComponentFormWrapper>
+            <DynamicComponent
+              componentPath={formPath}
+              props={componentProps}
+              configId={props.configId}
+              componentId={componentId}
+              components={componentIdList}
+            />
+          </CMComponentFormWrapper>
+        )}
+        <DynamicComponent
+          componentPath={componentPath}
+          props={componentProps}
+        />
+      </CMComponentClient>
+    );
   }
 
   return (
-    <CMComponentClient configId={props.configId} componentId={componentId}>
-      {props.mode === "edit" && formPath && (
-        <CMComponentFormWrapper>
-          <DynamicComponent
-            componentPath={formPath}
-            props={componentProps}
-            configId={props.configId}
-            componentId={componentId}
-            components={componentIdList}
-          />
-        </CMComponentFormWrapper>
-      )}
-      <DynamicComponent componentPath={componentPath} props={componentProps} />
-    </CMComponentClient>
+    <DynamicComponent componentPath={componentPath} props={componentProps} />
   );
 };

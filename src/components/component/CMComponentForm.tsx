@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button, Drawer } from "antd";
 import { EditIcon } from "../icons/EditIcon";
-import { Translator } from "../../pages/Translator";
+import { Translator } from "../../config/Translator";
 import { useCMConfig } from "../../client/useCMConfig";
 
 type props = {

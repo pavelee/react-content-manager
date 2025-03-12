@@ -2,9 +2,9 @@
 
 import React, { useCallback } from "react";
 import { createContext, useState } from "react";
-import { getPersister } from "../pages/getPersister";
+import { getPersister } from "../config/getPersister";
 import { notification } from "antd";
-import { Translator } from "../pages/Translator";
+import { Translator } from "../config/Translator";
 import type { ProviderConfig } from "../types";
 
 export interface CMConfigContextProps {

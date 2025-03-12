@@ -5,7 +5,7 @@ import { DynamicComponent } from "../DynamicComponent";
 import { CMComponentClient } from "./CMComponent.client";
 import { ComponentDetailsList } from "../../types";
 import { CMComponentFormWrapper } from "./CMComponentForm";
-import { getFetcher } from "../../pages/getFetcher";
+import { getFetcher } from "../../config/getFetcher";
 
 export interface CMComponentProps extends EditableProps {
   configId: string;

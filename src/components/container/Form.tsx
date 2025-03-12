@@ -7,7 +7,7 @@ import { ContainerProps } from "./CMContainer";
 import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
-import { Translator } from "../../pages/Translator";
+import { Translator } from "../../config/Translator";
 import { ComponentDetails, ComponentDetailsList } from "../../types";
 import Card from "../card/Card";
 import { useCMConfig } from "../../client/useCMConfig";

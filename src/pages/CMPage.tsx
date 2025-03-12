@@ -1,7 +1,7 @@
 import React from "react";
 import { EditPage } from "./EditPage";
 import { ViewPage } from "./ViewPage";
-import { getCmConfig } from "./getCmConfig";
+import { getCmConfig } from "../config/getCmConfig";
 import "@ant-design/v5-patch-for-react-19";
 import type { ProviderConfig } from "../types";
 

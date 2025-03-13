@@ -32,13 +32,7 @@ const getAvailableComponentIdList = async (): Promise<ComponentDetailsList> => {
       active: true,
     });
   }
-  // c.forEach(async (component) => {
-  //   componentIdList.push({
-  //     id: component.id,
-  //     name: component.name,
-  //     desc: component.desc,
-  //   });
-  // });
+
   return componentIdList;
 };
 
@@ -62,14 +56,24 @@ export const CMComponent = async (props: CMComponentProps) => {
     ...ip,
     ...componentReadProps,
   };
-  if (component.id === containerComponentId) {
-    componentProps.mode = props.mode;
-  }
 
   let componentIdList: ComponentDetailsList = [];
-  if (props.mode === "edit") {
-    componentIdList = await getAvailableComponentIdList();
+  componentIdList = await getAvailableComponentIdList();
 
+  if (component.id === containerComponentId) {
+    componentProps.mode = props.mode;
+    componentProps.configIds = componentProps.configIds.map(
+      (c: { configId: string; componentId: string }) => {
+        const cc = componentIdList.find((c2) => c2.id === c.componentId);
+        return {
+          ...c,
+          active: !!cc,
+        };
+      },
+    );
+  }
+
+  if (props.mode === "edit") {
     return (
       <CMComponentClient configId={props.configId} componentId={component.id}>
         {component.formPath && (

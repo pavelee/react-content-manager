@@ -5,7 +5,7 @@ import { CMComponent } from "../../index";
 
 export interface ContainerProps extends EditableProps {
   id: string;
-  configIds?: ContainerWrapperId[];
+  configIds?: (ContainerWrapperId & { active: boolean })[];
   direction?: "row" | "column";
 }
 
@@ -39,9 +39,18 @@ export const CMContainer = (props: ContainerProps) => {
     return null;
   }
 
+  const anyActive = props.configIds?.some((c) => c.active);
+
+  if (!anyActive) {
+    return null;
+  }
+
   return (
     <div style={styles} className="@container">
       {props.configIds?.map((componentId: any) => {
+        if (!componentId.active) {
+          return null;
+        }
         return (
           <div
             style={{

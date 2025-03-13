@@ -42,16 +42,18 @@ export const CMComponent = async (props: CMComponentProps) => {
 
   if (component.id === containerComponentId) {
     componentProps.mode = props.mode;
-    componentProps.configIds = componentProps.configIds.map(
-      (c: { configId: string; componentId: string }) => {
-        const cc = componentIdList.find((c2) => c2.id === c.componentId);
-        return {
-          ...c,
-          ...cc,
-          active: cc?.active ?? true,
-        };
-      },
-    );
+    if (componentProps.configIds) {
+      componentProps.configIds = componentProps.configIds.map(
+        (c: { configId: string; componentId: string }) => {
+          const cc = componentIdList.find((c2) => c2.id === c.componentId);
+          return {
+            ...c,
+            ...cc,
+            active: cc?.active ?? true,
+          };
+        },
+      );
+    }
   }
 
   if (props.mode === "edit") {

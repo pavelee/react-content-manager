@@ -17,6 +17,8 @@ export const tranlations: { [key: string]: string } = {
   CHANGES_SAVED: "Changes saved",
   ERROR: "Error",
   ACTIVE: "Active",
+  INACTIVE: "Inactive",
   YES: "Yes",
   NO: "No",
+  STATUS: "Status"
 };

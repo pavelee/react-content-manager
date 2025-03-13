@@ -64,8 +64,8 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
                 extra={
                   <Tag color={component.active ? "green" : "red"}>
                     {component.active
-                      ? Translator.translate("YES")
-                      : Translator.translate("NO")}
+                      ? Translator.translate("ACTIVE")
+                      : Translator.translate("INACTIVE")}
                   </Tag>
                 }
                 actions={[
@@ -321,7 +321,7 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               ),
             },
             {
-              title: Translator.translate("ACTIVE"),
+              title: Translator.translate("STATUS"),
               key: "active",
               render: (record: SelectedComponent) => {
                 return (
@@ -335,8 +335,8 @@ export const Form = (props: ContainerProps & ComponentForm) => {
                     <div>
                       <Tag color={record.active ? "green" : "red"}>
                         {record.active
-                          ? Translator.translate("YES")
-                          : Translator.translate("NO")}
+                          ? Translator.translate("ACTIVE")
+                          : Translator.translate("INACTIVE")}
                       </Tag>
                     </div>
                     {record.statusComment && (

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { ConfigReturnType } from "../types";
 import { CMComponentInterface } from "./CmComponentGallery";
 
@@ -41,7 +42,7 @@ export class CS {
 
   public async getComponentCustomStatus(
     component: CMComponentInterface,
-  ): Promise<string | undefined> {
+  ): Promise<ReactNode | undefined> {
     const config = await this.getConfig(component);
     if (config && config.statusComment) {
       return config.statusComment;

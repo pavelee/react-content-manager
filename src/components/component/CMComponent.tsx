@@ -7,6 +7,7 @@ import { ComponentDetailsList } from "../../types";
 import { CMComponentFormWrapper } from "./CMComponentForm";
 import { getFetcher } from "../../config/getFetcher";
 import { ComponentService } from "../../services/ComponentService";
+import { ComponentListCached } from "../../services/ComponentListCached";
 
 export interface CMComponentProps extends EditableProps {
   configId: string;
@@ -14,27 +15,6 @@ export interface CMComponentProps extends EditableProps {
   componentProps?: any;
   initProps?: object;
 }
-
-const getAvailableComponentIdList = async (): Promise<ComponentDetailsList> => {
-  const c = cmComponentGallery.getPublicComponents();
-  const cArray = Array.from(c);
-  const componentIdList: ComponentDetailsList = [];
-  // list map
-  for (let i = 0; i < cArray.length; i++) {
-    const component = cArray[i][1];
-    if ((await ComponentService.isComponentVisible(component)) === false) {
-      continue;
-    }
-    componentIdList.push({
-      id: component.id,
-      name: component.name,
-      desc: component.desc,
-      active: true,
-    });
-  }
-
-  return componentIdList;
-};
 
 export const CMComponent = async (props: CMComponentProps) => {
   const fetcher = getFetcher();
@@ -58,7 +38,7 @@ export const CMComponent = async (props: CMComponentProps) => {
   };
 
   let componentIdList: ComponentDetailsList = [];
-  componentIdList = await getAvailableComponentIdList();
+  componentIdList = await ComponentListCached.getAvailableComponentIdList();
 
   if (component.id === containerComponentId) {
     componentProps.mode = props.mode;

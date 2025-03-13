@@ -1,6 +1,4 @@
-export type ConfigReturnType = {
-  active?: boolean;
-};
+import type { ConfigReturnType } from "../types";
 
 export interface CMComponentInterface {
   id: string;
@@ -16,9 +14,7 @@ export interface CMComponentInterface {
     default: (props: any) => Promise<{ [key: string]: any }>;
   }>;
   config?: () => Promise<{
-    default: () => Promise<{
-      active?: boolean;
-    }>;
+    default: () => Promise<ConfigReturnType>;
   }>;
   tags: string[]; // should be used for search
 }

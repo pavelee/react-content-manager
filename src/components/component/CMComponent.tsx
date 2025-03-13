@@ -6,8 +6,8 @@ import { CMComponentClient } from "./CMComponent.client";
 import { ComponentDetailsList } from "../../types";
 import { CMComponentFormWrapper } from "./CMComponentForm";
 import { getFetcher } from "../../config/getFetcher";
-import { ComponentService } from "../../services/ComponentService";
 import { ComponentListCached } from "../../services/ComponentListCached";
+import { ComponentService } from "../../services/ComponentService";
 
 export interface CMComponentProps extends EditableProps {
   configId: string;
@@ -47,7 +47,8 @@ export const CMComponent = async (props: CMComponentProps) => {
         const cc = componentIdList.find((c2) => c2.id === c.componentId);
         return {
           ...c,
-          active: !!cc,
+          ...cc,
+          active: cc?.active ?? true,
         };
       },
     );

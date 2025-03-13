@@ -2,14 +2,21 @@
 
 import React, { useCallback } from "react";
 import { useState } from "react";
-import { Table, Form as AntdForm, Radio, Drawer, Button, Tag } from "antd";
+import {
+  Table,
+  Form as AntdForm,
+  Radio,
+  Drawer,
+  Button,
+  Tag,
+  Card,
+} from "antd";
 import { ContainerProps } from "./CMContainer";
 import { TrashIcon } from "../icons/TrashIcon";
 import { ArrowDownIcon } from "../icons/ArrowDownIcon";
 import { ArrowUpIcon } from "../icons/ArrowUpIcon";
 import { Translator } from "../../config/Translator";
 import { ComponentDetails, ComponentDetailsList } from "../../types";
-import Card from "../card/Card";
 import { useCMConfig } from "../../client/useCMConfig";
 import { generateConfigId } from "../../services/generateConfigId";
 
@@ -54,9 +61,16 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
               <Card
                 key={component.id}
                 title={component.name}
-                description={component.desc}
+                extra={
+                  <Tag color={component.active ? "green" : "red"}>
+                    {component.active
+                      ? Translator.translate("YES")
+                      : Translator.translate("NO")}
+                  </Tag>
+                }
                 actions={[
                   <Button
+                    disabled={!component.active}
                     key="add"
                     onClick={() => {
                       addComponentToContainer(component.id);
@@ -66,7 +80,22 @@ const ComponentGallery = (props: ComponentGalleryProps) => {
                     {Translator.translate("ADD_COMPONENT")}
                   </Button>,
                 ]}
-              />
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1.25rem",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {component.statusComment && (
+                    <Tag>{component.statusComment}</Tag>
+                  )}
+                  {component.desc}
+                </div>
+              </Card>
             );
           })}
         </div>
@@ -110,15 +139,6 @@ export const Form = (props: ContainerProps & ComponentForm) => {
         c.push({
           ...filtered[0],
           configId: config.configId,
-          active: true,
-        });
-      } else {
-        c.push({
-          id: config.componentId,
-          // @TODO how to know name of component if it not listed?
-          name: config.componentId,
-          configId: config.configId,
-          active: false,
         });
       }
     });
@@ -305,11 +325,26 @@ export const Form = (props: ContainerProps & ComponentForm) => {
               key: "active",
               render: (record: SelectedComponent) => {
                 return (
-                  <Tag color={record.active ? "green" : "red"}>
-                    {record.active
-                      ? Translator.translate("YES")
-                      : Translator.translate("NO")}
-                  </Tag>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.75rem",
+                    }}
+                  >
+                    <div>
+                      <Tag color={record.active ? "green" : "red"}>
+                        {record.active
+                          ? Translator.translate("YES")
+                          : Translator.translate("NO")}
+                      </Tag>
+                    </div>
+                    {record.statusComment && (
+                      <Tag style={{ fontSize: "0.75rem" }}>
+                        {record.statusComment}
+                      </Tag>
+                    )}
+                  </div>
                 );
               },
             },

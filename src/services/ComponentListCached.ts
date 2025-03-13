@@ -33,16 +33,15 @@ class CLC {
         // list map
         for (let i = 0; i < cArray.length; i++) {
           const component = cArray[i][1];
-          if (
-            (await ComponentService.isComponentVisible(component)) === false
-          ) {
-            continue;
-          }
+          const isActive = await ComponentService.isComponentVisible(component);
+          const statusComment =
+            await ComponentService.getComponentCustomStatus(component);
           componentIdList.push({
             id: component.id,
             name: component.name,
             desc: component.desc,
-            active: true,
+            active: isActive,
+            statusComment,
           });
         }
 

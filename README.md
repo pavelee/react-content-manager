@@ -141,6 +141,7 @@ You need 4 files:
 - Form.tsx - contains form that will be use to configure component by user
 - ReadProps.ts - function that will deserialize data from source to component props
 - WriteProps.ts - function that will serialize data from component props to source
+- Config.ts - configuration file for component (optional)
 
 minimal example for components (live inside demo-next app)
 
@@ -259,6 +260,17 @@ export const writeProps = async (props: ComponentProps) => {
 export default writeProps;
 ```
 
+`Config.ts` (optional)
+
+```typescript
+import { ConfigReturnType } from "react-content-manager";
+
+export const config: ConfigReturnType = {
+  active: true, // optional
+  statusComment: "This is a status comment", // optional
+};
+```
+
 `cm.config.ts`
 
 ```typescript
@@ -277,6 +289,7 @@ cmConfig.getComponentGallery().registerComponent({
   formPath: () => import("@/app/components/text-block/Form"), // path to component with form that will be use to edit component props
   readProps: () => import("@/app/components/text-block/ReadProps"), // path to function that will deserialize component props from your persistence layer
   writeProps: () => import("@/app/components/text-block/WriteProps"), // path to function that will serialize component props to your persistence layer
+  config: () => import("@/app/components/text-block/Config"), // (optional) path to function that will return configuration for component
   tags: ["content", "alert"], // tags that will be used to filter components in component gallery
 });
 

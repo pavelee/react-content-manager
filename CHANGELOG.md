@@ -1,5 +1,9 @@
 # react-content-manager
 
+## 3.3.0
+
+- Added new config callback that allow you to pass custom config to components, on start we have option to deactivate component on site and add status comment to explain eg. why component is not active.
+
 ## 3.2.0
 
 - Added config object to CMProvider

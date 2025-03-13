@@ -20,5 +20,5 @@ export const tranlations: { [key: string]: string } = {
   INACTIVE: "Nieaktywny",
   YES: "Tak",
   NO: "Nie",
-  STATUS: "Status"
+  STATUS: "Status",
 };
